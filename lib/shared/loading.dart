@@ -1,9 +1,10 @@
-
 import 'package:bookyourdriveing/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loading extends StatelessWidget {
+  final double size;
+  Loading({this.size});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,7 +12,7 @@ class Loading extends StatelessWidget {
         child: Center(
             child: SpinKitFoldingCube(
           color: AppColors.icons,
-          size: 50.0,
+          size: size != null ? size : 50.0,
         )));
   }
 }

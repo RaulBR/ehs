@@ -1,12 +1,11 @@
-import 'dart:async';
-import 'package:bookyourdriveing/models/home_mode.dart';
+import 'package:bookyourdriveing/models/employee_model.dart';
 import 'package:bookyourdriveing/theme.dart';
 import 'package:flutter/material.dart';
 
-class TitleMenuElement extends StatelessWidget {
-  final HomeElement homeElement;
+class EmployeeListElement extends StatelessWidget {
+  final Employee employee;
   final Function data;
-  TitleMenuElement({this.homeElement, this.data});
+  EmployeeListElement({this.employee, this.data});
   @override
   Widget build(BuildContext context) {
 
@@ -23,8 +22,8 @@ class TitleMenuElement extends StatelessWidget {
             radius: 25,
             backgroundColor: AppColors.lightprimary,
           ),
-          title: Text(homeElement.title),
-          subtitle: Text(homeElement.subtitle),
+          title: Text('${employee.id} ${employee.lastName.toString()}'),
+          subtitle: Text(employee.phone.toString()),
         ),
       ),
     );

@@ -16,4 +16,6 @@ class SignUpEvent extends LoginEvent {
 class SigninLoading extends LoginEvent {
 }
 
+class CheckSinginEvent extends LoginEvent {}
+
 class SignOutEvent extends LoginEvent {}

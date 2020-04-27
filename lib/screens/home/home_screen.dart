@@ -1,5 +1,6 @@
+
+import 'package:bookyourdriveing/screens/employee/employee_list.dart';
 import 'package:bookyourdriveing/screens/side_menu/side_menu.dart';
-import 'package:bookyourdriveing/screens/titles/title_content.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -20,9 +21,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Home')),
+      appBar: AppBar(title: Text('Employee List')),
       drawer: SideMenu(),
-      body: TitleContent(),
+      body: EmployeeList(),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         child: Container(
@@ -30,10 +31,10 @@ class _HomeState extends State<Home> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/loading');
+        onPressed: () async {
+          Navigator.pushNamed(context, '/employee');
         },
-        child: Icon(Icons.calendar_view_day),
+        child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );

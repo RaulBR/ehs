@@ -1,10 +1,9 @@
 import 'package:bookyourdriveing/models/user.model.dart';
-import 'package:bookyourdriveing/services/http.dart';
 import 'package:bookyourdriveing/shared/constants.dart';
-import 'package:bookyourdriveing/state/login_block.dart';
 import 'package:bookyourdriveing/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bookyourdriveing/state/login_bloc/login.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -17,7 +16,6 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    final _http = HttpService();
     LoginBloc login = BlocProvider.of<LoginBloc>(context);
     return Scaffold(
       appBar: AppBar(actions: <Widget>[], title: Text('Sign up')),
@@ -62,8 +60,8 @@ class _SignUpFormState extends State<SignUpForm> {
                   width: double.infinity,
                   child: RaisedButton(
                     onPressed: () {
-                        User user = User(email:_email, password: _password);
-                        login.onSignUp(user);
+                      User user = User(email: _email, password: _password);
+                      login.onSignUp(user);
                     },
                     color: AppColors.primary,
                     child: Text('Signup',

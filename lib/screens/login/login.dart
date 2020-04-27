@@ -1,7 +1,7 @@
 import 'package:bookyourdriveing/models/user.model.dart';
-import 'package:bookyourdriveing/services/http.dart';
 import 'package:bookyourdriveing/shared/constants.dart';
-import 'package:bookyourdriveing/state/login_block.dart';
+import 'package:bookyourdriveing/shared/loading.dart';
+import 'package:bookyourdriveing/state/login_bloc/login.dart';
 import 'package:bookyourdriveing/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,24 +17,24 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   String _email;
   String _password;
-
+LoginBloc _login;
   void initState() {
     super.initState();
-    print('init login');
+      _login = BlocProvider.of<LoginBloc>(context);
+    // _login.amILogendIn();
   }
 
   void dispose() {
-    // _loginBloc.dispose();
     print('dispose login');
+    _login.close();
     super.dispose();
   }
 
-  final http = HttpService();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    LoginBloc login = BlocProvider.of<LoginBloc>(context);
-    return Scaffold(
+
+     return Scaffold(
         appBar: AppBar(actions: <Widget>[], title: Text('Sign in')),
         body: Container(
             height: 300,
@@ -60,11 +60,12 @@ class _LoginFormState extends State<LoginForm> {
                     width: double.infinity,
                     child: RaisedButton(
                       onPressed: () {
-                        login.onLogIn(User(email: _email, password: _password));
+                        User user = User(email: _email, password: _password);
+                        _login.onLogIn(user);
                       },
                       color: AppColors.primary,
                       child: Text('Login',
-                          style: TextStyle(color: AppColors.icons)),
+                              style: TextStyle(color: AppColors.icons)),
                     ),
                   ),
                   SizedBox(
@@ -74,7 +75,7 @@ class _LoginFormState extends State<LoginForm> {
                         Navigator.pushNamed(context, '/signup');
                       },
                       color: AppColors.primary,
-                      child: Text('Signup',
+                      child: Text('sign up',
                           style: TextStyle(color: AppColors.icons)),
                     ),
                   ),

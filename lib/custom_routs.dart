@@ -1,25 +1,25 @@
-
+import 'package:bookyourdriveing/screens/employee/employee_form.dart';
 import 'package:bookyourdriveing/screens/home/home_screen.dart';
 import 'package:bookyourdriveing/screens/login/login.dart';
+import 'package:bookyourdriveing/services/loacal_storage.dart';
 import 'package:bookyourdriveing/shared/loading.dart';
 import 'package:flutter/material.dart';
 
-
 class Router {
-  // LoginBloc _authGuard;
-  // Router(LoginBloc loginBloc) {
-  //   this._authGuard = loginBloc;
-  // } 
+  final _localStorageService = LocalStorageService();
+  String _token;
   bool isAllowed = true;
   Route<dynamic> generateRoute(RouteSettings settings) {
-      
     switch (settings.name) {
-       case '/':
-         return  freeRoute(Home());
-         break;        
+      case '/':
+        return checkRoute(Home());
+        break;
       case '/loading':
-        return freeRoute(Loading2());
-         break;
+        return checkRoute(Loading2());
+        break;
+      case '/employee':
+        return checkRoute(EmployeeForm());
+        break;
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(
@@ -28,11 +28,16 @@ class Router {
                 ));
     }
   }
+
   MaterialPageRoute checkRoute(Widget inputWidget) {
-    return  MaterialPageRoute(builder: (_) =>  isAllowed ? inputWidget : LoginForm());
+    return MaterialPageRoute(
+        builder: (_) => _localStorageService.getToken() != null
+            ? inputWidget
+            : LoginForm());
   }
+
   MaterialPageRoute freeRoute(Widget inputWidget) {
-    return  MaterialPageRoute(builder: (_) =>  inputWidget );
+    return MaterialPageRoute(builder: (_) => inputWidget);
   }
 
 // bool getAuth() {
