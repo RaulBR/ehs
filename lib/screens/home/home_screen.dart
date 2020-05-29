@@ -1,30 +1,18 @@
-
-import 'package:bookyourdriveing/screens/employee/employee_list.dart';
-import 'package:bookyourdriveing/screens/side_menu/side_menu.dart';
+import 'package:ehsfocus/screens/forms/employee_list.dart';
+import 'package:ehsfocus/shared/constants.dart';
+import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
 
-class _HomeState extends State<Home> {
-  void initState() {
-    super.initState();
-  }
-
-  void dispose() {
-    print('dispose home');
-    super.dispose();
-  }
-
+class Safety extends StatelessWidget with Lables {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Employee List')),
-      drawer: SideMenu(),
+     return Scaffold(
+      appBar: AppBar(title: Text(Lables.safty)),
+      // drawer: SideMenu(),
       body: EmployeeList(),
       bottomNavigationBar: BottomAppBar(
+        color: AppColors.darkprimary,
         shape: const CircularNotchedRectangle(),
         child: Container(
           height: 50.0,

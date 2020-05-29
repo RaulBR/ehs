@@ -1,9 +1,11 @@
-import 'package:bookyourdriveing/custom_routs.dart';
-import 'package:bookyourdriveing/state/employee_bloc/employee_bloc.dart';
-import 'package:bookyourdriveing/state/employee_bloc/employee_list_bloc/employee_list_bloc.dart';
-import 'package:bookyourdriveing/theme.dart';
+import 'package:ehsfocus/app_localizations.dart';
+import 'package:ehsfocus/custom_routs.dart';
+import 'package:ehsfocus/state/audit_bloc/audit_bloc.dart';
+import 'package:ehsfocus/state/employee_bloc/employee_bloc.dart';
+import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class MainApp extends StatelessWidget {
   @override
@@ -14,12 +16,30 @@ class MainApp extends StatelessWidget {
           create: (_) => EmployeeBloc(),
         ),
         BlocProvider(
-          create: (_) => EmployeeListBloc(),
+          create: (_) => AuditBloc(),
         ),
       ],
       child: MaterialApp(
-        title: 'My app',
-        theme: CompanyThemeData,
+        title: 'EHS-focus',
+        theme: companyThemeData,
+        supportedLocales: [Locale('ro', 'RO'), Locale('en', 'US')],
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate
+        ],
+        localeResolutionCallback: (locale, supportedLocales) {
+          for (var supportedLocale in supportedLocales) {
+            if (locale == null) {
+              return supportedLocales.first;
+            }
+            if (supportedLocale.languageCode == locale.languageCode &&
+                supportedLocale.countryCode == locale.countryCode) {
+              return supportedLocale;
+            }
+          }
+          return supportedLocales.first;
+        },
         onGenerateRoute: Router().generateRoute,
         initialRoute: '/',
       ),

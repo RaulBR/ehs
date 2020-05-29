@@ -1,4 +1,4 @@
-import 'package:bookyourdriveing/models/employee_model.dart';
+import 'package:ehsfocus/models/employee_model.dart';
 
 class EmployeeState {
   Employee employee;

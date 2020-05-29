@@ -1,25 +1,41 @@
-import 'package:bookyourdriveing/screens/employee/employee_form.dart';
-import 'package:bookyourdriveing/screens/home/home_screen.dart';
-import 'package:bookyourdriveing/screens/login/login.dart';
-import 'package:bookyourdriveing/services/loacal_storage.dart';
-import 'package:bookyourdriveing/shared/loading.dart';
+import 'package:ehsfocus/screens/forms/audit_form.dart';
+import 'package:ehsfocus/screens/forms/employee_form.dart';
+import 'package:ehsfocus/screens/forms/incident_form.dart';
+import 'package:ehsfocus/screens/home/home.dart';
+import 'package:ehsfocus/screens/login/login.dart';
+import 'package:ehsfocus/shared/constants.dart';
+import 'package:ehsfocus/screens/statistics.dart';
+import 'package:ehsfocus/services/loacal_storage.dart';
+import 'package:ehsfocus/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 class Router {
   final _localStorageService = LocalStorageService();
-  String _token;
-  bool isAllowed = true;
   Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case '/':
-        return checkRoute(Home());
-        break;
-      case '/loading':
-        return checkRoute(Loading2());
-        break;
-      case '/employee':
-        return checkRoute(EmployeeForm());
-        break;
+      case RoutPath.homeRout:
+        return checkRoute(Home(), settings);
+      case RoutPath.loadingRout:
+        return checkRoute(Loading2(), settings);
+
+      case RoutPath.safetyRout:
+        return checkRoute(AuditForm(), settings);
+
+      case RoutPath.employeeRout:
+        return checkRoute(EmployeeForm(), settings);
+
+      case RoutPath.statsRout:
+        return checkRoute(Statistics(), settings);
+
+      case RoutPath.helthRout:
+        return checkRoute(AuditForm(), settings);
+
+      case RoutPath.enviromentRout:
+        return checkRoute(AuditForm(), settings);
+
+      case RoutPath.incidentRout:
+        return checkRoute(IncidentForm(), settings);
+      
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(
@@ -29,19 +45,14 @@ class Router {
     }
   }
 
-  MaterialPageRoute checkRoute(Widget inputWidget) {
+  MaterialPageRoute checkRoute(Widget inputWidget, settings) {
     return MaterialPageRoute(
-        builder: (_) => _localStorageService.getToken() != null
-            ? inputWidget
-            : LoginForm());
+        builder: (_) =>
+            _localStorageService.getToken() != null ? inputWidget : LoginForm(),
+        settings: settings);
   }
 
   MaterialPageRoute freeRoute(Widget inputWidget) {
     return MaterialPageRoute(builder: (_) => inputWidget);
   }
-
-// bool getAuth() {
-//   print('i was here dawdasd asd ${_authGuard.state.isLogin}');
-//   return _authGuard.state.isLogin;
-// }
 }

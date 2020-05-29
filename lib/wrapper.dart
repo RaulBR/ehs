@@ -1,11 +1,12 @@
-import 'package:bookyourdriveing/main_app.dart';
+import 'package:ehsfocus/main_app.dart';
 
-import 'package:bookyourdriveing/screens/login/login_wrapper.dart';
-import 'package:bookyourdriveing/shared/animation_wrapper.dart';
-import 'package:bookyourdriveing/state/login_bloc/login_bloc.dart';
-import 'package:bookyourdriveing/state/login_bloc/login_state.dart';
+import 'package:ehsfocus/screens/login/login_wrapper.dart';
+import 'package:ehsfocus/shared/animation_wrapper.dart';
 
-import 'package:bookyourdriveing/theme.dart';
+import 'package:ehsfocus/state/login_bloc/login_bloc.dart';
+import 'package:ehsfocus/state/login_bloc/login_state.dart';
+
+import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,14 +16,15 @@ class AuthWrapper extends StatelessWidget {
     return Container(
       color: AppColors.accent,
       child: BlocProvider<LoginBloc>(
-          create: (_) => LoginBloc(),
+          create: (context) => LoginBloc(),
           child: BlocListener<LoginBloc, LoginState>(
-              listener: (BuildContext context, LoginState state) =>
-                  {print(' is login ${state.user.toJson()}')},
+              listener: (BuildContext context, LoginState state) => {},
               child: BlocBuilder<LoginBloc, LoginState>(
-                builder: (context, state) => state.user != null ?
-                      AnimationWrapper(wrappWidget: MainApp()) : 
-                      AnimationWrapper(wrappWidget: LoginWraper()),
+                builder: (context, state) {
+                  return state is LoginState
+                      ? AnimationWrapper(child: MainApp())
+                      : AnimationWrapper(child: LoginWraper());
+                },
               ))),
     );
   }

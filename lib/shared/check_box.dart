@@ -1,9 +1,12 @@
+import 'package:ehsfocus/shared/form_container.dart';
 import 'package:flutter/material.dart';
 
 class MyCheckBox extends StatefulWidget {
-  bool value = false;
-  Function setValue;
-  MyCheckBox({this.value, @required this.setValue});
+  final String label;
+  final bool value;
+  final Function setValue;
+  MyCheckBox({this.value, @required this.setValue, this.label});
+
   @override
   _MyCheckBoxState createState() => _MyCheckBoxState(value);
 }
@@ -18,7 +21,7 @@ class _MyCheckBoxState extends State<MyCheckBox> {
         builder: (BuildContext context, StateSetter setState) {
       return Center(
         child: CheckboxListTile(
-          title: const Text('Animate Slowly'),
+          title: Text(widget.label == null ? 'Do you agree?' : widget.label),
           value: valueIn,
           onChanged: (bool value) {
             widget.setValue(value);
@@ -26,9 +29,54 @@ class _MyCheckBoxState extends State<MyCheckBox> {
               valueIn = value;
             });
           },
-          secondary: const Icon(Icons.hourglass_empty),
+          // secondary: const Icon(Icons.hourglass_empty),
         ),
       );
     });
+  }
+}
+
+class EhsCheckBox extends StatelessWidget {
+  final String label;
+  final bool value;
+  final Function setValue;
+  EhsCheckBox({this.value, @required this.setValue, this.label});
+  @override
+  Widget build(BuildContext context) {
+    // return CheckboxListTile(
+      
+    //   title: Text(label),  
+    //   onChanged: (bool value) { 
+
+    //    setValue(value);
+    //  },
+    //   value: value,
+    //  );
+    
+    
+    
+    return InputContainer(
+      child: Center(
+        child: FlatButton(
+          padding: EdgeInsets.all(0),
+          onPressed: () {
+            setValue(!value);
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(label),
+              Checkbox(
+                value: value,
+                onChanged: (bool value) {
+                  setValue(value);
+                },
+                // secondary: const Icon(Icons.hourglass_empty),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

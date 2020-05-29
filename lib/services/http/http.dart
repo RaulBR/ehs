@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:bookyourdriveing/services/loacal_storage.dart';
+import 'package:ehsfocus/services/loacal_storage.dart';
 import 'package:http/http.dart';
 
 class HttpService {
   final localstorageService = LocalStorageService();
-  String _url = 'http://192.168.0.4:4000';
+  String _url = 'https://ehs-back.herokuapp.com';
+  // String _url = 'http://192.168.0.4:4000';
   bool isDayTime;
   String _token;
 
@@ -16,7 +17,7 @@ class HttpService {
       return handlleDeleteResponce(response: response);
     } catch (e) {
       print('e: $e');
-      // throw (jsonDecode(e));
+      return ' delete error';
     }
   }
 
@@ -24,7 +25,6 @@ class HttpService {
       {String endpint, Map<String, dynamic> jsonValue, bool hasHeadder}) async {
     hasHeadder = hasHeadder == null ? false : hasHeadder;
     dynamic headders = hasHeadder ? await getHeaders() : null;
-    print('endpint: $endpint  token $_token');
     Response response =
         await post('$_url$endpint', body: jsonValue, headers: headders);
     return handlleResponce(response: response);
@@ -47,10 +47,10 @@ class HttpService {
       case 400:
         throw response.body.isNotEmpty
             ? json.decode(response.body)['message']
-            : 'no errorMessage';
+            : StatusList[Status.noErrorMessage];
         break;
       case 401:
-        throw 'Not alowed';
+        throw StatusList[Status.notAllowed];
         break;
       case 500:
         throw '500';
@@ -61,31 +61,57 @@ class HttpService {
   }
 
   String handlleDeleteResponce({Response response}) {
-    if (response.body.isNotEmpty) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-      int statusCode = response.statusCode;
-      print('codeeee: $statusCode');
-      if (statusCode == 200) {
-        return 'succes';
-      }
-
-      if (statusCode == 400) {
-        throw data['message'];
-      }
-      if (statusCode == 401) {
-        throw 'Not alowed';
-      }
+    int statusCode = response.statusCode;
+    switch (statusCode) {
+      case 200:
+        return  StatusList[Status.success];
+        break;
+      case 400:
+        throw response.body.isNotEmpty
+            ? json.decode(response.body)['message']
+            : StatusList[Status.noErrorMessage];
+        break;
+      case 401:
+        throw StatusList[Status.notAllowed];
+        break;
+      case 500:
+        throw StatusList[Status.serverError];
+        break;
+      default:
+        return null;
     }
-    return null;
   }
 
   Future<Map<String, String>> getHeaders() async {
-    if (_token == null) {
+    // if (_token == null) {
       _token = await localstorageService.getToken();
-    }
+    // }
     return {
       // HttpHeaders.contentTypeHeader: "application/json",
       HttpHeaders.authorizationHeader: "$_token",
     };
   }
 }
+
+enum Status {
+  success,
+  notAllowed,
+  noErrorMessage,
+  serverError,
+  error
+}
+
+const Map<Status, String> StatusList = {
+ Status.success: "Success",
+ Status.notAllowed: 'Not alowed',
+ Status.noErrorMessage : 'No errorMessage',
+ Status.serverError: ' Server error'
+
+};
+const Map<Status, int> HttpStatus = {
+ Status.success: 200,
+ Status.notAllowed: 401,
+ Status.error : 400,
+ Status.serverError: 500
+
+};

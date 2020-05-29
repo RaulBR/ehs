@@ -1,8 +1,10 @@
-import 'package:bookyourdriveing/models/employee_model.dart';
-import 'package:bookyourdriveing/shared/check_box.dart';
-import 'package:bookyourdriveing/shared/constants.dart';
-import 'package:bookyourdriveing/state/employee_bloc/employee_bloc.dart';
-import 'package:bookyourdriveing/theme.dart';
+import 'package:ehsfocus/models/employee_model.dart';
+import 'package:ehsfocus/shared/check_box.dart';
+import 'package:ehsfocus/shared/constants.dart';
+import 'package:ehsfocus/shared/datepiker.dart';
+import 'package:ehsfocus/state/employee_bloc/employee_bloc.dart';
+import 'package:ehsfocus/state/employee_bloc/employee_bloc_index.dart';
+import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,13 +19,12 @@ class _EmployeeFormState extends State<EmployeeForm> {
   @override
   Widget build(BuildContext context) {
     Employee _employee = Employee();
-
-    final EmployeeBloc employeeBloc = BlocProvider.of<EmployeeBloc>(context);
     return Scaffold(
         appBar: AppBar(actions: <Widget>[], title: Text('Add employee')),
         body: Container(
-          margin: EdgeInsets.fromLTRB(0, 25, 0, 0),
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+          width: 400,
+          margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           child: Form(
             key: _formKey,
             child: SingleChildScrollView(
@@ -63,24 +64,16 @@ class _EmployeeFormState extends State<EmployeeForm> {
                   TextFormField(
                     decoration: textInputDecoration.copyWith(
                         labelText: 'Phone numbare'),
+                         keyboardType: TextInputType.number,
                   ),
-                  RaisedButton.icon(
-                      onPressed: () {
-                        showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(2001),
-                                lastDate: DateTime(2222))
-                            .then((date) => {
-                                  setState(() => {
-                                        _dateTime = date,
-                                      })
-                                });
-                      },
-                      icon: Icon(Icons.calendar_today),
-                      label: Text(_dateTime != null
-                          ? _dateTime.toString()
-                          : 'BirthDay')),
+                  DatePiker(
+                      color: AppColors.icons,
+                      inputDate: 'data',
+                      label: 'Date piker',
+                      getDate: (data) {
+                        print(data.toString());
+                        _dateTime = data;
+                      }),
                   SizedBox(height: 20.0),
                   MyCheckBox(
                       value: false,
@@ -101,9 +94,10 @@ class _EmployeeFormState extends State<EmployeeForm> {
                 elevation: 0,
                 onPressed: () {
                   _employee.setBirthday = _dateTime.toString();
-                  employeeBloc.setEmployee(employee: _employee);
+                  BlocProvider.of<EmployeeBloc>(context)
+                      .setEmployee(employee: _employee);
+                      Navigator.pop(context);
                 },
-                color: AppColors.primary,
                 child:
                     Text('register', style: TextStyle(color: AppColors.icons)),
               ),
@@ -112,11 +106,17 @@ class _EmployeeFormState extends State<EmployeeForm> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                color: AppColors.primary,
                 child: Text('cancel', style: TextStyle(color: AppColors.icons)),
               ),
             ],
           ),
-        ));
+        )
+        
+        );
+  }
+
+  void dispose() {
+    print('dispose form');
+    super.dispose();
   }
 }

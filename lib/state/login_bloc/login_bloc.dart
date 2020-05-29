@@ -1,36 +1,48 @@
 import 'package:bloc/bloc.dart';
-import 'package:bookyourdriveing/models/user.model.dart';
-import 'package:bookyourdriveing/services/http/http_login.dart';
-import 'package:bookyourdriveing/services/loacal_storage.dart';
+import 'package:ehsfocus/models/user.model.dart';
+import 'package:ehsfocus/services/http/http_login.dart';
+import 'package:ehsfocus/services/loacal_storage.dart';
 
-import 'package:bookyourdriveing/state/login_bloc/login_event.dart';
-import 'package:bookyourdriveing/state/login_bloc/login_state.dart';
+import 'package:ehsfocus/state/login_bloc/login_event.dart';
+import 'package:ehsfocus/state/login_bloc/login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final httpService = HttpLoginService();
-  final _localStorageService =  LocalStorageService();
+  final _localStorageService = LocalStorageService();
   @override
   LoginState get initialState => LoginState.initial();
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
     dynamic data;
-    yield LoadingState();
     switch (event.runtimeType) {
-      case CheckSinginEvent: 
-      data = await httpService.isMe();
-      print('data after $data');
-      if (data == null) {
-          yield LoginState(user: null);
-      }
-      print(data);
-      yield LoginState(user:data);
-      break;
-      case SignInEvent:
-        data = await httpService.login(event.user);
-         _localStorageService.setToken(data.token);
+      case CheckSinginEvent:
+       yield AppLoadingState();
+        data = await httpService.isMe();
+        if (data == null) {
+          yield LoginState();
+          break;
+        }
+        if (data.email == "null" || data.email == null) {
+          yield LoginState();
+          break;
+        }
+        print('success ${data.toJson()}');
         yield LoginState(user: data);
         break;
+
+      case SignInEvent:
+       yield LoadingState();
+      try {
+        data = await httpService.login(event.user);
+        print(data.token);
+        await _localStorageService.setToken(data.token);
+        yield LoginState(user: data);
+      } catch(e) {
+          yield LoginError(error:'eroare la login');
+      }
+        break;
+
       case SignUpEvent:
         try {
           data = await httpService.signUp(event.user);
@@ -42,25 +54,27 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         } catch (e) {}
         break;
 
-        case SignOutEvent:
-           data = await httpService.signOut();
-            _localStorageService.removeToken();
-          
+      case SignOutEvent:
+        data = await httpService.signOut();
+        await _localStorageService.removeToken();
+        print('data');
+        yield LoginState();
         break;
+
       default:
         yield LoginState(user: null);
     }
   }
 
   void onLogIn(User user) {
-    if(user == null) {
-      return;
-    }
+    // if (user == null) {
+    //   return;
+    // }
     add(SignInEvent(user: user));
   }
 
   void onSignUp(User user) {
-     if(user == null) {
+    if (user == null) {
       return;
     }
     add(SignUpEvent(user: user));
@@ -69,6 +83,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   void amILogendIn() {
     add(CheckSinginEvent());
   }
+
   void onLogout() {
     add(SignOutEvent());
   }

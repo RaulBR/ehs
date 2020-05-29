@@ -1,4 +1,4 @@
-import 'package:bookyourdriveing/theme.dart';
+import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -37,5 +37,18 @@ class _Loading2State extends State<Loading2> {
   @override
   Widget build(BuildContext context) {
      return Loading();
+  }
+}
+
+
+class LoadingSimbol extends StatelessWidget {
+  final double size;
+  LoadingSimbol({this.size});
+  @override
+  Widget build(BuildContext context) {
+    return  SpinKitFoldingCube(
+          color: AppColors.icons,
+          size: size != null ? size : 50.0,
+        );
   }
 }

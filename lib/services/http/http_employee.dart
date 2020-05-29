@@ -1,24 +1,35 @@
 import 'dart:convert';
-import 'package:bookyourdriveing/models/employee_model.dart';
-import 'package:bookyourdriveing/services/http/http.dart';
+import 'package:ehsfocus/models/employee_model.dart';
+import 'package:ehsfocus/services/http/http.dart';
 
 class HttpEmployeeService extends HttpService {
+  String employeeUrl = '/api/employee/';
   getAllEmployees() async {
-    String data = await getRequest(endpint: '/api/employee', hasHeadder: true);
+    String data = await getRequest(endpint: employeeUrl, hasHeadder: true);
     return (json.decode(data) as List)
         .map((i) => Employee.fromJson(i))
         .toList();
   }
 
-  setEmployee(employee) async {
-
-    String data = await getRequest(endpint: '/api/employee', hasHeadder: true);
+  setEmployee(Employee employee) async {
+    String data = await postRequest(endpint: employeeUrl, jsonValue: employee.toJson() ,hasHeadder: true);
     return Employee.fromJson(json.decode(data));
   }
 
-  // Future<dynamic> signUp(Employee employee) async {
-  //   return postTeamplate('/api/user', employee);
-  // }
+  deleteEmployee(Employee employee) async {
+    if(employee == null) {
+      return;
+    }
+
+    if(employee.id == null) {
+      return;
+    }
+
+    String data = await deleteRequest(endpint: '$employeeUrl${employee.id}');
+    print(data);
+    return data;
+  }
+
 
   // Future<dynamic> signOut() async {
   //   return postTeamplate('/api/user/logout', null);

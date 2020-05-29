@@ -1,4 +1,4 @@
-import 'package:bookyourdriveing/models/employee_model.dart';
+import 'package:ehsfocus/models/employee_model.dart';
 
 class EmployeeListState {
   List<Employee> employees;
@@ -6,7 +6,7 @@ class EmployeeListState {
   factory EmployeeListState.initial() => EmployeeListState(employees: null);
 }
 
-class LoadingListState extends EmployeeListState{
+class LoadingListState extends EmployeeListState {
   bool isLoading = false;
   LoadingListState() {
     isLoading = !isLoading;

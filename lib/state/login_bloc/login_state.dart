@@ -1,4 +1,4 @@
-import 'package:bookyourdriveing/models/user.model.dart';
+import 'package:ehsfocus/models/user.model.dart';
 
 class LoginState {
   User user;
@@ -12,7 +12,11 @@ class LoadingState extends LoginState {
     isLoading = !isLoading;
   }
 }
+class AppLoadingState extends LoginState {
 
+  AppLoadingState();
+    
+}
 class LoginError extends LoginState {
   String error;
 
