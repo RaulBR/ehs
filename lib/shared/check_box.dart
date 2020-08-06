@@ -1,4 +1,4 @@
-import 'package:ehsfocus/shared/form_container.dart';
+import 'package:ehsfocus/shared/form_eleements/form_container.dart';
 import 'package:flutter/material.dart';
 
 class MyCheckBox extends StatefulWidget {
@@ -44,17 +44,15 @@ class EhsCheckBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // return CheckboxListTile(
-      
-    //   title: Text(label),  
-    //   onChanged: (bool value) { 
+
+    //   title: Text(label),
+    //   onChanged: (bool value) {
 
     //    setValue(value);
     //  },
     //   value: value,
     //  );
-    
-    
-    
+
     return InputContainer(
       child: Center(
         child: FlatButton(

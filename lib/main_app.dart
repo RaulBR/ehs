@@ -1,7 +1,7 @@
 import 'package:ehsfocus/app_localizations.dart';
 import 'package:ehsfocus/custom_routs.dart';
-import 'package:ehsfocus/state/audit_bloc/audit_bloc.dart';
-import 'package:ehsfocus/state/employee_bloc/employee_bloc.dart';
+import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc.dart';
+import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
 import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,8 +12,8 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (_) => EmployeeBloc(),
+        BlocProvider<EmployeeBloc>(
+          create: (contect) => EmployeeBloc(),
         ),
         BlocProvider(
           create: (_) => AuditBloc(),

@@ -17,7 +17,7 @@ class User  {
   }
 
   User.fromJson(Map<String, dynamic> parsedJson) {
-    id = parsedJson['_id'].toString();
+    id = parsedJson['id'].toString();
     email = parsedJson['email'].toString();
     token = parsedJson['token'].toString();
   }

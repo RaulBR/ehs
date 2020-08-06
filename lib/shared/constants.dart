@@ -5,21 +5,35 @@ const textInputDecoration = InputDecoration(
   fillColor: AppColors.field,
   filled: true,
   enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: AppColors.field, width: 2)),
+      borderSide: BorderSide(color: AppColors.textSecundart, width: 1)),
   focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: AppColors.accent, width: 2)),
 );
 
+const textAreaStyle = InputDecoration(
+  fillColor: AppColors.field,
+  filled: true,
+  // enabledBorder: UnderlineInputBorder(
+  //     borderSide: BorderSide(color: AppColors.field, width: 1)),
+  // focusedBorder: UnderlineInputBorder(
+  //     borderSide: BorderSide(color:AppColors.field, width: 2)),
+);
+
 const labelFomat = TextStyle(fontSize: 12, color: AppColors.textSecundart);
+const normallabelFomat = TextStyle(
+    fontSize: 17,
+    color: AppColors.textSecundart,
+    fontWeight: FontWeight.normal);
+const textFomat = TextStyle(fontSize: 17, color: AppColors.textPrimery);
 
 const auditList = EdgeInsets.fromLTRB(12, 10, 12, 0);
 const labelPadding = EdgeInsets.only(left: 10, right: 10, top: 10);
 
 @immutable
-class Lables {
+class Labels {
   static String ok = 'ok';
   static String ehsTitle = 'EHS Focus';
-  static String safty = 'Audit de Siguranta Muncii';
+  static String safty = 'Audit EHS';
   static String enviroment = 'Audit de Mediu';
   static String helth = 'Audit de Sanatatea Muncii';
   static String incident = 'Incident';
@@ -56,46 +70,66 @@ class Lables {
   static String addComment = 'Adauga Comentariu';
   static String comment = 'Comentariu';
   static String scan = 'Scaneaza';
+  static String addCorectiveAcction = 'Adauga Actiune corectiva';
+  static String goTocorectiveAcction = 'Actiunea corectiva';
+  static String backToAspects = 'Inapoi la aspecte';
+  static String aspects = 'aspecte';
+  static String aspect = 'un aspect';
+  static String delete = 'Sterge';
+  static String send = 'Trimite';
+  static String audits = "Auditele mele";
+  static String mainPage = 'Pagina Principala';
+  static String settings = 'Setari';
+  static String statistics = 'Statistici';
+  static String aspectType = 'Tip audit';
+  static String myData = 'Contul Meu';
+  static String noData = 'Nu sunt date';
+  static String close = 'Inchide';
+  static String area = 'Area';
+  static String clear = 'Sterge';
 }
 
 Map<String, String> dinamicTitles = {
   'ok': 'ok',
-  'ehsTitle': Lables.ehsTitle,
-  'safty': Lables.safty,
-  'enviroment': Lables.enviroment,
-  'helth': Lables.helth,
-  'incident': Lables.incident,
-  'areaId': Lables.areaId,
-  'qrScannerMesasge': Lables.qrScannerMesasge,
-  'positiveAcctionMessage': Lables.positiveAcctionMessage,
-  'negativeAcctionMessage': Lables.negativeAcctionMessage,
-  'insertPositive': Lables.insertPositive,
-  'insertNegative': Lables.insertNegative,
-  'corectiveAcction': Lables.corectiveAcction,
-  'insertcorectiveAcction': Lables.insertcorectiveAcction,
-  'responsibal': Lables.responsibal,
-  'area1': Lables.area1,
-  'area2': Lables.area2,
-  'scanButton': Lables.scanButton,
-  'pictureButton': Lables.pictureButton,
-  'category': Lables.category,
-  'addAudit': Lables.addAudit,
-  'email': Lables.email,
-  'resable': Lables.responsabile,
-  'passwoard': Lables.passwoard,
-  'add': Lables.add,
+  'ehsTitle': Labels.ehsTitle,
+  'safty': Labels.safty,
+  'enviroment': Labels.enviroment,
+  'helth': Labels.helth,
+  'incident': Labels.incident,
+  'areaId': Labels.areaId,
+  'qrScannerMesasge': Labels.qrScannerMesasge,
+  'positiveAcctionMessage': Labels.positiveAcctionMessage,
+  'negativeAcctionMessage': Labels.negativeAcctionMessage,
+  'insertPositive': Labels.insertPositive,
+  'insertNegative': Labels.insertNegative,
+  'corectiveAcction': Labels.corectiveAcction,
+  'insertcorectiveAcction': Labels.insertcorectiveAcction,
+  'responsibal': Labels.responsibal,
+  'area1': Labels.area1,
+  'area2': Labels.area2,
+  'scanButton': Labels.scanButton,
+  'pictureButton': Labels.pictureButton,
+  'category': Labels.category,
+  'addAudit': Labels.addAudit,
+  'email': Labels.email,
+  'resable': Labels.responsabile,
+  'passwoard': Labels.passwoard,
+  'audits': Labels.audits,
+  'add': Labels.add,
 };
 
 @immutable
 class RoutPath {
   static const homeRout = '/';
   static const loadingRout = '/loading';
-  static const safetyRout = '/safery';
+  static const safetyRout = '/ehs';
   static const employeeRout = '/employee';
   static const statsRout = '/stats';
   static const helthRout = '/sanatate';
   static const enviromentRout = '/mediu';
   static const incidentRout = '/incident';
+  static const auditsRoute = '/audits';
+  static const categoryRoute = '/category';
 }
 
 class CurrentPath {
@@ -107,22 +141,28 @@ class CurrentPath {
         'statsRout': RoutPath.statsRout,
         'helth': RoutPath.helthRout,
         'enviroment': RoutPath.enviromentRout,
-        'incident': RoutPath.incidentRout
+        'incident': RoutPath.incidentRout,
+        'audits': RoutPath.auditsRoute
       };
-}
-
-Map<String, String> routPathList() {
-  return {
-    'homeRout': '/',
-    'loadingRout': '/loading',
-    'safty': '/safery',
-    'employeeRout': '/employee',
-    'statsRout': '/stats',
-    'helthRout': '/sanatate',
-    'helth': '/audit'
-  };
+  routPathList() => {
+        'homeRout': '/',
+        'loadingRout': '/loading',
+        'safty': '/safery',
+        'employeeRout': '/employee',
+        'statsRout': '/stats',
+        'helthRout': '/sanatate',
+        'helth': '/audit'
+      };
 }
 
 class PageTitles {
   String ok = 'ok';
 }
+
+enum FooterStates { delete, save, send }
+
+Map<FooterStates, String> footerLagels = {
+  FooterStates.delete: Labels.delete,
+  FooterStates.save: Labels.save,
+  FooterStates.send: Labels.send,
+};

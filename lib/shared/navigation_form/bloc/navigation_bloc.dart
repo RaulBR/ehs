@@ -5,10 +5,7 @@ part 'navigation_state.dart';
 
 class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
   final int pages;
-  NavigationBloc(this.pages);
-
-  @override
-  NavigationState get initialState => NavigationInitial();
+  NavigationBloc(this.pages) : super(NavigationInitial.initial());
 
   @override
   Stream<NavigationState> mapEventToState(
@@ -30,7 +27,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
         currentPage = event.currnetPage;
         index = currentPage - 1;
         if (index < 0) {
-           yield NavigateState(0);
+          yield NavigateState(0);
           break;
         }
         yield NavigateState(index);
@@ -38,12 +35,12 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
       default:
     }
   }
-   void navigate(int direction, int curentPage) {
-     if(direction == 1){
-       add(NavigateRightEvent(curentPage));
-       return;
-     }
-      add(NavigateLeftEvent(curentPage));
-  
+
+  void navigate(int direction, int curentPage) {
+    if (direction == 1) {
+      add(NavigateRightEvent(curentPage));
+      return;
+    }
+    add(NavigateLeftEvent(curentPage));
   }
 }

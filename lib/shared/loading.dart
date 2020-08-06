@@ -17,38 +17,34 @@ class Loading extends StatelessWidget {
   }
 }
 
-
 class Loading2 extends StatefulWidget {
-
   @override
   _Loading2State createState() => _Loading2State();
 }
 
 class _Loading2State extends State<Loading2> {
-
-    void initState() {
+  void initState() {
     super.initState();
-        Future.delayed(const Duration(seconds: 2), () {
-        Navigator.pop(context);
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.pop(context);
       // Here you can write your code for open new view
     });
-
   }
+
   @override
   Widget build(BuildContext context) {
-     return Loading();
+    return Loading();
   }
 }
-
 
 class LoadingSimbol extends StatelessWidget {
   final double size;
   LoadingSimbol({this.size});
   @override
   Widget build(BuildContext context) {
-    return  SpinKitFoldingCube(
-          color: AppColors.icons,
-          size: size != null ? size : 50.0,
-        );
+    return SpinKitFoldingCube(
+      color: AppColors.icons,
+      size: size != null ? size : 50.0,
+    );
   }
 }

@@ -7,8 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class EhsNavigatorWidget extends StatelessWidget {
   final List<Widget> displayWidgets;
   final int pageStart;
-
-  const EhsNavigatorWidget({Key key, this.displayWidgets, this.pageStart})
+  final Function action;
+  const EhsNavigatorWidget(
+      {Key key, this.displayWidgets, this.pageStart, this.action})
       : super(key: key);
 
   @override
@@ -44,6 +45,7 @@ class EhsNavigatorWidget extends StatelessWidget {
               bottomNavigationBar: BottomGroupButtons(
                 isBackHiden: page == 0,
                 navigate: (value) {
+                  action(_controller.page.toInt());
                   BlocProvider.of<NavigationBloc>(context)
                       .navigate(value, _controller.page.toInt());
                 },

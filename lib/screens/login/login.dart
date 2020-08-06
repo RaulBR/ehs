@@ -1,9 +1,11 @@
 import 'package:ehsfocus/models/user.model.dart';
+import 'package:ehsfocus/screens/login/login_bloc/login_bloc.dart';
+import 'package:ehsfocus/screens/login/login_bloc/login_state.dart';
 import 'package:ehsfocus/services/loacal_storage.dart';
 import 'package:ehsfocus/shared/constants.dart';
-import 'package:ehsfocus/shared/form_container.dart';
+import 'package:ehsfocus/shared/form_eleements/form_container.dart';
 import 'package:ehsfocus/shared/loading.dart';
-import 'package:ehsfocus/state/login_bloc/login.dart';
+
 import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,9 +25,6 @@ class _LoginFormState extends State<LoginForm> {
   void initState() {
     super.initState();
     _login = BlocProvider.of<LoginBloc>(context);
-    if (localStorageService.getToken() != null) {
-      _login.amILogendIn();
-    }
     _login.listen((data) {
       if (data is LoginError) {
         error = 'troble signing in';
@@ -33,11 +32,11 @@ class _LoginFormState extends State<LoginForm> {
     });
   }
 
-  void dispose() {
-    print('dispose login');
-    // _login.close();
-    super.dispose();
-  }
+  // void dispose() {
+  //   print('dispose login');
+  //   // _login.close();
+  //   super.dispose();
+  // }
 
   final _formKey = GlobalKey<FormState>();
   @override

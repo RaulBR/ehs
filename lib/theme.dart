@@ -8,12 +8,15 @@ final ThemeData companyThemeData = new ThemeData(
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     backgroundColor: AppColors.primary,
     selectedItemColor: Colors.red,
-      
-    
   ),
   // buttonBarTheme: ButtonBarThemeData(
   //   buttonAlignedDropdown: companyThemeData
   // ),
+  
+  bottomAppBarTheme: BottomAppBarTheme(
+    color: AppColors.primary,
+  ),
+
   buttonTheme: ButtonThemeData(
     buttonColor: AppColors.primary,
   ),
@@ -21,7 +24,9 @@ final ThemeData companyThemeData = new ThemeData(
     foregroundColor: AppColors.icons,
     backgroundColor: AppColors.primary,
   ),
-  iconTheme: IconThemeData(color: AppColors.icons),
+  iconTheme: IconThemeData(color: AppColors.icons,),
+  primaryIconTheme:IconThemeData(color: AppColors.icons,) ,
+  accentIconTheme: IconThemeData(color: AppColors.icons,) ,
   colorScheme: ColorScheme.light(primary: AppColors.primary),
 );
 
@@ -40,9 +45,6 @@ class AppColors {
     900: const Color(0xFF00493c),
   };
 
-
-
-
   static const Map<int, Color> tfPiker = const <int, Color>{
     0: const Color(0xFFFFEC19),
     1: const Color(0xF7FFC100),
@@ -51,7 +53,6 @@ class AppColors {
     4: const Color(0xFFF6412D),
     5: const Color(0xFFFF0000),
   };
-
 
   static const Map<int, Color> greqween = const <int, Color>{
     50: const Color(0xFFe8eaf6),

@@ -5,7 +5,8 @@ class NavigateToNextPage extends StatelessWidget {
   final String label;
   final Function onPressed;
 
-  const NavigateToNextPage({Key key, this.onPressed, this.label}) : super(key: key);
+  const NavigateToNextPage({Key key, this.onPressed, this.label})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class NavigateToNextPage extends StatelessWidget {
           onPressed();
         },
         child: Text(
-          'Adauga Actiune corectiva',
+          label,
           style: TextStyle(color: AppColors.fieldInFocus),
         ),
       ),

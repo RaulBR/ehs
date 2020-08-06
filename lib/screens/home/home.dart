@@ -17,7 +17,7 @@ class Home extends StatelessWidget {
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
                     centerTitle: true,
-                    title: Text(Lables.ehsTitle,
+                    title: Text(Labels.ehsTitle,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16.0,

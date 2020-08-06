@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -7,8 +5,10 @@ class GennericListElement extends StatelessWidget {
   final String title;
   final String subtitle;
   final Function isSelected;
-  final File file;
-  GennericListElement({this.title, this.subtitle, this.isSelected, this.file});
+  final Function deleted;
+  final String simbol;
+  GennericListElement(
+      {this.title, this.subtitle, this.isSelected, this.simbol, this.deleted});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,19 +20,22 @@ class GennericListElement extends StatelessWidget {
           onTap: () async {
             isSelected();
           },
-          leading: CircleAvatar(
-            radius: 25,
-            backgroundColor: AppColors.lightprimary,
-            child: file != null
-                ? Container(
-                    width: 120.0,
-                    height: 120.0,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            fit: BoxFit.fill, image: FileImage(file))))
-                : Text('P'),
-          ),
+          leading: simbol == null
+              ? null
+              : CircleAvatar(
+                  radius: 25,
+                  backgroundColor: AppColors.lightprimary,
+                  child: Text(simbol ?? 'P'),
+                ),
+          trailing: deleted == null
+              ? null
+              : FlatButton.icon(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    deleted();
+                  },
+                  label: null,
+                ),
           title: Text(title == null ? 'no data' : title),
           subtitle: Text(subtitle == null ? '' : subtitle),
           // trailing: FlatButton(

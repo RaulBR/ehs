@@ -6,14 +6,14 @@ class HomeCard extends StatelessWidget {
   final String title;
   final Function acction;
   final Color color;
-  HomeCard({this.icon, this.title, this.acction ,this.color});
+  HomeCard({this.icon, this.title, this.acction, this.color});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 120,
       width: 150,
       child: Card(
-        color: color == null ?  AppColors.primary : color,
+        color: color == null ? AppColors.primary : color,
         child: FlatButton(
           onPressed: () {
             acction();
@@ -23,7 +23,8 @@ class HomeCard extends StatelessWidget {
             children: <Widget>[
               Center(
                   child: Icon(
-                   IconData(icon != null ? icon : 59645, fontFamily: 'MaterialIcons'),
+                IconData(icon != null ? icon : 59645,
+                    fontFamily: 'MaterialIcons'),
                 size: 40,
                 color: AppColors.icons,
               )),

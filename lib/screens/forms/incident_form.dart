@@ -1,8 +1,8 @@
-import 'package:ehsfocus/models/area_model.dart';
+import 'package:ehsfocus/models/audit_head_modal.dart';
 import 'package:ehsfocus/models/aspects_model.dart';
-import 'package:ehsfocus/screens/aspects/photo_comment_form.dart';
-import 'package:ehsfocus/screens/forms/area_form.dart';
-import 'package:ehsfocus/screens/forms/shared_form_components/audit_list-element.dart';
+import 'package:ehsfocus/screens/forms/area/area_form.dart';
+import 'package:ehsfocus/screens/forms/aspects/photo_comment_form.dart';
+import 'package:ehsfocus/screens/forms/shared_form_components/audit_list_element.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/ehs_slider.dart';
 import 'package:ehsfocus/shared/navigation_form/navigation_wrapper.dart';
@@ -20,19 +20,16 @@ class _IncidentFormState extends State<IncidentForm> {
   List<Aspect> _negativeAspects = [];
   List<String> inputList = ['TF1', 'TF2', 'TF3', 'TF4', 'TF5'];
   int stepValue = 0;
-  Area area;
+  AuditHead area;
   String test;
 
   Widget getNav(int number) {
     return EhsNavigatorWidget(
       displayWidgets: [
-        AreaFromWidget(
-            title: Lables.areaId,
-            order: 1),
+        AreaFromWidget(title: Labels.areaId, order: 1),
         PhotoCommentForm(
-            isfooterDisabled: true,
             order: 2,
-            title: Lables.incidentDocumentation,
+            title: Labels.incidentDocumentation,
             hasChanges: (data) {
               setState(() {
                 _negativeAspects.add(data);
@@ -76,7 +73,7 @@ class _IncidentFormState extends State<IncidentForm> {
       ),
       body: ListView(children: <Widget>[
         AuditListElement(
-          title: Lables.areaId,
+          title: Labels.areaId,
           order: 1,
           subtitle: test,
           isDone: test != null,
@@ -85,7 +82,7 @@ class _IncidentFormState extends State<IncidentForm> {
           },
         ),
         DropDownAuditListElement(
-          title: Lables.incidentDocumentation,
+          title: Labels.incidentDocumentation,
           order: 2,
           isDone: _negativeAspects.length != 0,
           aspects: _negativeAspects,
@@ -94,7 +91,7 @@ class _IncidentFormState extends State<IncidentForm> {
           },
         ),
         AuditListElement(
-          title: Lables.selectGravitty,
+          title: Labels.selectGravitty,
           order: 3,
           subtitle: test,
           isDone: test != null,
@@ -109,7 +106,6 @@ class _IncidentFormState extends State<IncidentForm> {
           step: stepValue,
           getValue: (value) {
             setState(() {
-              print(value);
               stepValue = value.toInt();
             });
           },
@@ -122,7 +118,7 @@ class _IncidentFormState extends State<IncidentForm> {
               child: SizedBox(
                   width: double.infinity,
                   child: FlatButton(
-                    child: Text(Lables.save),
+                    child: Text(Labels.save),
                     onPressed: () {},
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0)),

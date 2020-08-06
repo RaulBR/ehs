@@ -10,13 +10,12 @@ class LocalStorageService {
   }
 
   Future getToken() async {
-    print('get token');
     return await storage.read(key: 'jwt');
   }
-    Future removeToken() async {
+
+  Future removeToken() async {
     return await storage.delete(key: 'jwt');
   }
-
 
   // _readWithKey(key) {
   //   return storage.read(key: key);
