@@ -14,36 +14,18 @@ class AuditPhotos extends AspectState {
   AuditPhotos(this.photos);
 }
 
-class DataState extends AspectState {}
+class AspectToHandleState extends AspectState {
+  final List<Aspect> aspects;
+  AspectToHandleState(this.aspects);
+}
 
 class LoadingState extends AspectState {}
 
-class AspectTypes extends AspectState {
-  final List<String> aspectTypes;
-  AspectTypes({
-    this.aspectTypes,
-  });
-}
-
-class CategoryTypes extends AspectState {
-  final List<String> aspectTypes;
-  CategoryTypes({
-    this.aspectTypes,
-  });
-}
-
 class PhotoLoadingState extends AspectState {}
 
-class ErrorState extends AspectState {}
-
-class UpdateAspectState extends AspectState {
-  final Aspect aspect;
-  UpdateAspectState({this.aspect});
-}
-// maybe same as add
-
-class UpdatePhotoState extends AspectState {
-  final List<AspectPhoto> photos;
-
-  UpdatePhotoState(this.photos);
+class AspectError extends AspectState {
+  final dynamic error;
+  AspectError({
+    this.error,
+  });
 }

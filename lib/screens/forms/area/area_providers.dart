@@ -15,7 +15,7 @@ class AreaDependencies extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AreaBloc>(
-          create: (_) => AreaBloc(null),
+          create: (_) => AreaBloc(),
         ),
         BlocProvider<CategoryBloc>(
           create: (_) => CategoryBloc(),

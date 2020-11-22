@@ -5,6 +5,7 @@ final ThemeData companyThemeData = new ThemeData(
   accentColor: AppColors.accent,
   cardColor: AppColors.icons,
   buttonColor: AppColors.primary,
+
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     backgroundColor: AppColors.primary,
     selectedItemColor: Colors.red,
@@ -12,7 +13,7 @@ final ThemeData companyThemeData = new ThemeData(
   // buttonBarTheme: ButtonBarThemeData(
   //   buttonAlignedDropdown: companyThemeData
   // ),
-  
+
   bottomAppBarTheme: BottomAppBarTheme(
     color: AppColors.primary,
   ),
@@ -24,9 +25,15 @@ final ThemeData companyThemeData = new ThemeData(
     foregroundColor: AppColors.icons,
     backgroundColor: AppColors.primary,
   ),
-  iconTheme: IconThemeData(color: AppColors.icons,),
-  primaryIconTheme:IconThemeData(color: AppColors.icons,) ,
-  accentIconTheme: IconThemeData(color: AppColors.icons,) ,
+  iconTheme: IconThemeData(
+    color: AppColors.icons,
+  ),
+  primaryIconTheme: IconThemeData(
+    color: AppColors.icons,
+  ),
+  accentIconTheme: IconThemeData(
+    color: AppColors.icons,
+  ),
   colorScheme: ColorScheme.light(primary: AppColors.primary),
 );
 

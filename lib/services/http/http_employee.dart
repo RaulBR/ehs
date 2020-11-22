@@ -20,7 +20,9 @@ class HttpEmployeeService extends HttpService {
 
   setEmployee(Employee employee) async {
     String data = await postRequest(
-        endpint: employeeUrl, jsonValue: employee.toJson(), hasHeadder: true);
+        endpint: employeeUrl,
+        jsonValue: json.encode(employee),
+        hasHeadder: true);
     return Employee.fromJson(json.decode(data));
   }
 
@@ -37,6 +39,13 @@ class HttpEmployeeService extends HttpService {
     return data;
   }
 
+  deleteEmployees(Employee employee) async {
+    String data = await postRequest(
+        endpint: '$employeeUrl/delete',
+        jsonValue: json.encode(employee),
+        hasHeadder: true);
+    return Employee.fromJson(json.decode(data));
+  }
   // Future<dynamic> signOut() async {
   //   return postTeamplate('/api/user/logout', null);
   // }

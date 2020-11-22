@@ -5,10 +5,10 @@ import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SideMenuHeader extends StatelessWidget {
+class SideMenuHeaderContent extends StatelessWidget {
   final Employee employee;
   final String appTtitle;
-  const SideMenuHeader({Key key, this.employee, this.appTtitle})
+  const SideMenuHeaderContent({Key key, this.employee, this.appTtitle})
       : super(key: key);
   @override
   Widget build(BuildContext context) {

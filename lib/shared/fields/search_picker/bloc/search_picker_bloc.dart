@@ -1,7 +1,6 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:ehsfocus/models/drop_down_model.dart';
+import 'package:ehsfocus/models/generic_list_model.dart';
 import 'package:meta/meta.dart';
 part 'search_picker_event.dart';
 part 'search_picker_state.dart';
@@ -58,27 +57,30 @@ class SearchPickerBloc extends Bloc<SearchPickerEvent, SearchPickerState> {
   }
 
   void loadFormObjectList(List<dynamic> list, {String id, String type}) {
-    List<DropDown> listElements = mapFrom(list, id: id, type: type);
+    List<GenericListObject> listElements = mapFrom(list, id: id, type: type);
     add(SetAll(data: listElements));
   }
 
   void loadList(
-    List<DropDown> list,
+    List<GenericListObject> list,
   ) {
     add(SetAll(data: list ?? []));
   }
 
-  List<DropDown> mapFrom(List<dynamic> list, {String id, String type}) {
+  List<GenericListObject> mapFrom(List<dynamic> list,
+      {String id, String type}) {
     if (list == null) {
       return [];
     }
     id = id ?? 'id';
     type = type ?? 'type';
-    return list.map((e) => DropDown(id: e[id], type: e[type])).toList();
+    return list
+        .map((e) => GenericListObject(id: e[id], title: e[type]))
+        .toList();
   }
 
-  List<DropDown> mapFromString(List<dynamic> list) {
+  List<GenericListObject> mapFromString(List<dynamic> list) {
     int i = 0;
-    return list.map((e) => DropDown(id: '${i++}', type: e)).toList();
+    return list.map((e) => GenericListObject(id: '${i++}', title: e)).toList();
   }
 }

@@ -36,9 +36,40 @@ class HttpAuditService extends HttpService {
     return result.map((i) => Audit.fromJson(i)).toList();
   }
 
+  getAuditsToApprove() async {
+    String data =
+        await getRequest(endpint: '/auditsToApprove', hasHeadder: true);
+    dynamic result = (json.decode(data) as List) ?? [];
+    if (result.length == 0) {
+      return [];
+    }
+
+    List<dynamic> auditsList = result.map((i) => Aspect.fromJson(i)).toList();
+    return List<Aspect>.from(auditsList);
+  }
+
+  getAuditsToFix() async {
+    String data = await getRequest(endpint: '/auditsToFix', hasHeadder: true);
+    dynamic result = (json.decode(data) as List) ?? [];
+    if (result.length == 0) {
+      return [];
+    }
+
+    List<dynamic> auditsList = result.map((i) => Aspect.fromJson(i)).toList();
+    return List<Aspect>.from(auditsList);
+  }
+
   setAudit(AuditHead auditin) async {
     dynamic data = await postRequest(
         endpint: '/audit', jsonValue: jsonEncode(auditin), hasHeadder: true);
+    return AuditHead.fromJson(json.decode(data));
+  }
+
+  submitAudit(AuditHead auditin) async {
+    dynamic data = await postRequest(
+        endpint: '/submitAudit',
+        jsonValue: jsonEncode(auditin),
+        hasHeadder: true);
     return json.decode(data);
   }
 
@@ -47,6 +78,33 @@ class HttpAuditService extends HttpService {
         endpint: '/aspect', jsonValue: jsonEncode(auditin), hasHeadder: true);
     dynamic result = json.decode(data);
     return AuditRequest.fromJson(result);
+  }
+
+  rejectAspect(Aspect aspect) async {
+    dynamic data = await postRequest(
+        endpint: '/aspect/reject',
+        jsonValue: jsonEncode(aspect),
+        hasHeadder: true);
+    dynamic result = json.decode(data);
+    return Aspect.fromJson(result);
+  }
+
+  resolveAspect(Aspect aspect) async {
+    dynamic data = await postRequest(
+        endpint: '/aspect/resolve',
+        jsonValue: jsonEncode(aspect),
+        hasHeadder: true);
+    dynamic result = json.decode(data);
+    return Aspect.fromJson(result);
+  }
+
+  acceptAspect(Aspect aspect) async {
+    dynamic data = await postRequest(
+        endpint: '/aspect/accept',
+        jsonValue: jsonEncode(aspect),
+        hasHeadder: true);
+    dynamic result = json.decode(data);
+    return Aspect.fromJson(result);
   }
 
   Future<dynamic> deleteAudit(String id) async {

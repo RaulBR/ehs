@@ -1,3 +1,5 @@
+import 'package:ehsfocus/models/generic_list_model.dart';
+import 'package:ehsfocus/shared/ehs_generic_list.dart';
 import 'package:ehsfocus/shared/form_eleements/form_footer.dart';
 import 'package:flutter/material.dart';
 import 'package:ehsfocus/shared/constants.dart';
@@ -5,16 +7,24 @@ import 'package:ehsfocus/shared/constants.dart';
 class SearchPageWrapper extends StatefulWidget {
   final String title;
   final String searchLabel;
-  final Widget child;
+  final List<GenericListObject> listObjects;
+  final Widget customListWidget;
   final Widget addForm;
   final Function search;
+  final Function deleted;
+  final Function selected;
+  final Function add;
   const SearchPageWrapper({
     Key key,
     this.title,
-    this.child,
     this.searchLabel,
     this.search,
     this.addForm,
+    this.deleted,
+    this.selected,
+    this.listObjects,
+    this.add,
+    this.customListWidget,
   }) : super(key: key);
 
   @override
@@ -24,7 +34,7 @@ class SearchPageWrapper extends StatefulWidget {
 class _SearchPageWrapperState extends State<SearchPageWrapper> {
   final GlobalKey<ScaffoldState> _scaffoldstate = GlobalKey<ScaffoldState>();
   bool _isAddVisible = true;
-  openWidget(Widget input, _scaffoldstate) {
+  openWidget(Widget input) {
     handleBottomFooter();
     PersistentBottomSheetController bottomSheetController =
         _scaffoldstate.currentState.showBottomSheet(
@@ -61,16 +71,30 @@ class _SearchPageWrapperState extends State<SearchPageWrapper> {
               },
             ),
             SizedBox(height: 20),
-            Flexible(child: widget.child)
+            Flexible(
+              child: widget.customListWidget != null
+                  ? widget.customListWidget
+                  : EhsGenericList(
+                      listElements: widget.listObjects,
+                      deleted: (data) {
+                        widget.deleted(data);
+                      },
+                      selected: (data) {
+                        widget.selected(data);
+                        openWidget(widget.addForm);
+                      },
+                    ),
+            ),
           ],
         ),
       ),
-      floatingActionButton: !_isAddVisible || _isKeyboard
+      floatingActionButton: !_isAddVisible || _isKeyboard || widget.add == null
           ? null
           : FloatingActionButton(
               onPressed: () {
                 if (widget.addForm != null) {
-                  openWidget(widget.addForm, _scaffoldstate);
+                  widget.add();
+                  openWidget(widget.addForm);
                 }
               },
               child: Icon(Icons.add),

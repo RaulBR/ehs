@@ -1,5 +1,5 @@
 name: ehsfocus
-description: A new Flutter project.
+description: A nice Project.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -23,32 +23,31 @@ dependencies:
     sdk: flutter  
   http: ^0.12.1
   provider: ^4.0.1
-  flutter_bloc: ^6.0.0
+  flutter_bloc: ^6.1.0
   flutter_spinkit: ^4.1.2+1
-  intl: ^0.16.1
-  charts_flutter: ^0.9.0
-  flutter_secure_storage: ^3.3.3
+  intl: ^0.17.0-nullsafety.2
+  # charts_flutter: ^0.9.0
+  shared_preferences: ^0.5.12+4
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-
   cupertino_icons: ^0.1.2
   barcode_scan: ^2.0.1
   qr_flutter: ^3.2.0
   path_provider: ^1.6.5
-  image_picker: ^0.6.6+1
-  flutter_local_notifications: ^1.4.4+1
-
+  image_picker: 0.6.7+14 
+  # ^0.6.6+1
+  # flutter_local_notifications: ^1.4.4+1
+  equatable: ^1.2.5
+  socket_io_client: ^0.9.11
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  
- 
+   
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

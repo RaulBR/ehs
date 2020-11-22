@@ -1,5 +1,4 @@
 import 'package:ehsfocus/models/action_model.dart';
-import 'package:ehsfocus/models/area_modal.dart';
 import 'package:ehsfocus/models/aspects_model.dart';
 
 abstract class AuditEvent {
@@ -11,11 +10,7 @@ abstract class AuditEvent {
   AuditEvent({this.audit});
 }
 
-class GetMyAudits extends AuditEvent {}
-
 class GetMyAudit extends AuditEvent {}
-
-class GetMyTasks extends AuditEvent {}
 
 class UpdateForm extends AuditEvent {
   final Audit audit;
@@ -25,6 +20,12 @@ class UpdateForm extends AuditEvent {
 class SetAudit extends AuditEvent {
   final Audit audit;
   SetAudit({this.audit});
+}
+
+class GetAuditsToApprove extends AuditEvent {}
+
+class SubmitAudit extends AuditEvent {
+  SubmitAudit();
 }
 
 class EditAudit extends AuditEvent {
@@ -45,10 +46,4 @@ class SetAspect extends AuditEvent {
 class SetAuditAspect extends AuditEvent {
   AuditRequest auditRequest;
   SetAuditAspect({this.auditRequest});
-}
-
-class GetAuditResponsible extends AuditEvent {
-  final Aspect aspect;
-
-  GetAuditResponsible({this.aspect});
 }

@@ -1,4 +1,4 @@
-import 'package:ehsfocus/models/drop_down_model.dart';
+import 'package:ehsfocus/models/generic_list_model.dart';
 import 'package:ehsfocus/shared/fields/search_picker/bloc/search_picker_bloc.dart';
 import 'package:ehsfocus/shared/fields/search_picker/list_dialog.dart';
 import 'package:flutter/material.dart';
@@ -6,15 +6,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/form_container.dart';
 
-class EhsSearchListPicker2 extends StatelessWidget {
-  final List<DropDown> list;
+class EhsSearchListPicker extends StatelessWidget {
+  final List<GenericListObject> list;
   final String label;
   final Function selected;
   final Function tapped;
   final Function searchFor;
+  final bool isEditable;
   final String preselected;
   final String error;
-  const EhsSearchListPicker2({
+  const EhsSearchListPicker({
     Key key,
     this.label,
     this.selected,
@@ -23,6 +24,7 @@ class EhsSearchListPicker2 extends StatelessWidget {
     this.searchFor,
     this.error,
     this.list,
+    this.isEditable,
   }) : super(key: key);
 
   @override
@@ -31,6 +33,7 @@ class EhsSearchListPicker2 extends StatelessWidget {
       create: (context) => SearchPickerBloc(),
       child: TexEditingHost(
           label: label,
+          isEditable: isEditable == null || isEditable,
           selected: selected,
           tapped: tapped,
           preselected: preselected,
@@ -42,12 +45,13 @@ class EhsSearchListPicker2 extends StatelessWidget {
 }
 
 class TexEditingHost extends StatelessWidget {
-  final List<DropDown> list;
+  final List<GenericListObject> list;
   final String label;
   final Function selected;
   final Function tapped;
   final Function searchFor;
   final String preselected;
+  final bool isEditable;
   final String error;
 
   const TexEditingHost(
@@ -58,6 +62,7 @@ class TexEditingHost extends StatelessWidget {
       this.selected,
       this.searchFor,
       this.preselected,
+      this.isEditable,
       this.error})
       : super(key: key);
   void _showDialog(context2) {
@@ -92,8 +97,10 @@ class TexEditingHost extends StatelessWidget {
     return InputContainer(
       child: TextField(
         autofocus: false,
+        enabled: isEditable,
         readOnly: true,
         onTap: () {
+          if (!isEditable) return;
           tapped();
           FocusScope.of(context).requestFocus(new FocusNode()); //remove focus
           _showDialog(context);

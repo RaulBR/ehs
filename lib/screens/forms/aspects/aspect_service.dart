@@ -1,25 +1,31 @@
-import 'package:ehsfocus/models/drop_down_model.dart';
+import 'package:ehsfocus/models/generic_list_model.dart';
 import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
-
-import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc_index.dart';
+import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
 
 class AspectService {
-  List<DropDown> handleCategorysStateChange(context, state) {
+  List<GenericListObject> handleCategorysStateChange(context, state) {
     if (state is CategorysTypesState) {
       return state.categoryes
-          .map((d) => DropDown(id: d.id, type: d.type))
+          .map((d) => GenericListObject(id: d.id, title: d.type))
           .toList();
     }
     if (state is CategorysState) {
       return state.categoryes
-          .map((e) => DropDown(id: e.id, type: e.category))
+          .map((e) => GenericListObject(id: e.id, title: e.category))
           .toList();
     }
+    return [];
   }
 
-  List<DropDown> handleResponsableForAspect(context, state) {
-    if (state is AutidResponsable) {
-      return [DropDown(id: '1', type: '123123')];
+  List<GenericListObject> handleResponsableForAspect(context, state) {
+    if (state is EmployeesValueState) {
+      return state.employees == null
+          ? []
+          : state.employees
+              .map((e) => GenericListObject(
+                  id: e.id, title: '${e.firstName} ${e.lastName}'))
+              .toList();
     }
+    return [];
   }
 }

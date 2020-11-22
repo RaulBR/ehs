@@ -1,5 +1,6 @@
 import 'package:ehsfocus/models/audit_head_modal.dart';
 import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/models/employee_model.dart';
 
 class Audit {
   AuditHead auditHead;
@@ -52,19 +53,19 @@ class Audit {
 class AuditAction {
   String id;
   bool imidiatAcction;
-  String responsible;
+  Employee responsable;
   String limitDate;
   String comment;
   String type;
   AuditAction(
-      {this.imidiatAcction, this.comment, this.limitDate, this.responsible});
+      {this.imidiatAcction, this.comment, this.limitDate, this.responsable});
 
   Map<String, dynamic> toJson() => {
-        "Id": id,
+        "id": id ?? null,
         "imidiatAcction": imidiatAcction ?? false,
-        "limitDate": limitDate,
-        "comment": comment,
-        "responsible": responsible
+        "limitDate": limitDate ?? null,
+        "comment": comment ?? null,
+        "responsable": responsable.toJson()
       };
 
   AuditAction.fromJson(parsedJson) {
@@ -72,14 +73,16 @@ class AuditAction {
     imidiatAcction = parsedJson['imidiatAcction'];
     limitDate = parsedJson['limitDate'].toString();
     comment = parsedJson['comment'].toString();
-    responsible = parsedJson['responsible'].toString();
+    responsable = parsedJson['responsable'] != null
+        ? Employee.fromJson(parsedJson['responsable'])
+        : null;
   }
 
   isNotEmpty() {
     return imidiatAcction != null ||
         limitDate != null ||
         comment != null ||
-        responsible != null;
+        responsable != null;
   }
 }
 

@@ -1,7 +1,10 @@
 import 'package:ehsfocus/models/employee_model.dart';
+import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
 import 'package:ehsfocus/shared/constants.dart';
-import 'package:ehsfocus/theme.dart';
+import 'package:ehsfocus/shared/form_eleements/clerable%20_text_field.dart';
+import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/generic_list_page_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EmployeeForm extends StatefulWidget {
   @override
@@ -9,63 +12,69 @@ class EmployeeForm extends StatefulWidget {
 }
 
 class _EmployeeFormState extends State<EmployeeForm> {
-  final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     Employee _employee = Employee();
-    return Scaffold(
-        appBar: AppBar(actions: <Widget>[], title: Text(Labels.myData)),
-        body: Container(
-          width: 800,
-          margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  TextFormField(
-                      decoration: textInputDecoration.copyWith(
-                        labelText: 'Prenume',
-                      ),
-                      validator: (value) =>
-                          value.isEmpty ? 'Enter First name' : null,
-                      onChanged: (value) {
-                        _employee.setFirstName = value;
-                      }),
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: 'Nume'),
-                    onChanged: (lastName) {
-                      _employee.setLastName = lastName;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: 'Rol'),
-                    // keyboardType: TextInputType.number,
-                  ),
-                  SizedBox(height: 20.0),
-                ],
-              ),
-            ),
-          ),
+    return PageWrapper(
+      child: SingleChildScrollView(
+        child: BlocBuilder<EmployeeBloc, EmployeeState>(
+          builder: (context, state) {
+            if (state is EmployeeValueState) {
+              _employee = state.employee;
+            }
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                EHSTextField(
+                  keyboardType: TextInputType.name,
+                  label: Labels.name,
+                  inputValue: _employee.firstName,
+                  onChanged: (value) {
+                    _employee.firstName = value;
+                  },
+                  error: null,
+                ),
+                SizedBox(height: 20.0),
+                EHSTextField(
+                  keyboardType: TextInputType.name,
+                  label: Labels.surName,
+                  inputValue: _employee.lastName,
+                  onChanged: (value) {
+                    _employee.lastName = value;
+                  },
+                  error: null,
+                ),
+                SizedBox(height: 20.0),
+                EHSTextField(
+                  label: Labels.role,
+                  inputValue: _employee.role,
+                  onChanged: (value) {
+                    _employee.role = value;
+                  },
+                  error: null,
+                ),
+                SizedBox(height: 20.0),
+                EHSTextField(
+                  // enabled: isEditable,
+                  keyboardType: TextInputType.emailAddress,
+                  label: Labels.email,
+                  inputValue: _employee.email,
+                  onChanged: (value) {
+                    _employee.email = value;
+                  },
+                  error: null,
+                ),
+              ],
+            );
+          },
         ),
-        bottomNavigationBar: BottomAppBar(
-          color: AppColors.primary,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              RaisedButton(
-                elevation: 0,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('cancel', style: TextStyle(color: AppColors.icons)),
-              ),
-            ],
-          ),
-        ));
+      ),
+      footerAction: (data) {
+        if (data == FooterStates.save) {
+          BlocProvider.of<EmployeeBloc>(context).setEmployee(_employee);
+        }
+      },
+    );
   }
 
   void dispose() {

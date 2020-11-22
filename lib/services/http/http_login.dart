@@ -4,14 +4,14 @@ import 'package:ehsfocus/services/http/http.dart';
 
 class HttpLoginService extends HttpService {
   Future<dynamic> login(User user) async {
-    return userPstWrapper(url: '/login', user: user);
+    return userRequestWrapper(url: '/login', user: user);
   }
 
   Future<dynamic> signUp(User user) async {
     if (user == null) {
       return;
     }
-    return userPstWrapper(url: '/user', user: user);
+    return userRequestWrapper(url: '/register', user: user);
   }
 
   Future<dynamic> signOut() async {
@@ -19,10 +19,10 @@ class HttpLoginService extends HttpService {
   }
 
   Future<dynamic> isMe() {
-    return userPstWrapper(url: '/me', hasHeadder: true);
+    return userRequestWrapper(url: '/me', hasHeadder: true);
   }
 
-  Future<dynamic> userPstWrapper(
+  Future<dynamic> userRequestWrapper(
       {String url, User user, bool hasHeadder}) async {
     hasHeadder = hasHeadder == null ? false : hasHeadder;
     Map<String, dynamic> dataIn;

@@ -25,17 +25,12 @@ class GennericListElement extends StatelessWidget {
               : CircleAvatar(
                   radius: 25,
                   backgroundColor: AppColors.lightprimary,
-                  child: Text(simbol ?? 'P'),
+                  child: Text(simbol),
                 ),
           trailing: deleted == null
               ? null
-              : FlatButton.icon(
-                  icon: Icon(Icons.close),
-                  onPressed: () {
-                    deleted();
-                  },
-                  label: null,
-                ),
+              : GestureDetector(
+                  onTap: () => deleted(), child: Icon(Icons.close)),
           title: Text(title == null ? 'no data' : title),
           subtitle: Text(subtitle == null ? '' : subtitle),
           // trailing: FlatButton(

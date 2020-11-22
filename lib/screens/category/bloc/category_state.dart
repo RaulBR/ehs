@@ -14,6 +14,13 @@ class CategorysTypesState extends CategoryState {
   });
 }
 
+class OneCategoryTypesState extends CategoryState {
+  final CategoryType categorie;
+  OneCategoryTypesState({
+    this.categorie,
+  });
+}
+
 class CategorysState extends CategoryState {
   final List<Category> categoryes;
   CategorysState({

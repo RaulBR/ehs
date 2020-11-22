@@ -7,12 +7,7 @@ class Area {
   List<Step> steps;
   List<AreaRole> roles;
 
-  Area({
-    this.id,
-    this.area,
-    this.areaInfo,
-    this.steps,
-  });
+  Area({this.id, this.area, this.areaInfo, this.steps, this.roles});
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -72,8 +67,10 @@ class AreaRole {
   AreaRole.fromJson(Map<String, dynamic> parsedJson) {
     id = parsedJson['id'].toString();
     role = parsedJson['role'].toString();
-    responsable = Employee.fromJson(parsedJson['responsable']);
+    responsable = parsedJson['responsable'] == null
+        ? null
+        : Employee.fromJson(parsedJson['responsable']);
   }
   Map<String, dynamic> toJson() =>
-      {"id": id, "role": role, "responsableId": responsable.id};
+      {"id": id, "role": role, "responsable": responsable?.toJson()};
 }

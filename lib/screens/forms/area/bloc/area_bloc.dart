@@ -12,16 +12,13 @@ part 'area_event.dart';
 part 'area_state.dart';
 
 class AreaBloc extends Bloc<AreaEvent, AreaState> {
-  AuditHead areaHead = AuditHead();
   Area _area = Area();
   PaginationObject _requestParams = PaginationObject();
   HttpAreaService httpAreaService = HttpAreaService();
-  List<String> a = [];
-  List<dynamic> _data = [];
-  Map<String, List<String>> areas = {};
+  List<Area> _areasList = [];
 
-  AreaBloc(this.areaHead) : super(AreaInitial.initial()) {
-    //  getAreas();
+  AreaBloc() : super(AreaInitial.initial()) {
+    getAreas();
   }
 
   @override
@@ -34,23 +31,26 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
         _requestParams.toRow = 10;
         List<dynamic> ucelessLanguageList =
             await httpAreaService.getAudit(_requestParams);
-        _data = ucelessLanguageList
+        print(ucelessLanguageList);
+        _areasList = ucelessLanguageList
             .map((ucelenssLamngauageListElement) => Area(
                 id: ucelenssLamngauageListElement.id,
                 area: ucelenssLamngauageListElement.area,
-                areaInfo: ucelenssLamngauageListElement.areaInfo))
+                areaInfo: ucelenssLamngauageListElement.areaInfo,
+                steps: ucelenssLamngauageListElement.steps,
+                roles: ucelenssLamngauageListElement.roles))
             .toList();
 
-        yield AreaListState(areaList: _data ?? []);
+        yield AreaListState(areaList: _areasList ?? []);
         break;
       case SearchAreas:
-        if (event.area == '') {
-          yield AreaListState(areaList: _data);
+        if (event.areaString == '') {
+          yield AreaListState(areaList: _areasList);
           break;
         }
         List<Area> b = [];
-        _data.forEach((element) {
-          if (element.area.contains(event.area)) {
+        _areasList.forEach((element) {
+          if (element.area.contains(event.areaString)) {
             b.add(element);
           }
         });
@@ -58,11 +58,36 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
         yield AreaListState(areaList: b);
         break;
       case GetStepsEvent:
-        yield StepListState(stepList: areas['1']);
+        //    yield StepListState(stepList: areas['1']);
 
         break;
-      case UpdateAreaEvent:
-        yield AreaValueState(area: event.areaValue);
+      case DeleteAreaEvent:
+        try {
+          await httpAreaService.deleteArea(Area(id: event.areaString));
+          yield Success();
+          getAreas();
+          yield AreaListState(areaList: _areasList);
+        } catch (e) {}
+
+        break;
+
+      case DeleteRoleEvent:
+        _area =
+            await httpAreaService.deleteRole(AreaRole(id: event.areaString));
+        yield AreaFormState(area: _area);
+        try {} catch (e) {}
+
+        break;
+
+      case SetAreaEvent:
+        _area = await httpAreaService.setAudit(_area);
+        yield Success();
+        getAreas();
+        yield AreaFormState(area: _area);
+        break;
+
+      case UpdateAreaFormEvent:
+        yield AreaFormState(area: _area);
 
         break;
       case SetRoleEvent:
@@ -79,6 +104,10 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
     }
   }
 
+  deleteRole(String id) {
+    add(DeleteRoleEvent(id));
+  }
+
   getAreas() {
     add(GetAreasEvent());
   }
@@ -87,9 +116,26 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
     add(GetStepsEvent());
   }
 
-  setArea(AuditHead area) {
-    areaHead = area;
-    add(UpdateAreaEvent(areaValue: area));
+  clearForm() {
+    _area = Area();
+    add(UpdateAreaFormEvent(area: _area));
+  }
+
+  deleteArea(String id) {
+    if (id == null || id == '') {
+      return;
+    }
+    add(DeleteAreaEvent(id));
+  }
+
+  setAreaFormById(String id) {
+    _area = _areasList.firstWhere((element) => element.id == id);
+    setAreaForm(_area);
+  }
+
+  setAreaForm(Area area) {
+    _area = area;
+    add(UpdateAreaFormEvent(area: _area));
   }
 
   searchAreas(String search) {

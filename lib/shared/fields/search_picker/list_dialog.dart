@@ -1,4 +1,4 @@
-import 'package:ehsfocus/models/drop_down_model.dart';
+import 'package:ehsfocus/models/generic_list_model.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/fields/search_picker/bloc/search_picker_bloc.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ class ListDiablog extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    List<DropDown> dropDownList = [];
+    List<GenericListObject> dropDownList = [];
     return AlertDialog(
       title: TextField(
         onChanged: (value) {
@@ -43,9 +43,9 @@ class ListDiablog extends StatelessWidget {
                   itemCount: dropDownList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
-                      title: Text(dropDownList[index].type ?? ''),
-                      subtitle: dropDownList[index].subtype != null
-                          ? Text(dropDownList[index].subtype)
+                      title: Text(dropDownList[index].title ?? ''),
+                      subtitle: dropDownList[index].subtitle != null
+                          ? Text(dropDownList[index].subtitle)
                           : null,
                       onTap: () {
                         selected(dropDownList[index]);

@@ -4,36 +4,17 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loading extends StatelessWidget {
   final double size;
-  Loading({this.size});
+  final Color color;
+  Loading({this.size, this.color});
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: AppColors.primary,
+        color: color == null ? AppColors.primary : color,
         child: Center(
             child: SpinKitFoldingCube(
-          color: AppColors.icons,
+          color: color == null ? AppColors.icons : AppColors.primary,
           size: size != null ? size : 50.0,
         )));
-  }
-}
-
-class Loading2 extends StatefulWidget {
-  @override
-  _Loading2State createState() => _Loading2State();
-}
-
-class _Loading2State extends State<Loading2> {
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pop(context);
-      // Here you can write your code for open new view
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Loading();
   }
 }
 

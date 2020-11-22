@@ -1,15 +1,16 @@
-import 'package:ehsfocus/models/drop_down_model.dart';
+import 'package:ehsfocus/models/generic_list_model.dart';
 import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
 
 class AreaService {
-  List<DropDown> addEmployeesToDropDown(context, state) {
+  List<GenericListObject> addEmployeesToDropDown(context, state) {
     if (state is EmployeesValueState) {
       return state.employees
-          .map((employee) => DropDown(
+          .map((employee) => GenericListObject(
               id: employee.id,
-              type: '${employee.firstName} ${employee.lastName}',
-              subtype: employee.role ?? null))
+              title: '${employee.firstName} ${employee.lastName}',
+              subtitle: employee.role ?? null))
           .toList();
     }
+    return [];
   }
 }

@@ -1,11 +1,12 @@
 import 'package:ehsfocus/models/area_modal.dart';
 import 'package:ehsfocus/models/generic_list_model.dart';
-import 'package:ehsfocus/screens/category/category_type_list.dart';
+import 'package:ehsfocus/shared/ehs_generic_list.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/form_container.dart';
 import 'package:flutter/material.dart';
 
 class ExpandableListTile extends StatelessWidget {
+  final Function delete;
   final String title;
   final String subtitle;
   final Function selected;
@@ -13,7 +14,12 @@ class ExpandableListTile extends StatelessWidget {
   final List<GenericListObject> listElements;
 
   ExpandableListTile(
-      {this.title, this.subtitle, this.selected, this.listElements, this.add});
+      {this.title,
+      this.subtitle,
+      this.selected,
+      this.listElements,
+      this.add,
+      this.delete});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +28,7 @@ class ExpandableListTile extends StatelessWidget {
         return 0;
       }
       double size = listElements.length.toDouble();
-      return size > 3 ? 250 : size * 100;
+      return size > 3 ? 260 : size * 100;
     }
 
     return InputContainer(
@@ -35,7 +41,9 @@ class ExpandableListTile extends StatelessWidget {
             child: EhsGenericList(
               listElements: listElements,
               selected: (element) {},
-              deleted: (element) {},
+              deleted: (element) {
+                delete(element);
+              },
             ),
           ),
           SizedBox(
@@ -55,11 +63,13 @@ class ExpandableListTile extends StatelessWidget {
 }
 
 class ExpandableRoleTile extends StatelessWidget {
+  final Function delete;
   final List<AreaRole> roles;
   final Function selected;
   final Function add;
 
-  const ExpandableRoleTile({Key key, this.roles, this.selected, this.add})
+  const ExpandableRoleTile(
+      {Key key, this.roles, this.selected, this.add, this.delete})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -70,6 +80,9 @@ class ExpandableRoleTile extends StatelessWidget {
       },
       selected: (e) {
         selected();
+      },
+      delete: (data) {
+        delete(data);
       },
       listElements: roles
           .map((e) => GenericListObject(

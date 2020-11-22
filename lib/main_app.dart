@@ -2,6 +2,8 @@ import 'package:ehsfocus/app_localizations.dart';
 import 'package:ehsfocus/custom_routs.dart';
 import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc.dart';
 import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
+import 'package:ehsfocus/shared/blocs/audit_socket_bloc/audit_socket_bloc.dart';
+import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,12 +17,15 @@ class MainApp extends StatelessWidget {
         BlocProvider<EmployeeBloc>(
           create: (contect) => EmployeeBloc(),
         ),
+        BlocProvider<AuditSocketBloc>(
+          create: (contect) => AuditSocketBloc(),
+        ),
         BlocProvider(
           create: (_) => AuditBloc(),
         ),
       ],
       child: MaterialApp(
-        title: 'EHS-focus',
+        title: Labels.ehsTitle,
         theme: companyThemeData,
         supportedLocales: [Locale('ro', 'RO'), Locale('en', 'US')],
         localizationsDelegates: [
@@ -40,7 +45,7 @@ class MainApp extends StatelessWidget {
           }
           return supportedLocales.first;
         },
-        onGenerateRoute: Router().generateRoute,
+        onGenerateRoute: CustomRouter(context: context).generateRoute,
         initialRoute: '/',
       ),
     );

@@ -1,5 +1,4 @@
 import 'package:ehsfocus/shared/GoToButton.dart';
-import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/form_container.dart';
 import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +8,12 @@ class OpenTextAreaWidget extends StatelessWidget {
   final String label;
   final Icon icon;
   final String text;
-  final bool notEditable;
+  final bool isEditable;
   final Function onEdit;
   OpenTextAreaWidget({
     @required this.onEdit,
     this.text,
-    this.notEditable,
+    this.isEditable,
     this.label,
     this.icon,
   });
@@ -33,6 +32,7 @@ class OpenTextAreaWidget extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditableTextAreaWidget(
+                        isEditable: isEditable,
                         icon: icon,
                         label: label,
                         text: text,
@@ -44,7 +44,7 @@ class OpenTextAreaWidget extends StatelessWidget {
               },
             ),
             Container(
-                height: 100,
+                height: 40,
                 padding: EdgeInsets.only(left: 10, right: 10),
                 width: double.infinity,
                 child: SingleChildScrollView(
@@ -61,61 +61,66 @@ class EditableTextAreaWidget extends StatelessWidget {
   final Function onEdit;
   final String label;
   final Icon icon;
-
+  final isEditable;
   EditableTextAreaWidget(
-      {this.text, @required this.onEdit, this.label, this.icon});
+      {this.text,
+      @required this.onEdit,
+      this.label,
+      this.icon,
+      this.isEditable});
 
   @override
   Widget build(BuildContext context) {
-    var focusNode = new FocusNode();
+    var focusNode = FocusNode();
     final double screenSize = MediaQuery.of(context).size.height;
     final double keyboardSize = MediaQuery.of(context).viewInsets.bottom;
     final myController = TextEditingController();
     myController.text = text;
     return Scaffold(
-      appBar: AppBar(),
-      body: Container(
-        width: double.infinity,
-        child: Column(
-          children: [
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              FlatButton.icon(
-                  onPressed: () => onEdit(myController.text),
-                  icon: icon == null ? Icon(Icons.message) : icon,
-                  label: Text(label, style: normallabelFomat)),
-              FlatButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Icon(Icons.close))
-            ]),
-            // SingleChildScrollView(
+      appBar: AppBar(title: Text(label)),
+      body: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          child: Column(
+            children: [
+              // SingleChildScrollView(
 
-            GestureDetector(
-              onTap: () {
-                FocusScope.of(context).requestFocus(focusNode);
-              },
-              child: Container(
-                color: AppColors.icons,
-                height: (screenSize * 0.7 - keyboardSize),
-                child: SingleChildScrollView(
-                  child: TextField(
-                    focusNode: focusNode,
-                    controller: myController,
-                    // decoration: textAreaStyle,
-                    maxLines: null,
+              GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).requestFocus(focusNode);
+                },
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                  color: AppColors.icons,
+                  height: (screenSize * 0.72 - keyboardSize),
+                  child: SingleChildScrollView(
+                    child: TextField(
+                      readOnly: isEditable == null ? false : !isEditable,
+                      focusNode: focusNode,
+                      controller: myController,
+                      decoration: new InputDecoration(
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                      ),
+                      maxLines: null,
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            // ),
-            FlatButton(
-                onPressed: () {
-                  onEdit(myController.text);
-                  SystemChannels.textInput.invokeMethod('TextInput.hide');
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.check))
-          ],
+              // ),
+              FlatButton(
+                  onPressed: () {
+                    onEdit(myController.text);
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.check))
+            ],
+          ),
         ),
       ),
     );

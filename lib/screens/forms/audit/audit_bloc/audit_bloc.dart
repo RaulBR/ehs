@@ -21,56 +21,74 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
         break;
 
       case SetAuditAspect:
-        dynamic data = await httpAuditService.setAspect(event.auditRequest);
+        AuditRequest a = AuditRequest();
+        a.auditHead = _audit.auditHead;
+        a.aspect = event.auditRequest.aspect;
+        dynamic data = await httpAuditService.setAspect(a);
         if (data == null) {
           yield Error();
           break;
         }
         // move to service
+
         _audit.auditHead = data.auditHead;
         if (data.aspect.type == 'N') {
-          _audit.negativeAspects = _audit.negativeAspects ?? [];
-          _audit.negativeAspects.add(data.aspect);
+          _audit.negativeAspects =
+              _handleAspectElement(_audit.negativeAspects, data.aspect);
         } else {
-          _audit.positiveAspects = _audit.positiveAspects ?? [];
-          _audit.positiveAspects.add(data.aspect);
+          _audit.positiveAspects =
+              _handleAspectElement(_audit.positiveAspects, data.aspect);
         }
         //
         yield AuditDataState(_audit);
         break;
-
+      case GetAuditsToApprove:
+        try {
+          List<Aspect> audits = await httpAuditService.getAuditsToApprove();
+          print(audits);
+          yield AuditsToApproveState(audits);
+          break;
+        } catch (e) {
+          yield Error();
+          break;
+        }
+        break;
       case SetAudit:
         try {
-          httpAuditService.setAudit(_audit.auditHead);
+          _audit.auditHead = await httpAuditService.setAudit(_audit.auditHead);
+          print(_audit.auditHead.toJson());
         } catch (e) {
           yield Error();
           break;
         }
         yield AuditDataState(_audit);
         break;
-
+      case SubmitAudit:
+        try {
+          await httpAuditService.submitAudit(_audit.auditHead);
+          clearAudit();
+          yield AuditDataState(_audit);
+        } catch (e) {
+          yield Error();
+          break;
+        }
+        yield AuditDataState(_audit);
+        break;
       case GetMyAudit:
         yield AuditLoading();
         dynamic a = await httpAuditService.getAudit();
         if (a.length == 0) {
-          yield AuditDataState(_audit);
-          break;
+          clearAudit();
+        } else {
+          _audit = a[0];
         }
-        _audit = a[0];
-        yield AuditDataState(a[0]);
-        break;
-      case GetAuditResponsible:
-        print(event.aspect);
-        yield AutidResponsable(['Claudiu David', 'Danutz vasilica']);
+        yield AuditDataState(_audit);
         break;
       case DeleteAudit:
         dynamic a = await httpAuditService.deleteAudit(event.id);
         if (a == 'success') {
           yield DeleteSucsesfull();
-          _audit.auditHead = null;
-          _audit.negativeAspects = [];
-          _audit.positiveAspects = [];
-
+          clearAudit();
           yield AuditDataState(_audit);
           // yield AuditDataState(_audit);
           break;
@@ -106,13 +124,6 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
     add(UpdateForm(audit: _audit));
   }
 
-  void getEmployees(Aspect aspect) {
-    if (aspect == null) {
-      return;
-    }
-    add(GetAuditResponsible(aspect: aspect));
-  }
-
   void setAspect(Aspect aspect) {
     if (aspect == null) {
       return;
@@ -121,5 +132,35 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
     audit.auditHead = _audit.auditHead ?? AuditHead();
     audit.aspect = aspect;
     add(SetAuditAspect(auditRequest: audit));
+  }
+
+  List<Aspect> _handleAspectElement(List<Aspect> list, aspect) {
+    list = list ?? [];
+    Aspect element;
+    element = aspect;
+    if (list.length > 0) {
+      element = list.firstWhere((element) => element.id == aspect.id,
+          orElse: () => null);
+      if (element != null) {
+        element = aspect;
+        return list;
+      }
+    }
+    list.add(aspect);
+    return list;
+  }
+
+  void submitAudit() {
+    add(SubmitAudit());
+  }
+
+  void getAuditsToApprove() {
+    add(GetAuditsToApprove());
+  }
+
+  void clearAudit() {
+    _audit.auditHead = null;
+    _audit.negativeAspects = [];
+    _audit.positiveAspects = [];
   }
 }

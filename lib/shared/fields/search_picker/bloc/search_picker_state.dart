@@ -8,7 +8,7 @@ class SearchPickerInitial extends SearchPickerState {
 }
 
 class ElementListItems extends SearchPickerState {
-  final List<DropDown> values;
+  final List<GenericListObject> values;
   ElementListItems({
     this.values,
   });

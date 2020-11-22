@@ -1,9 +1,12 @@
+import 'package:ehsfocus/models/employee_model.dart';
+
 class AuditHead {
   String id;
   String area;
   String step;
   String sector;
   String auditStatus;
+  Employee employee;
 
   AuditHead({this.id, this.area, this.step, this.sector, this.auditStatus});
 
@@ -26,5 +29,9 @@ class AuditHead {
     sector =
         parsedJson['sector'] == null ? null : parsedJson['sector'].toString();
     auditStatus = parsedJson['auditStatus'].toString();
+    print(parsedJson['employee']);
+    employee = parsedJson['employee'] == null
+        ? null
+        : Employee.fromJson(parsedJson['employee']);
   }
 }

@@ -1,27 +1,38 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
-// Create storage
-  final storage = new FlutterSecureStorage();
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-// Write value
   Future setToken(token) async {
-    await storage.write(key: 'jwt', value: token);
+    if (token == null) {
+      return;
+    }
+    final SharedPreferences prefs = await _prefs;
+    await prefs.setString("jwt", token);
   }
 
   Future getToken() async {
-    return await storage.read(key: 'jwt');
+    final SharedPreferences prefs = await _prefs;
+    return prefs.getString('jwt');
   }
 
   Future removeToken() async {
-    return await storage.delete(key: 'jwt');
+    final SharedPreferences prefs = await _prefs;
+    return await prefs.remove('jwt');
   }
 
-  // _readWithKey(key) {
-  //   return storage.read(key: key);
-  // }
+  Future setRole(role) async {
+    final SharedPreferences prefs = await _prefs;
+    await prefs.setString("role", role);
+  }
 
-  // _setWithKey({String key, String value}) {
-  //   return storage.write(key: key, value: value);
-  // }
+  Future removeRole() async {
+    final SharedPreferences prefs = await _prefs;
+    prefs.getString("role");
+  }
+
+  Future readWithKey(key) async {
+    final SharedPreferences prefs = await _prefs;
+    prefs.getString(key);
+  }
 }

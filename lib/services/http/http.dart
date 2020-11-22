@@ -5,8 +5,8 @@ import 'package:http/http.dart';
 
 class HttpService {
   final localstorageService = LocalStorageService();
-  // String _url = 'https://ehs-back.herokuapp.com';
-  String _url = 'http://192.168.0.9:3000/api';
+  String url = 'http://192.168.0.166:3000';
+  String _url = 'http://192.168.0.166:3000/api';
   bool isDayTime;
   String _token;
 
@@ -25,16 +25,22 @@ class HttpService {
       {String endpint, dynamic jsonValue, bool hasHeadder}) async {
     hasHeadder = hasHeadder == null ? false : hasHeadder;
     dynamic headders = hasHeadder ? await getHeaders() : null;
-
+    if (hasHeadder && headders == null) {
+      return;
+    }
     Response response =
         await post('$_url$endpint', body: jsonValue, headers: headders);
     return handlleResponce(response: response);
   }
 
-  Future<String> getRequest(
+  Future<dynamic> getRequest(
       {String endpint, String id, bool hasHeadder}) async {
     hasHeadder = hasHeadder == null ? false : hasHeadder;
+
     dynamic headders = hasHeadder ? await getHeaders() : null;
+    if (hasHeadder && headders == null) {
+      return;
+    }
     Response response = await get('$_url$endpint', headers: headders);
     return handlleResponce(response: response);
   }
@@ -47,11 +53,15 @@ class HttpService {
         return response.body.isNotEmpty ? response.body : null;
         break;
       case 400:
-        throw response.body.isNotEmpty
-            ? json.decode(response.body)['message']
-            : StatusList[Status.noErrorMessage];
+        if (response.body.isNotEmpty) {
+          throw json.decode(response.body)['errors'] ?? {"status": 'error'};
+        }
+        throw StatusList[Status.noErrorMessage];
         break;
       case 401:
+        throw StatusList[Status.notAllowed];
+        break;
+      case 403:
         throw StatusList[Status.notAllowed];
         break;
       case 500:
@@ -75,6 +85,9 @@ class HttpService {
             : StatusList[Status.noErrorMessage];
         break;
       case 401:
+        throw StatusList[Status.notAllowed];
+        break;
+      case 403:
         throw StatusList[Status.notAllowed];
         break;
       case 500:

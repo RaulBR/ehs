@@ -1,4 +1,5 @@
 import 'package:ehsfocus/models/action_model.dart';
+import 'package:ehsfocus/models/aspects_model.dart';
 
 abstract class AuditState {}
 
@@ -13,13 +14,17 @@ class AuditDataState extends AuditState {
   AuditDataState(this.audit);
 }
 
+class AuditsToApproveState extends AuditState {
+  List<Aspect> areaList;
+  AuditsToApproveState(this.areaList);
+}
+
 class Error extends AuditState {}
 
 class DeleteSucsesfull extends AuditState {}
 
 class AutidResponsable extends AuditState {
   final List<String> employees;
-
   AutidResponsable(this.employees);
 }
 

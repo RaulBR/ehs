@@ -22,7 +22,9 @@ class AuditListElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: auditList,
-      leading: AuditListAvatar(order: '$order', isDone: isDone),
+      leading: order != null
+          ? AuditListAvatar(order: '$order', isDone: isDone)
+          : null,
       trailing: trailing ?? null,
       title: Text(
         title,

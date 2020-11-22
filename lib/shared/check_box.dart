@@ -38,9 +38,11 @@ class _MyCheckBoxState extends State<MyCheckBox> {
 
 class EhsCheckBox extends StatelessWidget {
   final String label;
+  final bool isEditable;
   final bool value;
   final Function setValue;
-  EhsCheckBox({this.value, @required this.setValue, this.label});
+  EhsCheckBox(
+      {this.value, @required this.setValue, this.label, this.isEditable});
   @override
   Widget build(BuildContext context) {
     // return CheckboxListTile(
@@ -67,7 +69,9 @@ class EhsCheckBox extends StatelessWidget {
               Checkbox(
                 value: value,
                 onChanged: (bool value) {
-                  setValue(value);
+                  if (isEditable) {
+                    setValue(value);
+                  }
                 },
                 // secondary: const Icon(Icons.hourglass_empty),
               ),

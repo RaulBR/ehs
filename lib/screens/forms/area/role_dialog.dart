@@ -1,5 +1,5 @@
 import 'package:ehsfocus/models/area_modal.dart';
-import 'package:ehsfocus/models/drop_down_model.dart';
+import 'package:ehsfocus/models/generic_list_model.dart';
 import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
 import 'package:ehsfocus/screens/forms/area/area_service.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_service.dart';
@@ -21,21 +21,18 @@ class RoleDialog extends StatefulWidget {
 class _RoleDialogState extends State<RoleDialog> {
   AreaRole _areaRole = AreaRole();
   String _responsable;
-  String _area;
-  setResponsabile(DropDown data) {
+  setResponsabile(GenericListObject data) {
     setState(() {
-      _responsable = data.type;
+      _responsable = data.title;
     });
     // get if
     _areaRole.responsable =
         BlocProvider.of<EmployeeBloc>(context).getEmployee(data.id);
   }
 
-  setArea(DropDown data) {
-    setState(() {
-      _area = data.type;
-    });
-    _areaRole.role = data.type;
+  setArea(GenericListObject data) {
+    setState(() {});
+    _areaRole.role = data.title;
   }
 
   @override
@@ -49,7 +46,7 @@ class _RoleDialogState extends State<RoleDialog> {
         child: Column(
           children: [
             BlocBuilder<CategoryBloc, CategoryState>(
-              builder: (context, state) => EhsSearchListPicker2(
+              builder: (context, state) => EhsSearchListPicker(
                 list:
                     AspectService().handleCategorysStateChange(context, state),
                 error: null,
@@ -65,7 +62,7 @@ class _RoleDialogState extends State<RoleDialog> {
               ),
             ),
             BlocBuilder<EmployeeBloc, EmployeeState>(
-              builder: (context, state) => EhsSearchListPicker2(
+              builder: (context, state) => EhsSearchListPicker(
                 list: AreaService().addEmployeesToDropDown(context, state),
                 error: null,
                 label: Labels.responsabile,

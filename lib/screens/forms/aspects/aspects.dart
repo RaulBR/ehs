@@ -77,7 +77,7 @@ class AspectsList extends StatelessWidget {
                 order: order,
                 type: type,
                 title: title,
-                hasChanges: (Aspect data) {
+                hasChanges: (Aspect data, action) {
                   data.type = type;
                   navigationEvent(data);
                 }),

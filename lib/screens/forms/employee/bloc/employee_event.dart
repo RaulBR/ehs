@@ -1,15 +1,22 @@
 part of 'employee_bloc.dart';
 
 @immutable
-abstract class EmployeeEvent {
-  Employee employee;
-}
+abstract class EmployeeEvent {}
 
-class GetEmployeeEvent extends EmployeeEvent {}
+class GetEmployeeEvent extends EmployeeEvent {
+  final Employee employee;
+  GetEmployeeEvent({this.employee});
+}
 
 class GetMyselfEvent extends EmployeeEvent {}
 
 class GetEmployeesEvent extends EmployeeEvent {}
+
+class DeleteEmployeeEvent extends EmployeeEvent {
+  final String id;
+
+  DeleteEmployeeEvent(this.id);
+}
 
 class SetEmployeeEvent extends EmployeeEvent {
   final Employee employee;

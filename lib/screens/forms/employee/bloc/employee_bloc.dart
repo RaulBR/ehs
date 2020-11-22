@@ -1,46 +1,62 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:ehsfocus/models/employee_model.dart';
 import 'package:ehsfocus/services/http/http_employee.dart';
 import 'package:meta/meta.dart';
-
 part 'employee_event.dart';
 part 'employee_state.dart';
 
 class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
-  EmployeeBloc() : super(EmployeeInitial()) {}
+  EmployeeBloc() : super(EmployeeInitial());
   Employee _appEmployee;
+  Employee _selectedEmployee;
   List<Employee> _appEmployees = [];
-  final httpAuditService = HttpEmployeeService();
+  final httpEmployeeService = HttpEmployeeService();
   @override
   Stream<EmployeeState> mapEventToState(
     EmployeeEvent event,
   ) async* {
     switch (event.runtimeType) {
       case GetEmployeesEvent:
-        dynamic data = await httpAuditService.getAllEmployees();
+        dynamic data = await httpEmployeeService.getAllEmployees();
         _appEmployees = data;
-        yield EmployeesValueState(_appEmployees);
+        yield EmployeesValueState(employees: _appEmployees);
         break;
-
+      case DeleteEmployeeEvent:
+        Employee e = Employee();
+        e.id = event is DeleteEmployeeEvent ? event.id : null;
+        await httpEmployeeService.deleteEmployees(e);
+        add(GetEmployeesEvent());
+        break;
       case SetEmployeeEvent:
-        dynamic data = await httpAuditService.setEmployee(event.employee);
-        if (data == null) {
-          // yield Error();
-          break;
+        Employee employee = event is SetEmployeeEvent ? event.employee : null;
+        try {
+          dynamic data = await httpEmployeeService.setEmployee(employee);
+          yield EmployeeValueState(data);
+          yield Sucsess();
+          add(GetEmployeesEvent());
+        } catch (e) {
+          yield Error();
         }
+
         // move to service
 
         //
         //   yield AuditDataState(_audit);
+        break;
+      case GetEmployeeEvent:
+        if (event is GetEmployeeEvent) {
+          yield EmployeeValueState(event.employee);
+        }
+        yield EmployeeValueState(
+            event is GetEmployeeEvent ? event.employee : Employee());
         break;
       case GetMyselfEvent:
         if (_appEmployee != null) {
           yield EmployeeValueState(_appEmployee);
           break;
         }
-        dynamic data = await httpAuditService.getMyself();
+        dynamic data = await httpEmployeeService.getMyself();
         _appEmployee = data;
         yield EmployeeValueState(data);
         break;
@@ -57,7 +73,24 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     add(GetEmployeesEvent());
   }
 
+  void setEmployee(Employee employee) {
+    add(SetEmployeeEvent(employee));
+  }
+
+  void deleteEmployee({String id}) {
+    add(DeleteEmployeeEvent(id));
+  }
+
   Employee getEmployee(String id) {
     return _appEmployees.firstWhere((employee) => employee.id == id);
+  }
+
+  void selectEmployee({String id}) {
+    if (id == null) {
+      add(GetEmployeeEvent(employee: Employee()));
+      return;
+    }
+    _selectedEmployee = getEmployee(id);
+    add(GetEmployeeEvent(employee: _selectedEmployee));
   }
 }

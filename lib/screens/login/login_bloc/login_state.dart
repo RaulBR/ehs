@@ -1,9 +1,16 @@
 import 'package:ehsfocus/models/user.model.dart';
 
-class LoginState {
+abstract class LoginState {
   User user;
-  LoginState({this.user});
-  factory LoginState.initial() => LoginState(user: null);
+  // factory LoginState.initial() => LoginState(user: null);
+}
+
+class LoginInitial extends LoginState {}
+
+class AuthorizedState extends LoginState {
+  final User user;
+
+  AuthorizedState({this.user});
 }
 
 class LoadingState extends LoginState {
@@ -12,17 +19,27 @@ class LoadingState extends LoginState {
     isLoading = !isLoading;
   }
 }
+
+class UserFormState extends LoginState {
+  final User user;
+
+  UserFormState(this.user);
+}
+
 class AppLoadingState extends LoginState {
-
   AppLoadingState();
-    
 }
-class LogoutState extends LoginState {
 
-}
+class LogoutState extends LoginState {}
+
 class LoginError extends LoginState {
   String error;
 
   LoginError({this.error});
-  factory LoginError.initial() => LoginError(error: null);
+}
+
+class UserLoginError extends LoginState {
+  User error;
+
+  UserLoginError({this.error});
 }

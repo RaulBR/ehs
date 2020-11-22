@@ -10,15 +10,13 @@ part 'category_event.dart';
 part 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
-  CategoryBloc() : super(CategoryInitial());
+  CategoryBloc() : super(CategoryInitial()) {
+    getCategoryes();
+  }
   HttpCategoryService httpCategoryService = HttpCategoryService();
   List<CategoryType> _categoryesType = [];
-  CategoryType _selectedCategoryType;
-  List<Category> categoryes = [
-    Category(id: '1', category: 'Categoria 1'),
-    Category(id: '2', category: 'Categoria 2333'),
-    Category(id: '3', category: 'Categoria 3')
-  ];
+  CategoryType _selectedCategoryType = CategoryType();
+  CategoryType _initialStateCategoryType = CategoryType();
 
   @override
   Stream<CategoryState> mapEventToState(
@@ -26,21 +24,46 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   ) async* {
     switch (event.runtimeType) {
       case GetCategoryTypeEvent:
-        dynamic data = await httpCategoryService.getCategoryTypes();
-        _categoryesType = data;
-        // if (areaHead.area != null) {
+        if (_categoryesType.length == 0) {
+          dynamic data = await httpCategoryService.getCategoryTypes();
+          _categoryesType = data;
+        }
+        yield CategorysTypesState(categoryes: _categoryesType);
 
-        yield CategorysTypesState(categoryes: data);
-        // }
         break;
       case GetCategorysEvent:
-        categoryes = _selectedCategoryType?.categories ?? [];
-        yield CategorysState(categoryes: categoryes ?? []);
-        // String area = event.area;
-        // yield StepListState(stepList: areas[area]);
+        if (_selectedCategoryType == null) {
+          yield CategorysState(categoryes: []);
+          break;
+        }
+        yield CategorysState(
+            categoryes: _selectedCategoryType.categories ?? []);
+
+        break;
+      case PropagateCategoryEvent:
+        yield OneCategoryTypesState(categorie: _selectedCategoryType);
+        break;
+      case ClearCategoryEvent:
+        yield CategorysState(categoryes: []);
+        break;
+      case DeleteCategoryEvent:
+        CategoryType categoryType =
+            event is DeleteCategoryEvent ? event.categoryType : null;
+        dynamic data = await httpCategoryService.deleteCategoryTypes(
+            categoryType: categoryType);
+        _categoryesType = data;
+        yield CategorysTypesState(categoryes: _categoryesType);
+        break;
+      case SetCategoryTypeEvent:
+        CategoryType toBeSated =
+            event is SetCategoryTypeEvent ? event.categoryType : null;
+        dynamic data =
+            await httpCategoryService.setCategoryType(categoryType: toBeSated);
+        _categoryesType.add(data);
+        yield CategorysTypesState(categoryes: _categoryesType);
         break;
       default:
-      //   yield CategoryTypesState();
+        yield OneCategoryTypesState(categorie: _selectedCategoryType);
     }
   }
 
@@ -48,8 +71,85 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     add(GetCategoryTypeEvent());
   }
 
+  saveCategoryType(CategoryType categoryType) {
+    print(categoryType == _initialStateCategoryType);
+    add(SetCategoryTypeEvent(categoryType));
+  }
+
+  /*
+  add category localoy
+  wiull walidate if the category already exists
+ */
+  addCategory(String category) {
+    if (category == null || category == '') {
+      return;
+    }
+    _selectedCategoryType.categories = _selectedCategoryType.categories ?? [];
+    if (_categoryExists(category)) {
+      add(CategoryError(errorMessage: 'Categoria exista'));
+      return;
+    }
+    _selectedCategoryType.categories.add(Category(category: category));
+    add(PropagateCategoryEvent());
+  }
+
+  addCategoryType(CategoryType categoryType) {
+    _selectedCategoryType = categoryType;
+  }
+
   selectedType(id) {
+    if (id == null) {
+      _selectedCategoryType = CategoryType();
+      add(PropagateCategoryEvent());
+      _initialStateCategoryType =
+          CategoryType.fromJson(_selectedCategoryType.toJson());
+      return;
+    }
     _selectedCategoryType = _categoryesType
         .firstWhere((element) => element.id == id, orElse: () => null);
+    _initialStateCategoryType =
+        CategoryType.fromJson(_selectedCategoryType.toJson());
+    add(ClearCategoryEvent());
+    add(PropagateCategoryEvent());
+  }
+
+  setCategoryType(String data) {
+    _selectedCategoryType.type = data;
+  }
+
+  editCategory(int index, String newValue) {
+    if (newValue == null) {
+      return;
+    }
+    if (_categoryExists(newValue)) {
+      add(CategoryError(errorMessage: 'Categoria exista'));
+      return;
+    }
+    _selectedCategoryType.categories[index].category = newValue;
+    add(PropagateCategoryEvent());
+  }
+
+  deleteCategoryType(String id) {
+    add(DeleteCategoryEvent(categoryType: CategoryType(id: id)));
+  }
+
+  deleteCategory(Category category) {}
+
+  // bool _categoryTypeExists(categoryType) {
+  //   if (_selectedCategoryType.categories == null) {
+  //     return false;
+  //   }
+  //   return _categoryesType.singleWhere((it) => it.type == categoryType,
+  //           orElse: () => null) !=
+  //       null;
+  // }
+
+  bool _categoryExists(category) {
+    if (_selectedCategoryType.categories == null) {
+      return false;
+    }
+    return _selectedCategoryType.categories
+            .singleWhere((it) => it.category == category, orElse: () => null) !=
+        null;
   }
 }

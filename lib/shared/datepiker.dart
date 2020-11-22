@@ -5,13 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ehsfocus/shared/constants.dart';
 
+//TODO whis is this sateful?
 class DatePiker extends StatefulWidget {
   final String inputDate;
   final String label;
   final DateTime date;
   final Function getDate;
+  final bool isEditable;
   final Color color;
-  DatePiker({this.inputDate, this.label, this.getDate, this.color, this.date});
+  DatePiker(
+      {this.inputDate,
+      this.label,
+      this.getDate,
+      this.color,
+      this.date,
+      this.isEditable});
   @override
   _DatePikerState createState() => _DatePikerState();
 }
@@ -35,6 +43,9 @@ class _DatePikerState extends State<DatePiker> {
         padding: EdgeInsets.all(0),
         color: widget.color,
         onPressed: () {
+          if (!widget.isEditable) {
+            return;
+          }
           showDatePicker(
                   context: context,
                   locale: const Locale("ro", "RO"),

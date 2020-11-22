@@ -1,9 +1,7 @@
 part of 'employee_bloc.dart';
 
 @immutable
-abstract class EmployeeState {
-  Employee employee;
-}
+abstract class EmployeeState {}
 
 class EmployeeInitial extends EmployeeState {}
 
@@ -24,5 +22,9 @@ class DeleteEmployeeState extends EmployeeState {
 
 class EmployeesValueState extends EmployeeState {
   final List<Employee> employees;
-  EmployeesValueState(this.employees);
+  EmployeesValueState({this.employees});
 }
+
+class Sucsess extends EmployeeState {}
+
+class Error extends EmployeeState {}

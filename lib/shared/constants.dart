@@ -13,10 +13,6 @@ const textInputDecoration = InputDecoration(
 const textAreaStyle = InputDecoration(
   fillColor: AppColors.field,
   filled: true,
-  // enabledBorder: UnderlineInputBorder(
-  //     borderSide: BorderSide(color: AppColors.field, width: 1)),
-  // focusedBorder: UnderlineInputBorder(
-  //     borderSide: BorderSide(color:AppColors.field, width: 2)),
 );
 
 const labelFomat = TextStyle(fontSize: 12, color: AppColors.textSecundart);
@@ -47,10 +43,11 @@ class Labels {
   static String insertcorectiveAcction = 'Introduce-ti o Actiune ccorectiva';
   static String responsibal = 'Responsabil';
   static String area1 = 'Zona';
-  static String area2 = 'Pas proces';
+  static String area2 = 'Echipament/Pas proces';
   static String scanButton = 'QR scan';
   static String pictureButton = 'Adauga poza';
   static String category = 'Categorie';
+  static String admin = 'Administartatie';
   static String addAudit = "Audit";
   static String email = 'Email';
   static String responsabile = 'Responsibil';
@@ -87,6 +84,26 @@ class Labels {
   static String close = 'Inchide';
   static String area = 'Area';
   static String clear = 'Sterge';
+  static String addCategory = 'Adauga Categorie';
+  static String areYouShoure = 'Esti sigur?';
+  static String areYouShoureText = 'Va fi sterge definitiv!';
+  static String employees = 'Auditori';
+  static String name = 'Prenume';
+  static String surName = 'Nume';
+  static String role = 'Departament';
+  static String logout = 'Log out';
+  static String search = 'Cauta';
+  static String signIn = 'Sign in';
+  static String signup = 'Sign up';
+  static String auditTitle = 'Audituri';
+  static String aspectsResponsiBilittyTitle = 'Aspecte de rezolvat';
+  static String doneBy = 'Facut de:';
+  static String responsable = 'Responsabil:';
+  static String rejected = 'Respins';
+  static String acceped = 'Acceptat';
+  static String modify = 'Modifica';
+  static String aspectTitle = 'Aspect';
+  static String ditail = 'Detalii';
 }
 
 Map<String, String> dinamicTitles = {
@@ -124,12 +141,20 @@ class RoutPath {
   static const loadingRout = '/loading';
   static const safetyRout = '/ehs';
   static const employeeRout = '/employee';
+  static const meRout = '/me';
   static const statsRout = '/stats';
   static const helthRout = '/sanatate';
   static const enviromentRout = '/mediu';
   static const incidentRout = '/incident';
   static const auditsRoute = '/audits';
   static const categoryRoute = '/category';
+  static const adminRoute = '/admin';
+  static const areaRoute = '/area';
+  static const login = '/login';
+  static const signup = '/signup';
+  static const loading = '/loading';
+  static const overwiewAudits = '/overwiewAudits';
+  static const myResponsibility = '/myResponsibility';
 }
 
 class CurrentPath {
@@ -160,6 +185,7 @@ class PageTitles {
 }
 
 enum FooterStates { delete, save, send }
+enum PopupStates { ok, cancel }
 
 Map<FooterStates, String> footerLagels = {
   FooterStates.delete: Labels.delete,

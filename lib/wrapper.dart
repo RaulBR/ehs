@@ -18,8 +18,10 @@ class AuthWrapper extends StatelessWidget {
         create: (context) => LoginBloc(),
         child: BlocBuilder<LoginBloc, LoginState>(
           builder: (context, state) {
-            if (state is LoginState) {}
-            return state is LoginState && state.user != null
+            if (state is LoginError) {
+              return AnimationWrapper(child: LoginWraper());
+            }
+            return state is AuthorizedState && state.user != null
                 ? AnimationWrapper(child: MainApp())
                 : AnimationWrapper(child: LoginWraper());
           },

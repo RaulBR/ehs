@@ -18,3 +18,19 @@ class AnimationWrapper extends StatelessWidget {
         child: child);
   }
 }
+
+class FadeAnimationWrapper extends StatelessWidget {
+  final Widget child;
+  FadeAnimationWrapper({this.child});
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSwitcher(
+        duration: const Duration(milliseconds: 500),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return FadeTransition(
+              opacity: Tween(begin: 0.0, end: 1.0).animate(animation),
+              child: child);
+        },
+        child: child);
+  }
+}

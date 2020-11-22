@@ -109,7 +109,7 @@ class _AuditFormState extends State<AuditForm> {
           if (state is AuditDataState) {
             if (state.audit.auditHead != null) {
               area = state.audit.auditHead;
-              areaTitle = '${area.area}-${area.step}';
+              areaTitle = '${area.area}';
               _negativeAspects = state.audit.negativeAspects ?? [];
               _positiveAspects = state.audit.positiveAspects ?? [];
             }
@@ -182,7 +182,8 @@ class _AuditFormState extends State<AuditForm> {
 
                     break;
                   case FooterStates.send:
-                    // print(action);
+                    BlocProvider.of<AuditBloc>(context).submitAudit();
+
                     break;
                 }
               },

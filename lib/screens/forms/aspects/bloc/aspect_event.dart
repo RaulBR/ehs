@@ -26,6 +26,31 @@ class GetAspectPhotos extends AspectEvent {
   GetAspectPhotos({this.aspect});
 }
 
+class GetAspectsToApprove extends AspectEvent {
+  final List<Aspect> aspects;
+  GetAspectsToApprove({this.aspects});
+}
+
+class GetAspectsForMe extends AspectEvent {
+  final List<Aspect> aspects;
+  GetAspectsForMe({this.aspects});
+}
+
+class RejectAspect extends AspectEvent {
+  final Aspect aspect;
+  RejectAspect({this.aspect});
+}
+
+class ResolveAspect extends AspectEvent {
+  final Aspect aspect;
+  ResolveAspect({this.aspect});
+}
+
+class AcceptAspect extends AspectEvent {
+  final Aspect aspect;
+  AcceptAspect({this.aspect});
+}
+
 class DeleteAspectPhoto extends AspectEvent {
   final AspectPhoto aspectPhoto;
 

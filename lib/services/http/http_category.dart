@@ -4,36 +4,33 @@ import 'package:ehsfocus/services/http/http.dart';
 
 class HttpCategoryService extends HttpService {
   String _categoryUrl = '/category';
+  String _deleteUrl = '/category/delete-categoryType';
   getCategoryTypes() async {
     String data = await postRequest(
         endpint: '$_categoryUrl/get', jsonValue: null, hasHeadder: true);
-    print(data);
+
     return (json.decode(data) as List)
         .map((i) => CategoryType.fromJson(i))
         .toList();
   }
 
-  // setEmployee(Employee employee) async {
-  //   String data = await postRequest(
-  //       endpint: _categoryUrl, jsonValue: employee.toJson(), hasHeadder: true);
-  //   return Employee.fromJson(json.decode(data));
-  // }
+  setCategoryType({CategoryType categoryType}) async {
+    String data = await postRequest(
+        endpint: _categoryUrl,
+        jsonValue: json.encode(categoryType),
+        hasHeadder: true);
 
-  // deleteEmployee(Employee employee) async {
-  //   if (employee == null) {
-  //     return;
-  //   }
+    return CategoryType.fromJson(json.decode(data));
+  }
 
-  //   if (employee.id == null) {
-  //     return;
-  //   }
+  deleteCategoryTypes({CategoryType categoryType}) async {
+    String data = await postRequest(
+        endpint: _deleteUrl,
+        jsonValue: json.encode(categoryType),
+        hasHeadder: true);
 
-  //   String data = await deleteRequest(endpint: '$_categoryUrl${employee.id}');
-  //   return data;
-  // }
-
-  // Future<dynamic> signOut() async {
-  //   return postTeamplate('/api/user/logout', null);
-  // }
-
+    return (json.decode(data) as List)
+        .map((i) => CategoryType.fromJson(i))
+        .toList();
+  }
 }

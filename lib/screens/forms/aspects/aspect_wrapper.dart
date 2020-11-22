@@ -13,6 +13,8 @@ class AspectWrapper extends StatefulWidget {
   final int order;
   final String type;
   final bool hasAction;
+  final bool isEditable;
+  final List<String> buttons;
 
   const AspectWrapper(
       {Key key,
@@ -21,7 +23,9 @@ class AspectWrapper extends StatefulWidget {
       this.title,
       this.order,
       this.type,
-      this.hasAction})
+      this.hasAction,
+      this.buttons,
+      this.isEditable})
       : super(key: key);
 
   @override
@@ -55,6 +59,39 @@ class _AspectWrapperState extends State<AspectWrapper> {
     });
   }
 
+  List<Widget> generateButtons() {
+    List<String> buttons = widget.buttons ?? [];
+    if (widget.buttons == null) {
+      buttons.add(Labels.addAnother);
+      buttons.add(Labels.add);
+      buttons.add(Labels.back);
+    }
+    return [
+      FlatButton(
+        // icon: Icon(Icons.add),
+        child: Text(buttons[0]),
+        onPressed: () {
+          widget.hasChanges(_aspect, buttons[0]);
+          resetForm();
+        },
+      ),
+      FlatButton(
+        onPressed: () {
+          widget.hasChanges(_aspect, buttons[1]);
+
+          Navigator.pop(context);
+        },
+        child: Text(buttons[1]),
+      ),
+      FlatButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: Text(Labels.back),
+      )
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     _aspect = widget.aspect ?? _aspect;
@@ -64,8 +101,9 @@ class _AspectWrapperState extends State<AspectWrapper> {
         body: _isAction
             ? AnimationWrapper(
                 child: ActionsFormWidget(
+                  isEditable: _aspect.status != "A",
                   aspect: _aspect,
-                  order: widget.order + 1,
+                  order: widget.order != null ? widget.order + 1 : null,
                   title: Labels.corectiveAcction,
                   navigate: () => navigate(),
                   hasChanges: (data) => setActions(data),
@@ -73,7 +111,8 @@ class _AspectWrapperState extends State<AspectWrapper> {
               )
             : AnimationWrapper(
                 child: PhotoCommentForm(
-                    hasAction: widget.type == 'N',
+                    isEditable: widget.isEditable ?? true,
+                    hasAction: widget.hasAction,
                     aspect: _aspect,
                     order: widget.order,
                     type: widget.type,
@@ -83,30 +122,7 @@ class _AspectWrapperState extends State<AspectWrapper> {
                       setAspects(data);
                     }),
               ),
-        persistentFooterButtons: [
-          FlatButton.icon(
-            icon: Icon(Icons.add),
-            label: Text(Labels.addAnother),
-            onPressed: () {
-              widget.hasChanges(_aspect);
-              resetForm();
-            },
-          ),
-          FlatButton(
-            onPressed: () {
-              widget.hasChanges(_aspect);
-
-              Navigator.pop(context);
-            },
-            child: Text(Labels.add),
-          ),
-          FlatButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(Labels.back),
-          )
-        ],
+        persistentFooterButtons: generateButtons(),
       ),
     );
   }

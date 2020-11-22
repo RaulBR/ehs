@@ -1,25 +1,42 @@
-class CategoryType {
+import 'package:equatable/equatable.dart';
+
+class CategoryType extends Equatable {
   String id;
   String type;
   List<Category> categories;
 
-  CategoryType({this.id, this.type});
-  Map<String, dynamic> toJson() => {"id": id, "type": type};
+  CategoryType({
+    this.id,
+    this.type,
+    this.categories,
+  });
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "type": type,
+        "categories": categories == null
+            ? []
+            : categories.map((Category data) => data.toJson()).toList(),
+      };
 
   CategoryType.fromJson(Map<String, dynamic> parsedJson) {
     if (parsedJson == null) {
       return;
     }
 
-    id = parsedJson['id'].toString();
-    type = parsedJson['type'].toString();
-    categories = (parsedJson['categoryes'] as List<dynamic>)
-        .map((i) => Category.fromJson(i))
-        .toList();
+    id = parsedJson['id'];
+    type = parsedJson['type'];
+    categories = parsedJson['categories'] == null
+        ? []
+        : (parsedJson['categories'] as List<dynamic>)
+            .map((i) => Category.fromJson(i))
+            .toList();
   }
+
+  @override
+  List<Object> get props => [id, type, categories];
 }
 
-class Category {
+class Category extends Equatable {
   String id;
   String category;
   Category({this.id, this.category});
@@ -30,7 +47,10 @@ class Category {
     if (parsedJson == null) {
       return;
     }
-    id = parsedJson['id'].toString();
-    category = parsedJson['category'].toString();
+    id = parsedJson['id'] ?? null;
+    category = parsedJson['category'].toString() ?? null;
   }
+
+  @override
+  List<Object> get props => [id, category];
 }
