@@ -1,3 +1,5 @@
+import 'package:ehsfocus/models/generic_list_model.dart';
+import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/clerable%20_text_field.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class CategorySertvice {
   void openCategoryModal(context, {Function add, String selected}) async {
-    String _localValoue;
+    String _localValoue = '';
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -22,7 +24,7 @@ class CategorySertvice {
                   onChanged: (data) {
                     _localValoue = data;
                   },
-                  error: null,
+                  error: '',
                 ),
                 Switch(
                   value: false,
@@ -56,5 +58,19 @@ class CategorySertvice {
         );
       },
     );
+  }
+
+  List<GenericListObject> handleCategorysStateChange(context, state) {
+    if (state is CategorysTypesState) {
+      return state.categoryes
+          .map((d) => GenericListObject(id: d.id, title: d.type))
+          .toList();
+    }
+    if (state is CategorysState) {
+      return state.categoryes
+          .map((e) => GenericListObject(id: e.id, title: e.category))
+          .toList();
+    }
+    return [];
   }
 }

@@ -16,6 +16,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   HttpCategoryService httpCategoryService = HttpCategoryService();
   List<CategoryType> _categoryesType = [];
   CategoryType _selectedCategoryType = CategoryType();
+  Category _selectedCategory = Category();
   CategoryType _initialStateCategoryType = CategoryType();
 
   @override
@@ -40,8 +41,11 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
             categoryes: _selectedCategoryType.categories ?? []);
 
         break;
-      case PropagateCategoryEvent:
+      case PropagateCategoryTypeEvent:
         yield OneCategoryTypesState(categorie: _selectedCategoryType);
+        break;
+      case PropagateCategoryEvent:
+        yield OneCategoryState(categorie: _selectedCategory);
         break;
       case ClearCategoryEvent:
         yield CategorysState(categoryes: []);
@@ -90,7 +94,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       return;
     }
     _selectedCategoryType.categories.add(Category(category: category));
-    add(PropagateCategoryEvent());
+    add(PropagateCategoryTypeEvent());
   }
 
   addCategoryType(CategoryType categoryType) {
@@ -100,7 +104,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   selectedType(id) {
     if (id == null) {
       _selectedCategoryType = CategoryType();
-      add(PropagateCategoryEvent());
+      add(PropagateCategoryTypeEvent());
       _initialStateCategoryType =
           CategoryType.fromJson(_selectedCategoryType.toJson());
       return;
@@ -110,7 +114,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     _initialStateCategoryType =
         CategoryType.fromJson(_selectedCategoryType.toJson());
     add(ClearCategoryEvent());
-    add(PropagateCategoryEvent());
+    add(PropagateCategoryTypeEvent());
   }
 
   setCategoryType(String data) {
@@ -126,7 +130,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       return;
     }
     _selectedCategoryType.categories[index].category = newValue;
-    add(PropagateCategoryEvent());
+    add(PropagateCategoryTypeEvent());
   }
 
   deleteCategoryType(String id) {
@@ -151,5 +155,16 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     return _selectedCategoryType.categories
             .singleWhere((it) => it.category == category, orElse: () => null) !=
         null;
+  }
+
+  void selectCategory(id) {
+    if (id == null || _selectedCategoryType == null) {
+      return;
+    }
+    _selectedCategory = _selectedCategoryType.categories
+        .firstWhere((element) => element.id == id, orElse: () => null);
+
+    add(ClearCategoryEvent());
+    add(PropagateCategoryEvent());
   }
 }

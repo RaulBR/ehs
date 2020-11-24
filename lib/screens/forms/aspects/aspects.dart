@@ -57,6 +57,7 @@ class AspectsList extends StatelessWidget {
               context: context,
               navigationEvent: (data) {
                 data.type = type;
+                // TODO why not save here?
                 hasChanges(data);
               });
         },

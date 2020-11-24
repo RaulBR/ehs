@@ -16,6 +16,10 @@ class DeletePhotoEvent extends PhotoEvent {
   DeletePhotoEvent(photoSorce) : super(photoSorce);
 }
 
+class ChangePhotoEvent extends PhotoEvent {
+  ChangePhotoEvent(photoSorce) : super(photoSorce);
+}
+
 class OpenCameraEvent extends PhotoEvent {
   OpenCameraEvent(photoSorce) : super(photoSorce);
 }

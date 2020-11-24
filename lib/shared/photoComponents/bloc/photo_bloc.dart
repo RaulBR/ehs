@@ -45,6 +45,9 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
           }
         }
         break;
+      case ChangePhotoEvent:
+        yield ShowPhotoState(photo: event.photoSorce);
+        break;
       case DeletePhotoEvent:
         if (event.photoSorce is AspectPhoto) {
           try {

@@ -34,4 +34,6 @@ class SetCategoryTypeEvent extends CategoryEvent {
 
 class ClearCategoryEvent extends CategoryEvent {}
 
+class PropagateCategoryTypeEvent extends CategoryEvent {}
+
 class PropagateCategoryEvent extends CategoryEvent {}

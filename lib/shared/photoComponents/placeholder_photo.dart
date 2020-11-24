@@ -89,8 +89,9 @@ class PhotoWithPlaceholder extends StatelessWidget {
                         if (!_isEditable) {
                           return;
                         }
-
                         camera.handleShowDialog(context, (data) {
+                          BlocProvider.of<PhotoBloc>(context)
+                              .add(ChangePhotoEvent(data));
                           addPicture(data);
                         });
                       },

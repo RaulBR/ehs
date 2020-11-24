@@ -1,3 +1,4 @@
+import 'package:ehsfocus/models/action_model.dart';
 import 'package:ehsfocus/models/aspects_model.dart';
 import 'package:ehsfocus/screens/forms/aspects/actions_form.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_dependencys.dart';
@@ -6,6 +7,7 @@ import 'package:ehsfocus/services/animations/animation_wrapper.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:flutter/material.dart';
 
+// TODO fix phoho comments!!!
 class AspectWrapper extends StatefulWidget {
   final Aspect aspect;
   final Function hasChanges;
@@ -41,15 +43,9 @@ class _AspectWrapperState extends State<AspectWrapper> {
     });
   }
 
-  setAspects(data) {
-    setState(() {
-      _aspect = data;
-    });
-  }
-
   setActions(data) {
     setState(() {
-      _aspect.action = data;
+      _aspect.action = data == null ? AuditAction() : data;
     });
   }
 
@@ -64,7 +60,6 @@ class _AspectWrapperState extends State<AspectWrapper> {
     if (widget.buttons == null) {
       buttons.add(Labels.addAnother);
       buttons.add(Labels.add);
-      buttons.add(Labels.back);
     }
     return [
       FlatButton(
@@ -119,7 +114,7 @@ class _AspectWrapperState extends State<AspectWrapper> {
                     title: widget.title,
                     navigate: () => navigate(),
                     hasChanges: (Aspect data) {
-                      setAspects(data);
+                      _aspect = data;
                     }),
               ),
         persistentFooterButtons: generateButtons(),

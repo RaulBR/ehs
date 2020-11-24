@@ -21,19 +21,18 @@ class OneCategoryTypesState extends CategoryState {
   });
 }
 
+class OneCategoryState extends CategoryState {
+  final Category categorie;
+  OneCategoryState({
+    this.categorie,
+  });
+}
+
 class CategorysState extends CategoryState {
   final List<Category> categoryes;
   CategorysState({
     this.categoryes,
   });
 }
-
-class SetCategoryTypesState extends CategoryState {}
-
-class SetCategoryState extends CategoryState {}
-
-class SetCategorysState extends CategoryState {}
-
-class DeleteCategorysState extends CategoryState {}
 
 class DeleteCategoryState extends CategoryState {}

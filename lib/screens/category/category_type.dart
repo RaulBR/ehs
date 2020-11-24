@@ -27,11 +27,11 @@ class CategoryTypeMentenanceForm extends StatelessWidget {
         children: <Widget>[
           ClearableTextField(
             label: Labels.aspectType,
-            inputValue: category.type,
+            inputValue: (category.type),
             onChanged: (value) {
               BlocProvider.of<CategoryBloc>(context).setCategoryType(value);
             },
-            error: null,
+            error: '',
           ),
           SizedBox(height: 20),
           InputContainer(

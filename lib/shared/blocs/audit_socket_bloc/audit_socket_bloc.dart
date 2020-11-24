@@ -37,6 +37,10 @@ class AuditSocketBloc extends Bloc<AuditSocketEvent, AuditSocketState> {
           notyfyDistributionchange(e);
           // notyfychange(e);
         });
+        ws.on("disconect", (_) {
+          print('Disconnected ${ws.id}');
+          throw ("some arbitrary error");
+        });
         break;
       case DisconnectFromSocketEvent:
         break;

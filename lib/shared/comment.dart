@@ -4,7 +4,7 @@ import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class OpenTextAreaWidget extends StatelessWidget {
+class OpenTextAreaWidget extends StatefulWidget {
   final String label;
   final Icon icon;
   final String text;
@@ -19,25 +19,35 @@ class OpenTextAreaWidget extends StatelessWidget {
   });
 
   @override
+  _OpenTextAreaWidgetState createState() => _OpenTextAreaWidgetState();
+}
+
+class _OpenTextAreaWidgetState extends State<OpenTextAreaWidget> {
+  String _text;
+  @override
   Widget build(BuildContext context) {
+    _text = _text == null ? widget.text : _text;
     return SafeArea(
       child: InputContainer(
         child: Column(
           children: [
             GoToButton(
-              icon: icon,
-              label: label,
+              icon: widget.icon,
+              label: widget.label,
               onPressed: () => {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditableTextAreaWidget(
-                        isEditable: isEditable,
-                        icon: icon,
-                        label: label,
-                        text: text,
+                        isEditable: widget.isEditable,
+                        icon: widget.icon,
+                        label: widget.label,
+                        text: _text,
                         onEdit: (text) {
-                          onEdit(text);
+                          setState(() {
+                            _text = text;
+                          });
+                          widget.onEdit(text);
                         },
                       ),
                     ))
@@ -48,7 +58,7 @@ class OpenTextAreaWidget extends StatelessWidget {
                 padding: EdgeInsets.only(left: 10, right: 10),
                 width: double.infinity,
                 child: SingleChildScrollView(
-                    child: Text(text == null ? '' : text))),
+                    child: Text(_text == null ? '' : _text))),
           ],
         ),
       ),
