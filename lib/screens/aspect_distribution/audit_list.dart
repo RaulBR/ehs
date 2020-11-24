@@ -40,13 +40,16 @@ class AuditList extends StatelessWidget {
                         state is AspectToHandleState ? state.aspects : [],
                   ),
                 ),
-          bottomNavigationBar: AspectTriajFooter(
-            actions: actions,
-            getAction: (aspect, actionVal) {
-              action(aspect, actionVal);
-            },
-            aspect: _aspects.length == 0 ? Aspect() : _aspects[index ?? 0],
-          ),
+          bottomNavigationBar: (state is LoadingState)
+              ? null
+              : AspectTriajFooter(
+                  actions: actions,
+                  getAction: (aspect, actionVal) {
+                    action(aspect, actionVal);
+                  },
+                  aspect:
+                      _aspects.length == 0 ? Aspect() : _aspects[index ?? 0],
+                ),
         );
       },
     );
