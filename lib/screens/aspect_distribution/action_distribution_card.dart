@@ -22,22 +22,30 @@ class ActionDistributionCard extends StatelessWidget {
     BlocProvider.of<AspectBloc>(context).getAspectsPhotos(aspect);
     // TODO move to service
     String getResponsable() {
-      if (aspect != null ||
-          aspect.action != null ||
-          aspect.action.responsable != null) {
-        return '${aspect.action.responsable.firstName ?? null} ${aspect.action.responsable.lastName ?? null}';
+      if (aspect != null && aspect.action != null) {
+        return aspect.action.responsable != null
+            ? '${aspect.action.responsable.firstName ?? null} ${aspect.action.responsable.lastName ?? null}'
+            : 'Nu sa setat';
       }
-      return null;
+      return 'Nu sa setat';
     }
 
     String getCreatedBy() {
-      if (aspect != null ||
-          aspect.audit != null ||
-          aspect.audit.employee != null ||
+      if (aspect != null &&
+          aspect.audit != null &&
+          aspect.audit.employee != null &&
           aspect.audit.employee.firstName != null) {
         return '${aspect.audit.employee.firstName ?? null} ${aspect.audit.employee.lastName ?? null}';
       }
-      return null;
+      return 'Nu sa setat';
+    }
+
+    String getDate() {
+      if (aspect != null && aspect.action != null) {
+        return aspect.action.limitDate != null
+            ? aspect.action.limitDate
+            : 'fara data';
+      }
     }
 
     return Padding(
@@ -106,7 +114,7 @@ class ActionDistributionCard extends StatelessWidget {
                     EmployeeCard(
                       action: Labels.responsable,
                       name: getResponsable(),
-                      date: aspect.action.limitDate,
+                      date: getDate(),
                     )
                   ],
                 ),
