@@ -21,14 +21,14 @@ class SetAspect extends AspectEvent {
   SetAspect({this.aspects});
 }
 
-class GetAspectPhotos extends AspectEvent {
-  final Aspect aspect;
-  GetAspectPhotos({this.aspect});
-}
-
 class GetAspectsToApprove extends AspectEvent {
   final List<Aspect> aspects;
   GetAspectsToApprove({this.aspects});
+}
+
+class AspectIndexEvent extends AspectEvent {
+  final int index;
+  AspectIndexEvent({this.index = 0});
 }
 
 class GetAspectsForMe extends AspectEvent {

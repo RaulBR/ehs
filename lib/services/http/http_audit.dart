@@ -74,19 +74,27 @@ class HttpAuditService extends HttpService {
   }
 
   setAspect(AuditRequest auditin) async {
-    dynamic data = await postRequest(
-        endpint: '/aspect', jsonValue: jsonEncode(auditin), hasHeadder: true);
-    dynamic result = json.decode(data);
-    return AuditRequest.fromJson(result);
+    try {
+      dynamic data = await postRequest(
+          endpint: '/aspect', jsonValue: jsonEncode(auditin), hasHeadder: true);
+      dynamic result = json.decode(data);
+      return AuditRequest.fromJson(result);
+    } catch (e) {
+      throw e;
+    }
   }
 
   rejectAspect(Aspect aspect) async {
-    dynamic data = await postRequest(
-        endpint: '/aspect/reject',
-        jsonValue: jsonEncode(aspect),
-        hasHeadder: true);
-    dynamic result = json.decode(data);
-    return Aspect.fromJson(result);
+    try {
+      dynamic data = await postRequest(
+          endpint: '/aspect/reject',
+          jsonValue: jsonEncode(aspect),
+          hasHeadder: true);
+      dynamic result = json.decode(data);
+      return Aspect.fromJson(result);
+    } catch (e) {
+      throw e;
+    }
   }
 
   resolveAspect(Aspect aspect) async {

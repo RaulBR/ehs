@@ -6,9 +6,12 @@ import 'package:ehsfocus/screens/forms/aspects/aspects.dart';
 import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc_index.dart';
 import 'package:ehsfocus/screens/forms/shared_form_components/audit_list_element.dart';
 import 'package:ehsfocus/services/page_helper_service.dart';
+import 'package:ehsfocus/services/websocket_service.dart/audit_socket_bloc/audit_socket_bloc.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/form_footer.dart';
+import 'package:ehsfocus/shared/loading.dart';
 import 'package:ehsfocus/shared/navigation_form/navigation_wrapper.dart';
+import 'package:ehsfocus/theme.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -77,6 +80,7 @@ class _AuditFormState extends State<AuditForm> {
             if (data == null) {
               return;
             }
+
             BlocProvider.of<AuditBloc>(context).setAspect(data);
           },
         ),
@@ -107,12 +111,11 @@ class _AuditFormState extends State<AuditForm> {
       body: BlocListener<AuditBloc, AuditState>(
         listener: (BuildContext context, AuditState state) {
           if (state is AuditDataState) {
-            if (state.audit.auditHead != null) {
-              area = state.audit.auditHead;
-              areaTitle = '${area.area}';
-              _negativeAspects = state.audit.negativeAspects ?? [];
-              _positiveAspects = state.audit.positiveAspects ?? [];
-            }
+            area = state.audit.auditHead;
+            areaTitle = state.audit.auditHead != null ? '${area.area}' : null;
+            _negativeAspects = state.audit.negativeAspects ?? [];
+            _positiveAspects = state.audit.positiveAspects ?? [];
+            BlocProvider.of<AuditSocketBloc>(context).getAuditChange();
           }
           if (state is DeleteSucsesfull) {
             area = null;
@@ -137,6 +140,7 @@ class _AuditFormState extends State<AuditForm> {
                 },
               ),
               DropDownAuditListElement(
+                disabled: area == null,
                 title: Labels.positiveAcctionMessage,
                 order: 2,
                 isDone: _positiveAspects.length != 0,
@@ -150,6 +154,7 @@ class _AuditFormState extends State<AuditForm> {
                 },
               ),
               DropDownAuditListElement(
+                disabled: area == null,
                 title: Labels.negativeAcctionMessage,
                 order: 3,
                 isDone: _negativeAspects.length != 0,
@@ -164,28 +169,39 @@ class _AuditFormState extends State<AuditForm> {
       ),
       bottomNavigationBar: isFormOpened
           ? null
-          : FormFooter(
-              actions: [
-                FooterStates.delete,
-                FooterStates.save,
-                FooterStates.send
-              ],
-              action: (action) {
-                // TODO move to bloc
-                switch (action) {
-                  case FooterStates.delete:
-                    // TODO add popup
-                    BlocProvider.of<AuditBloc>(context).deleteAuidit(area.id);
-                    break;
-                  case FooterStates.save:
-                    BlocProvider.of<AuditBloc>(context).setAudit();
-
-                    break;
-                  case FooterStates.send:
-                    BlocProvider.of<AuditBloc>(context).submitAudit();
-
-                    break;
+          : BlocBuilder<AuditBloc, AuditState>(
+              builder: (context, state) {
+                if (state is AuditLoading) {
+                  return Loading(
+                    color: AppColors.transparent,
+                    size: 30,
+                  );
                 }
+                return FormFooter(
+                  isEditable: false,
+                  actions: [
+                    FooterStates.delete,
+                    FooterStates.save,
+                    FooterStates.send
+                  ],
+                  action: (action) {
+                    // TODO move to bloc
+                    switch (action) {
+                      case FooterStates.delete:
+                        // TODO add popup
+                        BlocProvider.of<AuditBloc>(context)
+                            .deleteAuidit(area.id);
+                        break;
+                      case FooterStates.save:
+                        BlocProvider.of<AuditBloc>(context).setAudit();
+
+                        break;
+                      case FooterStates.send:
+                        BlocProvider.of<AuditBloc>(context).submitAudit();
+                        break;
+                    }
+                  },
+                );
               },
             ),
     );

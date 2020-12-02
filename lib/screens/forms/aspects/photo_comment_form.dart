@@ -1,6 +1,5 @@
 import 'package:ehsfocus/models/generic_list_model.dart';
-import 'package:ehsfocus/screens/category/category_picker.dart';
-import 'package:ehsfocus/screens/category/category_type_picker.dart';
+import 'package:ehsfocus/screens/category/category_grup.dart';
 import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
 import 'package:ehsfocus/services/camera_service.dart';
 import 'package:ehsfocus/shared/action_button.dart';
@@ -14,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PhotoCommentForm extends StatelessWidget {
+  final PhotoCommentError error;
   final Aspect aspect;
   final String type;
   final String title;
@@ -31,7 +31,8 @@ class PhotoCommentForm extends StatelessWidget {
       this.aspect,
       this.hasAction,
       this.navigate,
-      this.isEditable});
+      this.isEditable,
+      this.error});
 
   @override
   Widget build(BuildContext context) {
@@ -84,23 +85,19 @@ class PhotoCommentForm extends StatelessWidget {
                     },
                   ),
                 ),
-                CategoryTypePiker(
-                  input: _aspect.categoryType,
+                CategoryGroupPicker(
+                  error: null,
+                  categoryType: _aspect.categoryType,
+                  category: _aspect.category,
                   isEditable: isEditable,
-                  hasChanges: (value2) {
-                    _aspect.categoryType = value2;
+                  getCategory: (category) {
+                    _aspect.category = category;
                     hasChanges(_aspect);
                   },
-                  label: Labels.aspectType,
-                ),
-                CategoryPiker(
-                  input: _aspect.category,
-                  isEditable: isEditable,
-                  hasChanges: (value2) {
-                    _aspect.category = value2;
+                  getCategoryType: (categoryType) {
+                    _aspect.categoryType = categoryType;
                     hasChanges(_aspect);
                   },
-                  label: Labels.category,
                 ),
                 OpenTextAreaWidget(
                   isEditable: isEditable,
@@ -128,4 +125,11 @@ class PhotoCommentForm extends StatelessWidget {
       ),
     );
   }
+}
+
+class PhotoCommentError {
+  String areaError;
+  String photoError;
+  String categoryError;
+  String commentError;
 }

@@ -1,14 +1,12 @@
-import 'package:ehsfocus/models/aspects_model.dart';
-import 'package:ehsfocus/screens/forms/aspects/aspect_wrapper.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 
+// duplicate
 class AspectTriajFooter extends StatelessWidget {
   final List<String> actions;
   final Function getAction;
-  final Aspect aspect;
-  const AspectTriajFooter({Key key, this.actions, this.getAction, this.aspect})
+  const AspectTriajFooter({Key key, this.actions, this.getAction})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -18,7 +16,7 @@ class AspectTriajFooter extends StatelessWidget {
         children: [
           FlatButton(
             onPressed: () {
-              getAction(aspect, actions[0]);
+              getAction(actions[0]);
             },
             child: Text(
               actions[0],
@@ -29,28 +27,13 @@ class AspectTriajFooter extends StatelessWidget {
           ),
           FlatButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AspectWrapper(
-                    isEditable: false,
-                    aspect: aspect ?? Aspect(),
-                    hasChanges: (data, action) {
-                      getAction(data, action);
-                    },
-                    title: Labels.aspectTitle,
-                    type: 'N',
-                    hasAction: true,
-                    buttons: [Labels.acceped, Labels.rejected],
-                  ),
-                ),
-              );
+              getAction(Labels.ditail);
             },
             child: Text(Labels.ditail),
           ),
           FlatButton(
             onPressed: () {
-              getAction(aspect, actions[1]);
+              getAction(actions[1]);
             },
             child: Icon(
               Icons.check,

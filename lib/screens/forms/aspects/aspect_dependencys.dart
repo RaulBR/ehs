@@ -12,15 +12,15 @@ class AspectBlocDependencyes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(providers: [
-      BlocProvider<AspectBloc>(
-        create: (_) => AspectBloc(),
-      ),
+      // BlocProvider<AspectBloc>(
+      //   create: (_) => AspectBloc(),
+      // ),
       BlocProvider<AreaBloc>(
         create: (_) => AreaBloc(),
       ),
-      BlocProvider<CategoryBloc>(
-        create: (_) => CategoryBloc(),
-      ),
+      // BlocProvider<CategoryBloc>(
+      //   create: (_) => CategoryBloc(),
+      // ),
     ], child: child);
   }
 }

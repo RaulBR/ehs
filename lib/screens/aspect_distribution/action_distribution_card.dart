@@ -1,12 +1,10 @@
 import 'package:ehsfocus/models/aspects_model.dart';
-import 'package:ehsfocus/screens/forms/aspects/bloc/aspect_bloc.dart';
+import 'package:ehsfocus/screens/aspect_distribution/bold_elemen_text.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/photoComponents/placeholder_photo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'employee_card.dart';
 
-// TODO BIG MAKE DINAMIC
 class ActionDistributionCard extends StatelessWidget {
   final Function isSelected;
   final Aspect aspect;
@@ -19,15 +17,14 @@ class ActionDistributionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<AspectBloc>(context).getAspectsPhotos(aspect);
     // TODO move to service
     String getResponsable() {
       if (aspect != null && aspect.action != null) {
         return aspect.action.responsable != null
             ? '${aspect.action.responsable.firstName ?? null} ${aspect.action.responsable.lastName ?? null}'
-            : 'Nu sa setat';
+            : Labels.notSet;
       }
-      return 'Nu sa setat';
+      return Labels.notSet;
     }
 
     String getCreatedBy() {
@@ -37,14 +34,14 @@ class ActionDistributionCard extends StatelessWidget {
           aspect.audit.employee.firstName != null) {
         return '${aspect.audit.employee.firstName ?? null} ${aspect.audit.employee.lastName ?? null}';
       }
-      return 'Nu sa setat';
+      return Labels.notSet;
     }
 
     String getDate() {
       if (aspect != null && aspect.action != null) {
         return aspect.action.limitDate != null
             ? aspect.action.limitDate
-            : 'fara data';
+            : Labels.notSet;
       }
     }
 
@@ -90,10 +87,19 @@ class ActionDistributionCard extends StatelessWidget {
                   Container(
                     height: 60,
                     width: double.infinity,
-                    child: Text(
-                      '${aspect.comment}',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
+                    child: BoldElementText(
+                      boldText: Labels.observation,
+                      text: aspect.comment == null ? '' : '${aspect.comment}',
+                    ),
+                  ),
+                  Container(
+                    height: 60,
+                    width: double.infinity,
+                    child: BoldElementText(
+                      boldText: Labels.acction,
+                      text: aspect.action.comment == null
+                          ? ''
+                          : '${aspect.action.comment}',
                     ),
                   ),
                   SizedBox(

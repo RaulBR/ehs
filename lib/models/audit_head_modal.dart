@@ -29,7 +29,6 @@ class AuditHead {
     sector =
         parsedJson['sector'] == null ? null : parsedJson['sector'].toString();
     auditStatus = parsedJson['auditStatus'].toString();
-    print(parsedJson['employee']);
     employee = parsedJson['employee'] == null
         ? null
         : Employee.fromJson(parsedJson['employee']);

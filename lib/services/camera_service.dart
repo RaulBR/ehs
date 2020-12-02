@@ -72,7 +72,6 @@ class CameraService {
   }
 
   Future<File> preProcessLocation(PickedFile path) async {
-    print(path);
     File f = new File(path.path);
     String newPath = await getAppFolder();
     String type = path.path.split('/').last.split('.')[1];

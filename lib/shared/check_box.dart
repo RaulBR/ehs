@@ -36,41 +36,47 @@ class _MyCheckBoxState extends State<MyCheckBox> {
   }
 }
 
-class EhsCheckBox extends StatelessWidget {
+class EhsCheckBox extends StatefulWidget {
   final String label;
   final bool isEditable;
   final bool value;
   final Function setValue;
   EhsCheckBox(
       {this.value, @required this.setValue, this.label, this.isEditable});
+
+  @override
+  _EhsCheckBoxState createState() => _EhsCheckBoxState();
+}
+
+class _EhsCheckBoxState extends State<EhsCheckBox> {
+  bool local;
   @override
   Widget build(BuildContext context) {
-    // return CheckboxListTile(
-
-    //   title: Text(label),
-    //   onChanged: (bool value) {
-
-    //    setValue(value);
-    //  },
-    //   value: value,
-    //  );
+    local = local == null ? widget.value : local;
+    setLocal() {
+      setState(() {
+        local = !local;
+      });
+    }
 
     return InputContainer(
       child: Center(
         child: FlatButton(
           padding: EdgeInsets.all(0),
           onPressed: () {
-            setValue(!value);
+            setLocal();
+            widget.setValue(local);
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(label),
+              Text(widget.label),
               Checkbox(
-                value: value,
+                value: local,
                 onChanged: (bool value) {
-                  if (isEditable) {
-                    setValue(value);
+                  if (widget.isEditable) {
+                    setLocal();
+                    widget.setValue(local);
                   }
                 },
                 // secondary: const Icon(Icons.hourglass_empty),

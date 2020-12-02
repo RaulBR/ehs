@@ -104,6 +104,11 @@ class Labels {
   static String modify = 'Modifica';
   static String aspectTitle = 'Aspect';
   static String ditail = 'Detalii';
+  static String notAdded = 'NU A FOST ADAUGAT';
+  static String unKnown = 'Necunosct';
+  static String notSet = 'Nu s-a setat';
+  static String observation = 'Observatii: ';
+  static String acction = 'Actiuni: ';
 }
 
 Map<String, String> dinamicTitles = {

@@ -19,7 +19,12 @@ class AuditsToApproveState extends AuditState {
   AuditsToApproveState(this.areaList);
 }
 
-class Error extends AuditState {}
+class Error extends AuditState {
+  final dynamic error;
+  Error({
+    this.error,
+  });
+}
 
 class DeleteSucsesfull extends AuditState {}
 

@@ -9,7 +9,6 @@ import 'package:ehsfocus/shared/ehs_slider.dart';
 import 'package:ehsfocus/shared/navigation_form/navigation_wrapper.dart';
 import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class IncidentForm extends StatefulWidget {
   @override

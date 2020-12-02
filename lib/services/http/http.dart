@@ -54,7 +54,7 @@ class HttpService {
         break;
       case 400:
         if (response.body.isNotEmpty) {
-          throw json.decode(response.body)['errors'] ?? {"status": 'error'};
+          throw response.body ?? {"status": 'error'};
         }
         throw StatusList[Status.noErrorMessage];
         break;

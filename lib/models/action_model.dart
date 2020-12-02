@@ -71,8 +71,8 @@ class AuditAction {
   AuditAction.fromJson(parsedJson) {
     id = parsedJson['id'].toString();
     imidiatAcction = parsedJson['imidiatAcction'];
-    limitDate = parsedJson['limitDate'].toString();
-    comment = parsedJson['comment'].toString();
+    limitDate = parsedJson['limitDate']?.toString();
+    comment = parsedJson['comment']?.toString();
     responsable = parsedJson['responsable'] != null
         ? Employee.fromJson(parsedJson['responsable'])
         : null;
@@ -104,7 +104,7 @@ class AuditRequest {
   }
 
   Map<String, dynamic> toJson() => {
-        "auditHead": auditHead.toJson(),
-        "aspect": aspect.toJson(),
+        "auditHead": auditHead?.toJson(),
+        "aspect": aspect?.toJson(),
       };
 }

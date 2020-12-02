@@ -28,6 +28,11 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
         await httpEmployeeService.deleteEmployees(e);
         add(GetEmployeesEvent());
         break;
+      case UpdateSelectedEmployeeEvent:
+        Employee e =
+            event is UpdateSelectedEmployeeEvent ? event.employee : null;
+        yield EmployeeValueState(e);
+        break;
       case SetEmployeeEvent:
         Employee employee = event is SetEmployeeEvent ? event.employee : null;
         try {
@@ -82,7 +87,9 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   }
 
   Employee getEmployee(String id) {
-    return _appEmployees.firstWhere((employee) => employee.id == id);
+    Employee dude = _appEmployees.firstWhere((employee) => employee.id == id);
+    add(UpdateSelectedEmployeeEvent(dude));
+    return dude;
   }
 
   void selectEmployee({String id}) {

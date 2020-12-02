@@ -27,9 +27,7 @@ class EmployeeAdmin extends StatelessWidget {
             return SearchPageWrapper(
               title: Labels.employees,
               searchLabel: Labels.search,
-              search: (data) {
-                print(data);
-              },
+              search: (data) {},
               add: () => BlocProvider.of<EmployeeBloc>(context)
                   .selectEmployee(id: null),
               selected: (data) => BlocProvider.of<EmployeeBloc>(context)

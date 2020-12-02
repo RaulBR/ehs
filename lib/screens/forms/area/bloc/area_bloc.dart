@@ -31,7 +31,7 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
         _requestParams.toRow = 10;
         List<dynamic> ucelessLanguageList =
             await httpAreaService.getAudit(_requestParams);
-        print(ucelessLanguageList);
+
         _areasList = ucelessLanguageList
             .map((ucelenssLamngauageListElement) => Area(
                 id: ucelenssLamngauageListElement.id,
@@ -91,7 +91,6 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
 
         break;
       case SetRoleEvent:
-        print(event.areaRole);
         if (_area.roles == null) {
           _area.roles = [];
         }

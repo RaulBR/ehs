@@ -16,11 +16,9 @@ class SearchPickerBloc extends Bloc<SearchPickerEvent, SearchPickerState> {
     yield ListLoadoing();
     switch (event.runtimeType) {
       case SetAll:
-        print(event.data);
         yield ElementListItems(values: event.data ?? []);
         break;
       case SearchFor:
-        print(localList);
         List<String> searchList = [];
         if (event.search == '') {
           searchList = localList;

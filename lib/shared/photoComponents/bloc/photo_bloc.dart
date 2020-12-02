@@ -29,8 +29,10 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
           AspectPhoto photo;
           String photoName = aspect.photos[0].name;
           photo = await cameraService.getFromFile(photoName);
+
           if (photo != null) {
-            yield ShowPhotoState(photo: photo);
+            aspect.photos[0].photo = photo.photo;
+            yield ShowPhotoState(photo: aspect.photos[0]);
             break;
           }
           dynamic data =

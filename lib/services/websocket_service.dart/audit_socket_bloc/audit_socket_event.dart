@@ -21,3 +21,5 @@ class AuditDistributionCountEvent extends AuditSocketEvent {
 class DisconnectFromSocketEvent extends AuditSocketEvent {}
 
 class AlertUserEvent extends AuditSocketEvent {}
+
+class CheckConenctionEvent extends AuditSocketEvent {}

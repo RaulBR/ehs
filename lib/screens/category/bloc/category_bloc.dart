@@ -11,7 +11,7 @@ part 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   CategoryBloc() : super(CategoryInitial()) {
-    getCategoryes();
+    getCategoryesTypes();
   }
   HttpCategoryService httpCategoryService = HttpCategoryService();
   List<CategoryType> _categoryesType = [];
@@ -71,8 +71,12 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     }
   }
 
-  getCategoryes() {
+  getCategoryesTypes() {
     add(GetCategoryTypeEvent());
+  }
+
+  getCategoryes() {
+    add(GetCategorysEvent());
   }
 
   saveCategoryType(CategoryType categoryType) {

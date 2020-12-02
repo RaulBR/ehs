@@ -18,6 +18,11 @@ class DeleteEmployeeEvent extends EmployeeEvent {
   DeleteEmployeeEvent(this.id);
 }
 
+class UpdateSelectedEmployeeEvent extends EmployeeEvent {
+  final Employee employee;
+  UpdateSelectedEmployeeEvent(this.employee);
+}
+
 class SetEmployeeEvent extends EmployeeEvent {
   final Employee employee;
   SetEmployeeEvent(this.employee);

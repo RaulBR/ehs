@@ -77,7 +77,7 @@ class AppColors {
   static const Color primary = Color(0xFF009688);
   static const Color darkprimary = Color(0xFF00796B);
   static const Color lightprimary = Color(0xFFB2DFDB);
-
+  static const Color transparent = Color.fromRGBO(0, 0, 0, 0);
   static const Color accent = Color(0xFF009688);
   static const Color textPrimery = Color(0xFF212121);
   static const Color textSecundart = Color(0xFF757575);

@@ -16,7 +16,7 @@ class ActionDistributionList extends StatelessWidget with Labels {
   @override
   Widget build(BuildContext context) {
     PageController _controller = PageController(
-      initialPage: index == null ? 0 : index,
+      initialPage: index == null ? 1 : index,
     );
     List<Aspect> _listElements = listElements ?? [];
     return _listElements.length == 0

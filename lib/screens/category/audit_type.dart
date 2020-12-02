@@ -40,9 +40,7 @@ class CategoryForm extends StatelessWidget {
                     .deleteCategoryType(data.id);
               }
             },
-            search: (data) {
-              print(data);
-            },
+            search: (data) {},
             // addForm: CategoryTypeMentenanceForm()
           );
         },
