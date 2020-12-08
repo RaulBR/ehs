@@ -1,5 +1,6 @@
 import 'package:ehsfocus/models/aspects_model.dart';
 import 'package:ehsfocus/screens/aspect_distribution/bold_elemen_text.dart';
+import 'package:ehsfocus/shared/check_box.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/photoComponents/placeholder_photo.dart';
 import 'package:flutter/material.dart';
@@ -7,17 +8,20 @@ import 'employee_card.dart';
 
 class ActionDistributionCard extends StatelessWidget {
   final Function isSelected;
+  final Function hasDublicate;
   final Aspect aspect;
 
   const ActionDistributionCard({
     Key key,
     this.isSelected,
     this.aspect,
+    this.hasDublicate,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO move to service
+    bool _hasDublicate = hasDublicate == null ? false : true;
     String getResponsable() {
       if (aspect != null && aspect.action != null) {
         return aspect.action.responsable != null
@@ -45,6 +49,7 @@ class ActionDistributionCard extends StatelessWidget {
       }
     }
 
+    var duplicat;
     return Padding(
       padding: EdgeInsets.all(3),
       child: Card(
@@ -64,12 +69,15 @@ class ActionDistributionCard extends StatelessWidget {
                     },
                     title: Text(
                         aspect.audit == null ? 'no data' : aspect.audit.area),
-                    subtitle: Container(
-                      child: Text(
-                        '${aspect.categoryType} -> ${aspect.category}',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
-                      ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${aspect.categoryType} -> ${aspect.category}',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
+                        ),
+                      ],
                     ),
                   ),
 
@@ -84,6 +92,7 @@ class ActionDistributionCard extends StatelessWidget {
                     height: 20,
                   ),
                   // Text(Labels.comment),
+
                   Container(
                     height: 60,
                     width: double.infinity,
@@ -107,6 +116,17 @@ class ActionDistributionCard extends StatelessWidget {
                   ),
                 ],
               ),
+              !_hasDublicate
+                  ? Text('')
+                  : EhsCheckBox(
+                      spred: false,
+                      isEditable: true,
+                      value: false,
+                      label: Labels.duplicat,
+                      setValue: (value) {
+                        hasDublicate(value);
+                      },
+                    ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
                 child: Row(

@@ -18,6 +18,7 @@ class HttpAuditService extends HttpService {
     return result.map((i) => AspectPhoto.fromJson(i)).toList();
   }
 
+// move to poho
   deleteAspectPhoto(AspectPhoto aspectPhoto) async {
     dynamic data = await postRequest(
         endpint: '/aspect/delete-photo',
@@ -33,7 +34,16 @@ class HttpAuditService extends HttpService {
     if (result.length == 0) {
       return [];
     }
-    return result.map((i) => Audit.fromJson(i)).toList();
+    return result.map<Audit>((i) => Audit.fromJson(i)).toList();
+  }
+
+  Future<dynamic> getMyAudit() async {
+    String data = await getRequest(endpint: '/myAudits', hasHeadder: true);
+    dynamic result = (json.decode(data) as List) ?? [];
+    if (result.length == 0) {
+      return [];
+    }
+    return result.map<Audit>((i) => Audit.fromJson(i)).toList();
   }
 
   getAuditsToApprove() async {
@@ -118,5 +128,14 @@ class HttpAuditService extends HttpService {
   Future<dynamic> deleteAudit(String id) async {
     String data = await deleteRequest(endpint: '/audits', id: id);
     return data;
+  }
+
+  Future<dynamic> getMyAudits() async {
+    String data = await getRequest(endpint: '/audits', hasHeadder: true);
+    dynamic result = (json.decode(data) as List) ?? [];
+    if (result.length == 0) {
+      return [];
+    }
+    return result.map((i) => Audit.fromJson(i)).toList();
   }
 }

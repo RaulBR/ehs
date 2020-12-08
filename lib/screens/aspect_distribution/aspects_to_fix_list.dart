@@ -23,7 +23,7 @@ class AuditListWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     BlocProvider.of<AspectBloc>(context).getAspectsForMe();
     return AuditList(
-        actions: [Labels.rejected, Labels.acceped],
+        actions: ['', Labels.acceped],
         action: (aspect, action) {
           print(action);
           if (action == Labels.rejected) print('rejected');

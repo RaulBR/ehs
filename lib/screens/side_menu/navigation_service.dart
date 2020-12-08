@@ -20,7 +20,7 @@ class NavogationService {
       ),
       NavigationTile(
         title: Labels.audits,
-        path: RoutPath.auditsRoute,
+        path: RoutPath.myAudits,
       ),
       NavigationTile(title: Labels.myData, path: RoutPath.meRout)
     ];

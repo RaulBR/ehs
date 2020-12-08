@@ -15,9 +15,11 @@ class AspectTriajFooter extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           FlatButton(
-            onPressed: () {
-              getAction(actions[0]);
-            },
+            onPressed: actions[0] == ''
+                ? null
+                : () {
+                    getAction(actions[0]);
+                  },
             child: Text(
               actions[0],
               style: actions[0] == Labels.rejected

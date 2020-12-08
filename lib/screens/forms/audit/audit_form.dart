@@ -6,7 +6,6 @@ import 'package:ehsfocus/screens/forms/aspects/aspects.dart';
 import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc_index.dart';
 import 'package:ehsfocus/screens/forms/shared_form_components/audit_list_element.dart';
 import 'package:ehsfocus/services/page_helper_service.dart';
-import 'package:ehsfocus/services/websocket_service.dart/audit_socket_bloc/audit_socket_bloc.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/form_footer.dart';
 import 'package:ehsfocus/shared/loading.dart';
@@ -17,6 +16,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuditForm extends StatefulWidget {
+  final bool loadDataFromList;
+
+  const AuditForm({Key key, this.loadDataFromList}) : super(key: key);
   @override
   _AuditFormState createState() => _AuditFormState();
 }
@@ -30,7 +32,7 @@ class _AuditFormState extends State<AuditForm> {
   String areaTitle;
   String pageType;
   Audit formData = Audit();
-
+  bool _hasData = false;
   openWidget(Widget input) {
     handleBottomFooter(true);
     PersistentBottomSheetController bottomSheetController =
@@ -52,7 +54,12 @@ class _AuditFormState extends State<AuditForm> {
 
   void initState() {
     super.initState();
-    BlocProvider.of<AuditBloc>(context).getAudit();
+
+    _hasData =
+        widget.loadDataFromList == null ? false : widget.loadDataFromList;
+    if (!_hasData) {
+      BlocProvider.of<AuditBloc>(context).getAudit();
+    }
   }
 
   Widget getNav(int number, context) {
@@ -102,69 +109,84 @@ class _AuditFormState extends State<AuditForm> {
 
   @override
   Widget build(BuildContext context) {
-    PageHelperService pageService = PageHelperService(context: context);
     return Scaffold(
       key: _scaffoldstate,
-      appBar: AppBar(
-        title: Text(pageService.checkRoute()),
-      ),
+      appBar: _hasData
+          ? null
+          : AppBar(
+              title: Text(Labels.auditTitle),
+            ),
+      // maybe can bereoved
       body: BlocListener<AuditBloc, AuditState>(
         listener: (BuildContext context, AuditState state) {
-          if (state is AuditDataState) {
-            area = state.audit.auditHead;
-            areaTitle = state.audit.auditHead != null ? '${area.area}' : null;
-            _negativeAspects = state.audit.negativeAspects ?? [];
-            _positiveAspects = state.audit.positiveAspects ?? [];
-            BlocProvider.of<AuditSocketBloc>(context).getAuditChange();
-          }
-          if (state is DeleteSucsesfull) {
-            area = null;
-            areaTitle = null;
-            _negativeAspects = [];
-            _positiveAspects = [];
-          }
+          // if (state is AuditDataState) {
+          //   area = state.audit.auditHead;
+          //   areaTitle = state.audit.auditHead != null ? '${area.area}' : null;
+          //   _negativeAspects = state.audit.negativeAspects ?? [];
+          //   _positiveAspects = state.audit.positiveAspects ?? [];
+          // }
+          // if (state is DeleteSucsesfull) {
+          //   area = null;
+          //   areaTitle = null;
+          //   _negativeAspects = [];
+          //   _positiveAspects = [];
+          // }
         },
         child: BlocBuilder<AuditBloc, AuditState>(
-          builder: (BuildContext context, state) => ListView(
-            children: <Widget>[
-              SizedBox(
-                height: 10,
-              ),
-              AuditListElement(
-                title: Labels.areaId,
-                order: 1,
-                subtitle: areaTitle,
-                isDone: areaTitle != null,
-                onTap: () {
-                  openWidget(getNav(0, context));
-                },
-              ),
-              DropDownAuditListElement(
-                disabled: area == null,
-                title: Labels.positiveAcctionMessage,
-                order: 2,
-                isDone: _positiveAspects.length != 0,
-                aspects: _positiveAspects,
-                selected: (data) {
-                  // TODO add navigate to page
-                },
-                onTap: () {
-                  // TODO add navigate to page
-                  openWidget(getNav(1, context));
-                },
-              ),
-              DropDownAuditListElement(
-                disabled: area == null,
-                title: Labels.negativeAcctionMessage,
-                order: 3,
-                isDone: _negativeAspects.length != 0,
-                aspects: _negativeAspects,
-                onTap: () {
-                  openWidget(getNav(2, context));
-                },
-              ),
-            ],
-          ),
+          builder: (BuildContext context, state) {
+            if (state is AuditDataState) {
+              area = state.audit.auditHead;
+              areaTitle = state.audit.auditHead != null ? '${area.area}' : null;
+              _negativeAspects = state.audit.negativeAspects ?? [];
+              _positiveAspects = state.audit.positiveAspects ?? [];
+            }
+            if (state is DeleteSucsesfull) {
+              area = null;
+              areaTitle = null;
+              _negativeAspects = [];
+              _positiveAspects = [];
+            }
+            return ListView(
+              children: <Widget>[
+                SizedBox(
+                  height: 10,
+                ),
+                AuditListElement(
+                  title: Labels.areaId,
+                  order: 1,
+                  subtitle: areaTitle,
+                  isDone: areaTitle != null,
+                  onTap: () {
+                    openWidget(getNav(0, context));
+                  },
+                ),
+                DropDownAuditListElement(
+                  disabled: area == null,
+                  title: Labels.positiveAcctionMessage,
+                  order: 2,
+                  isDone: _positiveAspects.length != 0,
+                  aspects: _positiveAspects,
+                  selected: (data) {
+                    // TODO add navigate to page
+                  },
+                  onTap: () {
+                    // TODO add navigate to page
+                    openWidget(getNav(1, context));
+                  },
+                ),
+                DropDownAuditListElement(
+                  disabled: area == null,
+                  title: Labels.negativeAcctionMessage,
+                  order: 3,
+                  isDone: _negativeAspects.length != 0,
+                  aspects: _negativeAspects,
+                  onTap: () {
+                    openWidget(getNav(2, context));
+                  },
+                ),
+              ],
+            );
+          },
         ),
       ),
       bottomNavigationBar: isFormOpened

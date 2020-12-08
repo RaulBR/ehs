@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuditBloc extends Bloc<AuditEvent, AuditState> {
   Audit _audit = Audit();
+  List<Audit> _audits = [];
   AuditBloc() : super(null);
 
   final httpAuditService = HttpAuditService();
@@ -92,6 +93,16 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
         }
 
         break;
+      case GetMyAuditsEvent:
+        try {
+          List<Audit> a = await httpAuditService.getMyAudit();
+          _audits = a;
+          yield AuditsDataState(areaList: a);
+        } catch (e) {
+          yield AuditsDataState(areaList: []);
+        }
+
+        break;
       case DeleteAudit:
         dynamic a = await httpAuditService.deleteAudit(event.id);
         if (a == 'success') {
@@ -170,5 +181,15 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
     _audit.auditHead = null;
     _audit.negativeAspects = [];
     _audit.positiveAspects = [];
+  }
+
+  void getAudits() {
+    add(GetMyAuditsEvent());
+  }
+
+  void selectedAudit(data) {
+    if (data == null) {}
+    _audit = _audits.firstWhere((element) => element.auditHead.id == data.id);
+    add(UpdateForm(audit: _audit));
   }
 }

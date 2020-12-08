@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:ehsfocus/models/employee_model.dart';
 import 'package:ehsfocus/services/http/http_employee.dart';
+import 'package:ehsfocus/services/loacal_storage.dart';
 import 'package:meta/meta.dart';
 part 'employee_event.dart';
 part 'employee_state.dart';
@@ -11,6 +12,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   Employee _appEmployee;
   Employee _selectedEmployee;
   List<Employee> _appEmployees = [];
+  final _localStorageService = LocalStorageService();
   final httpEmployeeService = HttpEmployeeService();
   @override
   Stream<EmployeeState> mapEventToState(
@@ -20,6 +22,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       case GetEmployeesEvent:
         dynamic data = await httpEmployeeService.getAllEmployees();
         _appEmployees = data;
+
         yield EmployeesValueState(employees: _appEmployees);
         break;
       case DeleteEmployeeEvent:
@@ -61,8 +64,12 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
           yield EmployeeValueState(_appEmployee);
           break;
         }
+
         dynamic data = await httpEmployeeService.getMyself();
         _appEmployee = data;
+        if (_appEmployee.email == null) {
+          _appEmployee.email = await _localStorageService.getEmail();
+        }
         yield EmployeeValueState(data);
         break;
       default:

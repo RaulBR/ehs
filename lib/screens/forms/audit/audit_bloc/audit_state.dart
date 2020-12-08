@@ -14,6 +14,12 @@ class AuditDataState extends AuditState {
   AuditDataState(this.audit);
 }
 
+class AuditsDataState extends AuditState {
+  List<Audit> areaList;
+  AuditsDataState({this.areaList});
+}
+
+// move
 class AuditsToApproveState extends AuditState {
   List<Aspect> areaList;
   AuditsToApproveState(this.areaList);

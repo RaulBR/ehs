@@ -11,9 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuditList extends StatelessWidget {
+  final bool hasDuplicate;
   final List<String> actions;
   final Function action;
-  const AuditList({Key key, this.actions, this.action}) : super(key: key);
+
+  const AuditList({Key key, this.actions, this.action, this.hasDuplicate})
+      : super(key: key);
   openAspect(context, aspect) {
     Navigator.push(
       context,
@@ -38,6 +41,7 @@ class AuditList extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Aspect> _aspects = [];
     int index = 0;
+    bool _hasDuplicate = hasDuplicate == null ? false : hasDuplicate;
     return BlocBuilder<AspectBloc, AspectState>(
       buildWhen: (previous, current) =>
           current is AspectToHandleState || current is LoadingState,
@@ -59,6 +63,13 @@ class AuditList extends StatelessWidget {
                         Navigator.pop(context);
                       }
                       return ActionDistributionList(
+                        hasDublicate: !_hasDuplicate
+                            ? null
+                            : (value) {
+                                if (value) {
+                                  _aspects[index].type = 'D';
+                                }
+                              },
                         index: index,
                         indexOut: (indexOut) {
                           index = indexOut;

@@ -40,7 +40,9 @@ class EmployeeAdmin extends StatelessWidget {
                 }
               },
               listObjects: list,
-              addForm: EmployeeForm(),
+              addForm: EmployeeForm(
+                isAdd: true,
+              ),
             );
           },
         ),

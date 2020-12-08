@@ -58,7 +58,6 @@ class _MainAppState extends State<MainApp> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     BlocProvider.of<AuditSocketBloc>(context).disconnect();
     super.dispose();
   }

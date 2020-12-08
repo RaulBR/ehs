@@ -18,9 +18,12 @@ class EhsGenericList extends StatelessWidget with Labels {
             itemCount: _listElements.length,
             itemBuilder: (context, index) {
               return GennericListElement(
+                simbol: _listElements[index].status,
                 title: _listElements[index].title,
                 subtitle: _listElements[index].subtitle ?? null,
-                deleted: () => deleted(_listElements[index]),
+                deleted: deleted == null
+                    ? null
+                    : () => deleted(_listElements[index]),
                 isSelected: () => selected(_listElements[index]),
               );
             },

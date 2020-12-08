@@ -9,10 +9,7 @@ class SignInEvent extends LoginEvent {
   SignInEvent({this.user});
 }
 
-class SignUpEvent extends LoginEvent {
-  User user;
-  SignUpEvent({this.user});
-}
+class SignUpEvent extends LoginEvent {}
 
 class SigninLoading extends LoginEvent {}
 

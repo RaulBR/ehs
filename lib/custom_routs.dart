@@ -1,6 +1,7 @@
 import 'package:ehsfocus/screens/admin_screen/admin_screen.dart';
 import 'package:ehsfocus/screens/aspect_distribution/aspects_to_distribute.dart';
 import 'package:ehsfocus/screens/aspect_distribution/aspects_to_fix_list.dart';
+import 'package:ehsfocus/screens/audits_sumery.dart/all_audits.dart';
 import 'package:ehsfocus/screens/category/audit_type.dart';
 import 'package:ehsfocus/screens/forms/area/audit_list.dart';
 import 'package:ehsfocus/screens/forms/audit/audit_form.dart';
@@ -55,6 +56,8 @@ class CustomRouter {
       case RoutPath.areaRoute:
         return checkRoute(AreaMentenance(), settings);
 
+      case RoutPath.myAudits:
+        return checkRoute(MyAudits(), settings);
       case RoutPath.loading:
         return freeRoute(Loading());
 

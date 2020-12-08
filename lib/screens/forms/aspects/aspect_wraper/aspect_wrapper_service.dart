@@ -13,14 +13,14 @@ class AspectWrapperServie {
     return [
       FlatButton(
         child: Text(_buttons[0]),
-        onPressed: !isEnabled
+        onPressed: !isEnabled || _buttons[0] == ''
             ? null
             : () {
                 hasChanges(_buttons[0]);
               },
       ),
       FlatButton(
-        onPressed: !isEnabled
+        onPressed: !isEnabled || _buttons[1] == ''
             ? null
             : () {
                 hasChanges(_buttons[1]);

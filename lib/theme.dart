@@ -84,4 +84,5 @@ class AppColors {
   static const Color dividerColor = Color(0xFFBDBDBD);
   static const Color fieldInFocus = Colors.pink;
   static const Color field = Colors.white;
+  static const Color pending = const Color(0xFFFF9800);
 }

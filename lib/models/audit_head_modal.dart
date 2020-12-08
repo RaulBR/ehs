@@ -7,7 +7,7 @@ class AuditHead {
   String sector;
   String auditStatus;
   Employee employee;
-
+  String createdDate;
   AuditHead({this.id, this.area, this.step, this.sector, this.auditStatus});
 
   Map<String, dynamic> toJson() => {
@@ -29,6 +29,7 @@ class AuditHead {
     sector =
         parsedJson['sector'] == null ? null : parsedJson['sector'].toString();
     auditStatus = parsedJson['auditStatus'].toString();
+    createdDate = parsedJson['createdDate'].toString();
     employee = parsedJson['employee'] == null
         ? null
         : Employee.fromJson(parsedJson['employee']);

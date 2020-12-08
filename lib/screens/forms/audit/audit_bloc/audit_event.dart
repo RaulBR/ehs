@@ -12,6 +12,8 @@ abstract class AuditEvent {
 
 class GetMyAudit extends AuditEvent {}
 
+class GetMyAuditsEvent extends AuditEvent {}
+
 class UpdateForm extends AuditEvent {
   final Audit audit;
   UpdateForm({this.audit});
