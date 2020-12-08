@@ -53,8 +53,7 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
       case DeletePhotoEvent:
         if (event.photoSorce is AspectPhoto) {
           try {
-            dynamic data =
-                await this.httpAuditService.deleteAspectPhoto(event.photoSorce);
+            await this.httpAuditService.deleteAspectPhoto(event.photoSorce);
             await cameraService.removePhoto(event.photoSorce);
             yield ShowPhotoState(photo: AspectPhoto());
             yield DeletedPicture(photo: event.photoSorce);

@@ -5,7 +5,6 @@ import 'package:ehsfocus/screens/forms/area/area_form.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspects.dart';
 import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc_index.dart';
 import 'package:ehsfocus/screens/forms/shared_form_components/audit_list_element.dart';
-import 'package:ehsfocus/services/page_helper_service.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/form_footer.dart';
 import 'package:ehsfocus/shared/loading.dart';
@@ -166,11 +165,8 @@ class _AuditFormState extends State<AuditForm> {
                   order: 2,
                   isDone: _positiveAspects.length != 0,
                   aspects: _positiveAspects,
-                  selected: (data) {
-                    // TODO add navigate to page
-                  },
+                  selected: (data) {},
                   onTap: () {
-                    // TODO add navigate to page
                     openWidget(getNav(1, context));
                   },
                 ),
@@ -207,7 +203,6 @@ class _AuditFormState extends State<AuditForm> {
                     FooterStates.send
                   ],
                   action: (action) {
-                    // TODO move to bloc
                     switch (action) {
                       case FooterStates.delete:
                         // TODO add popup

@@ -20,8 +20,6 @@ class AspectWraper2 extends StatelessWidget {
   final bool isFooterEditable;
   final List<String> buttons;
   final AspectWrapperServie _aspectWpService = AspectWrapperServie();
-  Aspect _aspect = Aspect();
-
   AspectWraper2(
       {Key key,
       this.aspect,
@@ -45,7 +43,7 @@ class AspectWraper2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _aspect = aspect ?? _aspect;
+    Aspect _aspect = aspect ?? Aspect();
     bool _isAction = type == 'N';
     _aspect.type = type;
     return BuilderProvider(

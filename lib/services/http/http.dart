@@ -5,10 +5,10 @@ import 'package:http/http.dart';
 
 class HttpService {
   final localstorageService = LocalStorageService();
-  String url = 'https://ehs-app.herokuapp.com';
-  String _url = 'https://ehs-app.herokuapp.com/api';
-  // String url = 'http://192.168.0.166:3000';
-  // String _url = 'http://192.168.0.166:3000/api';
+  //String url = 'https://ehs-app.herokuapp.com';
+  //String _url = 'https://ehs-app.herokuapp.com/api';
+  String url = 'http://192.168.0.166:3000';
+  String _url = 'http://192.168.0.166:3000/api';
   bool isDayTime;
   String _token;
 

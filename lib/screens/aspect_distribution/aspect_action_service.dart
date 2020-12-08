@@ -1,7 +1,6 @@
 import 'package:ehsfocus/shared/constants.dart';
 
 class AspectActionService {
-  // TODO add to constants
   String getResponsable(aspect) {
     if (aspect != null &&
         aspect.action != null &&

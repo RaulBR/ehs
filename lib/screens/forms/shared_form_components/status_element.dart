@@ -14,6 +14,9 @@ class StatusWidget extends StatelessWidget {
       case 'A':
         icon = 0xe6cf;
         break;
+      case 'R':
+        icon = 0xe6cf;
+        break;
       case 'S':
         icon = 0xe318;
         color = AppColors.darkprimary;
@@ -30,7 +33,7 @@ class StatusWidget extends StatelessWidget {
         icon = 0xe10c;
         color = AppColors.darkprimary;
         break;
-      case 'R':
+      case 'Z':
         icon = 0xf3e4;
         color = AppColors.fieldInFocus;
         break;
@@ -60,6 +63,9 @@ class StatusTextWidget extends StatelessWidget {
       case 'A':
         text = 'Acceptat';
         break;
+      case 'R':
+        text = 'Rezolvat';
+        break;
       case 'S':
         text = 'Ne procesat';
         color = AppColors.darkprimary;
@@ -76,7 +82,7 @@ class StatusTextWidget extends StatelessWidget {
         text = 'Duplicat (Acceptat)';
         color = AppColors.darkprimary;
         break;
-      case 'R':
+      case 'Z':
         text = 'Rejectat';
         color = AppColors.fieldInFocus;
         break;

@@ -11,6 +11,7 @@ class MyAudits extends StatelessWidget {
   Widget build(BuildContext context) {
     BlocProvider.of<AuditBloc>(context).getAudits();
     return BlocBuilder<AuditBloc, AuditState>(
+      buildWhen: (previous, current) => current is AuditsDataState,
       builder: (context, state) {
         List<GenericListObject> elements = [];
         if (state is AuditsDataState) {

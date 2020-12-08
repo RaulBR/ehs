@@ -1,4 +1,3 @@
-import 'package:ehsfocus/models/user.model.dart';
 import 'package:ehsfocus/screens/login/login_bloc/login.dart';
 import 'package:ehsfocus/screens/login/login_bloc/login_bloc.dart';
 import 'package:ehsfocus/shared/constants.dart';

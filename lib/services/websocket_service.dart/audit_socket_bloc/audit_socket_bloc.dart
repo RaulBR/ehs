@@ -11,7 +11,6 @@ class AuditSocketBloc extends Bloc<AuditSocketEvent, AuditSocketState> {
   Socket _webSocket;
   int _reconnectCouter = 0;
   bool _isConnected = false;
-  Timer _timer;
   AuditSocketBloc() : super(AuditSocketInitial()) {
     if ((_webSocket != null && !_webSocket.connected) || _webSocket == null) {
       add(ConnectToSocketEvent());
@@ -72,13 +71,9 @@ class AuditSocketBloc extends Bloc<AuditSocketEvent, AuditSocketState> {
 
         break;
       case CheckConenctionEvent:
-        _timer = Timer.periodic(new Duration(seconds: 60), (timer) {
+        Timer.periodic(new Duration(seconds: 60), (timer) {
           print('ws is: ${_webSocket.connected} => ${_webSocket.id} ');
-          if (_webSocket.disconnected && _isConnected == true) {
-            _isConnected == false;
-
-            //     add(ConnectToSocketEvent());
-          }
+          if (_webSocket.disconnected && _isConnected == true) {}
         });
 
         break;

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:ehsfocus/models/aspects_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -26,6 +25,7 @@ class CameraService {
       return await sourceFile.rename(newPath);
     } on FileSystemException catch (e) {
       // if rename fails, copy the source file and then delete it
+      print(e);
       final newFile = await sourceFile.copy(newPath);
       await sourceFile.delete();
       return newFile;

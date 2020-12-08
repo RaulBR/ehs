@@ -46,7 +46,6 @@ class AspectWrapperBloc extends Bloc<AspectWrapperEvent, AspectWrapperState> {
           break;
         }
         _isEditable = true;
-        ;
         yield EditableSate(true);
         break;
       // yield UpdateAspectState(null);

@@ -47,9 +47,9 @@ class ActionDistributionCard extends StatelessWidget {
             ? aspect.action.limitDate
             : Labels.notSet;
       }
+      return '';
     }
 
-    var duplicat;
     return Padding(
       padding: EdgeInsets.all(3),
       child: Card(
