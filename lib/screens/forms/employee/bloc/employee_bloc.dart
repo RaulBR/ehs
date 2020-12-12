@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:ehsfocus/models/employee_model.dart';
 import 'package:ehsfocus/services/http/http_employee.dart';
+import 'package:ehsfocus/services/loacal_storage.dart';
 import 'package:meta/meta.dart';
 part 'employee_event.dart';
 part 'employee_state.dart';
@@ -11,6 +12,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   Employee _appEmployee;
   Employee _selectedEmployee;
   List<Employee> _appEmployees = [];
+  final _localStorageService = LocalStorageService();
   final httpEmployeeService = HttpEmployeeService();
   @override
   Stream<EmployeeState> mapEventToState(
@@ -20,6 +22,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       case GetEmployeesEvent:
         dynamic data = await httpEmployeeService.getAllEmployees();
         _appEmployees = data;
+
         yield EmployeesValueState(employees: _appEmployees);
         break;
       case DeleteEmployeeEvent:
@@ -27,6 +30,11 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
         e.id = event is DeleteEmployeeEvent ? event.id : null;
         await httpEmployeeService.deleteEmployees(e);
         add(GetEmployeesEvent());
+        break;
+      case UpdateSelectedEmployeeEvent:
+        Employee e =
+            event is UpdateSelectedEmployeeEvent ? event.employee : null;
+        yield EmployeeValueState(e);
         break;
       case SetEmployeeEvent:
         Employee employee = event is SetEmployeeEvent ? event.employee : null;
@@ -56,8 +64,12 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
           yield EmployeeValueState(_appEmployee);
           break;
         }
+
         dynamic data = await httpEmployeeService.getMyself();
         _appEmployee = data;
+        if (_appEmployee.email == null) {
+          _appEmployee.email = await _localStorageService.getEmail();
+        }
         yield EmployeeValueState(data);
         break;
       default:
@@ -82,7 +94,9 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   }
 
   Employee getEmployee(String id) {
-    return _appEmployees.firstWhere((employee) => employee.id == id);
+    Employee dude = _appEmployees.firstWhere((employee) => employee.id == id);
+    add(UpdateSelectedEmployeeEvent(dude));
+    return dude;
   }
 
   void selectEmployee({String id}) {

@@ -1,7 +1,9 @@
 import 'package:ehsfocus/models/generic_list_model.dart';
+import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
 import 'package:ehsfocus/screens/category/category_picker.dart';
-import 'package:ehsfocus/screens/category/category_type_picker.dart';
+import 'package:ehsfocus/screens/forms/area/are_dropdown_picker.dart';
 import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
+import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc.dart';
 import 'package:ehsfocus/services/camera_service.dart';
 import 'package:ehsfocus/shared/action_button.dart';
 import 'package:ehsfocus/shared/fields/search_picker/custom_list_search.dart';
@@ -14,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PhotoCommentForm extends StatelessWidget {
+  final PhotoCommentError error;
   final Aspect aspect;
   final String type;
   final String title;
@@ -31,15 +34,20 @@ class PhotoCommentForm extends StatelessWidget {
       this.aspect,
       this.hasAction,
       this.navigate,
-      this.isEditable});
+      this.isEditable,
+      this.error});
 
   @override
   Widget build(BuildContext context) {
     Aspect _aspect = Aspect();
+
     final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
     _aspect.type = type;
     _aspect = aspect == null ? _aspect : aspect;
-
+    _aspect.categoryType = BlocProvider.of<AuditBloc>(context).getAuditType();
+    BlocProvider.of<CategoryBloc>(context)
+        .getForCategoryType(_aspect.categoryType);
+    BlocProvider.of<AreaBloc>(context).getStepes();
     return Scaffold(
       key: _key,
       resizeToAvoidBottomPadding: false,
@@ -64,43 +72,21 @@ class PhotoCommentForm extends StatelessWidget {
                         .remove((element) => element.id == picture.id);
                   },
                 ),
-                BlocBuilder<AreaBloc, AreaState>(
-                  buildWhen: (previous, current) => current is StepListState,
-                  builder: (context, state) => EhsSearchListPicker(
-                    isEditable: isEditable,
-                    label: Labels.area2,
-                    list: state is StepListState
-                        ? state.stepList
-                            .map((element) => GenericListObject(title: element))
-                            .toList()
-                        : [],
-                    preselected: null, //_area.step,
-                    selected: (data) {
-                      //  BlocProvider.of<AuditBloc>(context).setArea(_area);
-                    },
-                    tapped: () {},
-                    searchFor: (data) {
-                      //  areaBloc.searchAreas(data);
-                    },
-                  ),
-                ),
-                CategoryTypePiker(
-                  input: _aspect.categoryType,
+                EquipmantDroptDownPicker(
+                  equipment: _aspect.equipment,
                   isEditable: isEditable,
-                  hasChanges: (value2) {
-                    _aspect.categoryType = value2;
-                    hasChanges(_aspect);
+                  getData: (equipment) {
+                    _aspect.equipment = equipment;
                   },
-                  label: Labels.aspectType,
                 ),
                 CategoryPiker(
+                  error: null,
                   input: _aspect.category,
                   isEditable: isEditable,
-                  hasChanges: (value2) {
-                    _aspect.category = value2;
+                  hasChanges: (_category) {
+                    _aspect.category = _category;
                     hasChanges(_aspect);
                   },
-                  label: Labels.category,
                 ),
                 OpenTextAreaWidget(
                   isEditable: isEditable,
@@ -128,4 +114,11 @@ class PhotoCommentForm extends StatelessWidget {
       ),
     );
   }
+}
+
+class PhotoCommentError {
+  String areaError;
+  String photoError;
+  String categoryError;
+  String commentError;
 }

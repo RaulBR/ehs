@@ -1,12 +1,13 @@
+import 'package:ehsfocus/shared/constants.dart';
+
 class AspectActionService {
-  // TODO add to constants
   String getResponsable(aspect) {
     if (aspect != null &&
         aspect.action != null &&
         aspect.action.responsable != null) {
       return '${aspect.action.responsable.firstName ?? null} ${aspect.action.responsable.lastName ?? null}';
     }
-    return 'NU A FOST ADAUGAT';
+    return Labels.notAdded;
   }
 
   String getCreatedBy(aspect) {
@@ -16,12 +17,12 @@ class AspectActionService {
         aspect.audit.employee.firstName != null) {
       return '${aspect.audit.employee.firstName ?? null} ${aspect.audit.employee.lastName ?? null}';
     }
-    return 'NU A FOST ADAUGAT';
+    return Labels.notAdded;
   }
 
   String getSubtitle(aspect) {
     if (aspect == null) {
-      return 'Necunosct';
+      return Labels.unKnown;
     }
     return '${aspect.categoryType} -> ${aspect.category}';
   }

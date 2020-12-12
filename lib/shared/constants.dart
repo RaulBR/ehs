@@ -104,6 +104,12 @@ class Labels {
   static String modify = 'Modifica';
   static String aspectTitle = 'Aspect';
   static String ditail = 'Detalii';
+  static String notAdded = 'NU A FOST ADAUGAT';
+  static String unKnown = 'Necunosct';
+  static String notSet = 'Nu s-a setat';
+  static String observation = 'Observatii: ';
+  static String acction = 'Actiuni: ';
+  static String duplicat = 'Duplicat?';
 }
 
 Map<String, String> dinamicTitles = {
@@ -155,6 +161,7 @@ class RoutPath {
   static const loading = '/loading';
   static const overwiewAudits = '/overwiewAudits';
   static const myResponsibility = '/myResponsibility';
+  static const myAudits = '/myAudits';
 }
 
 class CurrentPath {
@@ -167,7 +174,8 @@ class CurrentPath {
         'helth': RoutPath.helthRout,
         'enviroment': RoutPath.enviromentRout,
         'incident': RoutPath.incidentRout,
-        'audits': RoutPath.auditsRoute
+        'audits': RoutPath.auditsRoute,
+        'myAudits': RoutPath.myAudits
       };
   routPathList() => {
         'homeRout': '/',

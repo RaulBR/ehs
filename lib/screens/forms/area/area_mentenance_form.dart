@@ -2,6 +2,8 @@ import 'package:ehsfocus/models/area_modal.dart';
 import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
 import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/area/role_dialog.dart';
+import 'package:ehsfocus/screens/forms/area/step_form.dart';
+import 'package:ehsfocus/services/animations/slide_right_router.dart';
 import 'package:ehsfocus/services/popup_service/generic_message_popup.dart';
 import 'package:ehsfocus/shared/GoToButton.dart';
 import 'package:ehsfocus/shared/comment.dart';
@@ -12,11 +14,13 @@ import 'package:ehsfocus/shared/form_eleements/form_container.dart';
 import 'package:flutter/material.dart';
 import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/generic_list_page_search.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class AreaMentenanceForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Area _area = Area();
+
     return PageWrapper(
       title: Labels.audits,
       child: SingleChildScrollView(
@@ -61,7 +65,21 @@ class AreaMentenanceForm extends StatelessWidget {
                     child: GoToButton(
                       icon: Icon(Icons.arrow_right_sharp),
                       label: Labels.area2,
-                      onPressed: () => {},
+                      onPressed: () {
+                        final myModel =
+                            Provider.of<AreaBloc>(context, listen: false);
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => BlocProvider.value(
+                              value: myModel, child: StepForm()),
+                        );
+                        // Navigator.push(
+                        //     context,
+                        //     SlideRightRoute(
+                        //         page: BlocProvider.value(
+                        //             value: BlocProvider.of<AreaBloc>(context),
+                        //             child: StepForm())));
+                      },
                     ),
                   ),
                   OpenTextAreaWidget(

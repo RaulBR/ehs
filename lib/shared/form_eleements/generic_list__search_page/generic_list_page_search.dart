@@ -76,9 +76,11 @@ class _SearchPageWrapperState extends State<SearchPageWrapper> {
                   ? widget.customListWidget
                   : EhsGenericList(
                       listElements: widget.listObjects,
-                      deleted: (data) {
-                        widget.deleted(data);
-                      },
+                      deleted: widget.deleted == null
+                          ? null
+                          : (data) {
+                              widget.deleted(data);
+                            },
                       selected: (data) {
                         widget.selected(data);
                         openWidget(widget.addForm);
@@ -124,7 +126,7 @@ class PageWrapper extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
       body: BodyContainer(child: child),
-      bottomNavigationBar: _isKeyboard
+      bottomNavigationBar: _isKeyboard || footerAction == null
           ? null
           : FormFooter(
               actions:

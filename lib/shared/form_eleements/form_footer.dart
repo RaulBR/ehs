@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 class FormFooter extends StatelessWidget {
   final Function action;
+  final bool isEditable;
   final List<FooterStates> actions;
-  const FormFooter({Key key, this.action, this.actions}) : super(key: key);
+  const FormFooter({Key key, this.action, this.actions, this.isEditable})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     List<Widget> getGeneratedList() {
@@ -29,13 +31,16 @@ class FormFooter extends StatelessWidget {
 }
 
 class FlatRoundedButton extends StatelessWidget {
+  final bool isEditable;
   final String lable;
   final Function onPressed;
 
-  const FlatRoundedButton({Key key, this.onPressed, this.lable})
+  const FlatRoundedButton(
+      {Key key, this.onPressed, this.lable, this.isEditable})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    bool _isEditable = isEditable == null ? true : isEditable;
     return FlatButton(
       child: Text(
         lable,
@@ -43,9 +48,11 @@ class FlatRoundedButton extends StatelessWidget {
           color: AppColors.icons,
         ),
       ),
-      onPressed: () {
-        onPressed();
-      },
+      onPressed: !_isEditable
+          ? null
+          : () {
+              onPressed();
+            },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
     );
   }

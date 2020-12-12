@@ -11,7 +11,7 @@ part 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   CategoryBloc() : super(CategoryInitial()) {
-    getCategoryes();
+    getCategoryesTypes();
   }
   HttpCategoryService httpCategoryService = HttpCategoryService();
   List<CategoryType> _categoryesType = [];
@@ -71,8 +71,12 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     }
   }
 
-  getCategoryes() {
+  getCategoryesTypes() {
     add(GetCategoryTypeEvent());
+  }
+
+  getCategoryes() {
+    add(GetCategorysEvent());
   }
 
   saveCategoryType(CategoryType categoryType) {
@@ -95,6 +99,12 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     }
     _selectedCategoryType.categories.add(Category(category: category));
     add(PropagateCategoryTypeEvent());
+  }
+
+  getForCategoryType(String categoryType) {
+    _selectedCategoryType = _categoryesType.firstWhere(
+        (element) => element.type == categoryType,
+        orElse: () => CategoryType());
   }
 
   addCategoryType(CategoryType categoryType) {
@@ -167,4 +177,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     add(ClearCategoryEvent());
     add(PropagateCategoryEvent());
   }
+
+  void selectedTypeName(String categoryType) {}
 }

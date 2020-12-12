@@ -23,18 +23,18 @@ class AdminScreen extends StatelessWidget {
               },
             ),
             HomeCard(
-              icon: 59607,
-              title: Labels.area,
-              acction: () {
-                Navigator.pushNamed(context, RoutPath.areaRoute);
-              },
-            ),
-            HomeCard(
               color: AppColors.fieldInFocus,
               icon: 58949,
               title: Labels.category,
               acction: () {
                 Navigator.pushNamed(context, RoutPath.categoryRoute);
+              },
+            ),
+            HomeCard(
+              icon: 59607,
+              title: Labels.area,
+              acction: () {
+                Navigator.pushNamed(context, RoutPath.areaRoute);
               },
             ),
           ],

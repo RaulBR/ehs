@@ -14,8 +14,12 @@ class HttpEmployeeService extends HttpService {
   }
 
   getMyself() async {
-    String data = await getRequest(endpint: employeeUrl, hasHeadder: true);
-    return Employee.fromJson(json.decode(data));
+    try {
+      String data = await getRequest(endpint: employeeUrl, hasHeadder: true);
+      return Employee.fromJson(json.decode(data));
+    } catch (e) {
+      return Employee();
+    }
   }
 
   setEmployee(Employee employee) async {

@@ -7,16 +7,20 @@ import 'package:flutter/material.dart';
 
 class ActionDistributionList extends StatelessWidget with Labels {
   final List<Aspect> listElements;
+  final Function hasDublicate;
   final int index;
   final Function indexOut;
 
   ActionDistributionList(
-      {this.listElements, @required this.indexOut, this.index});
+      {this.listElements,
+      @required this.indexOut,
+      this.index,
+      this.hasDublicate});
 
   @override
   Widget build(BuildContext context) {
     PageController _controller = PageController(
-      initialPage: index == null ? 0 : index,
+      initialPage: index == null ? 1 : index,
     );
     List<Aspect> _listElements = listElements ?? [];
     return _listElements.length == 0
@@ -32,7 +36,8 @@ class ActionDistributionList extends StatelessWidget with Labels {
             },
             itemCount: _listElements.length,
             itemBuilder: (context, index) {
-              return ActionDistributionCard(aspect: _listElements[index]);
+              return ActionDistributionCard(
+                  aspect: _listElements[index], hasDublicate: hasDublicate);
             },
           );
   }

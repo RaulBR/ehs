@@ -17,8 +17,8 @@ class AuditCountState extends AuditSocketState {
 }
 
 class AuditDistributionCountState extends AuditSocketState {
-  final int count;
-  AuditDistributionCountState({this.count});
+  final int distributeAuditCount;
+  AuditDistributionCountState({this.distributeAuditCount});
 }
 
 class HasAuditSate extends AuditSocketState {}

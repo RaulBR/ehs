@@ -1,6 +1,8 @@
 import 'package:ehsfocus/screens/home/home_card.dart';
-import 'package:ehsfocus/shared/blocs/audit_socket_bloc/audit_socket_bloc.dart';
+import 'package:ehsfocus/services/websocket_service.dart/audit_socket_bloc/audit_socket_bloc.dart';
+
 import 'package:ehsfocus/shared/constants.dart';
+
 import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +17,7 @@ class HomeMenu extends StatelessWidget with Labels {
         runSpacing: 8,
         children: [
           HomeCard(
-            icon: 58696,
+            icon: 62389,
             title: Labels.safty,
             acction: () {
               Navigator.pushNamed(context, RoutPath.safetyRout);
@@ -39,7 +41,7 @@ class HomeMenu extends StatelessWidget with Labels {
               return HomeCard(
                 expanded: true,
                 color: AppColors.accent,
-                icon: 9787,
+                icon: 58828,
                 title: 'Aveti $count actiuni',
                 acction: () {
                   Navigator.pushNamed(context, RoutPath.myResponsibility);
@@ -53,13 +55,15 @@ class HomeMenu extends StatelessWidget with Labels {
             builder: (context, state) {
               int distributinCount = 0;
               if (state is AuditDistributionCountState)
-                distributinCount = state.count == 0 ? null : state.count;
+                distributinCount = state.distributeAuditCount == 0
+                    ? null
+                    : state.distributeAuditCount;
               if (distributinCount == 0 || distributinCount == null)
                 return Text('');
               return HomeCard(
                 expanded: true,
                 color: AppColors.fieldInFocus,
-                icon: 9787,
+                icon: 58828,
                 title: 'Aveti $distributinCount actiune/i de distribuit',
                 acction: () {
                   Navigator.pushNamed(context, RoutPath.overwiewAudits);

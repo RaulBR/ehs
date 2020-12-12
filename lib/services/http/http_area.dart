@@ -11,15 +11,19 @@ class HttpAreaService extends HttpService {
   }
 
   Future<dynamic> getAudit(requestParams) async {
-    String data = await postRequest(
-        endpint: '/area/get',
-        jsonValue: jsonEncode(requestParams),
-        hasHeadder: true);
-    dynamic result = (json.decode(data) as List) ?? [];
-    if (result.length == 0) {
-      return [];
+    try {
+      String data = await postRequest(
+          endpint: '/area/get',
+          jsonValue: jsonEncode(requestParams),
+          hasHeadder: true);
+      dynamic result = (json.decode(data) as List) ?? [];
+      if (result.length == 0) {
+        return [];
+      }
+      return result.map((i) => Area.fromJson(i)).toList();
+    } catch (e) {
+      return;
     }
-    return result.map((i) => Area.fromJson(i)).toList();
   }
 
   deleteArea(Area auditin) async {

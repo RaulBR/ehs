@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:ehsfocus/models/aspects_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -12,12 +11,18 @@ class CameraService {
   ImagePicker _imagePicker = ImagePicker();
   Future<PickedFile> openGalery(context) async {
     return await _imagePicker.getImage(
-        source: ImageSource.gallery, maxHeight: 800, maxWidth: 800);
+        source: ImageSource.gallery,
+        maxHeight: 800,
+        maxWidth: 800,
+        imageQuality: 50);
   }
 
   Future<PickedFile> openCamera(context) async {
     return await _imagePicker.getImage(
-        source: ImageSource.camera, maxHeight: 800, maxWidth: 800);
+        source: ImageSource.camera,
+        maxHeight: 800,
+        maxWidth: 800,
+        imageQuality: 50);
   }
 
   Future<File> moveFile(File sourceFile, String newPath) async {
@@ -26,6 +31,7 @@ class CameraService {
       return await sourceFile.rename(newPath);
     } on FileSystemException catch (e) {
       // if rename fails, copy the source file and then delete it
+      print(e);
       final newFile = await sourceFile.copy(newPath);
       await sourceFile.delete();
       return newFile;
@@ -72,7 +78,6 @@ class CameraService {
   }
 
   Future<File> preProcessLocation(PickedFile path) async {
-    print(path);
     File f = new File(path.path);
     String newPath = await getAppFolder();
     String type = path.path.split('/').last.split('.')[1];

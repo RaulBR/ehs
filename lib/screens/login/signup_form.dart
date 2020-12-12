@@ -1,4 +1,3 @@
-import 'package:ehsfocus/models/user.model.dart';
 import 'package:ehsfocus/screens/login/login_bloc/login.dart';
 import 'package:ehsfocus/screens/login/login_bloc/login_bloc.dart';
 import 'package:ehsfocus/shared/constants.dart';
@@ -10,9 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SignUpForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String _email = '';
-    String _password = '';
-    String _password2 = '';
     return Scaffold(
       appBar: AppBar(actions: <Widget>[], title: Text(Labels.signup)),
       body: Container(
@@ -30,7 +26,7 @@ class SignUpForm extends StatelessWidget {
                     label: Labels.email,
                     error: state is UserLoginError ? state.error.email : null,
                     onChanged: (value) {
-                      _email = value;
+                      BlocProvider.of<LoginBloc>(context).onSetEmail(value);
                     },
                   ),
                   EHSTextField(
@@ -42,7 +38,7 @@ class SignUpForm extends StatelessWidget {
                     error:
                         state is UserLoginError ? state.error.password : null,
                     onChanged: (value) {
-                      _password = value;
+                      BlocProvider.of<LoginBloc>(context).onSetPassWoard(value);
                     },
                   ),
                   EHSTextField(
@@ -53,7 +49,8 @@ class SignUpForm extends StatelessWidget {
                     label: 'Confirm ${Labels.passwoard}',
                     error: null,
                     onChanged: (value) {
-                      _email = value;
+                      BlocProvider.of<LoginBloc>(context)
+                          .onSetSecondPassWoard(value);
                     },
                   ),
                   SizedBox(height: 20.0),
@@ -61,11 +58,7 @@ class SignUpForm extends StatelessWidget {
                     width: double.infinity,
                     child: RaisedButton(
                       onPressed: () {
-                        User user = User(
-                            email: _email,
-                            password: _password,
-                            password2: _password2);
-                        BlocProvider.of<LoginBloc>(context).onSignUp(user);
+                        BlocProvider.of<LoginBloc>(context).onSignUp();
                       },
                       child: Text(Labels.signup,
                           style: TextStyle(color: AppColors.icons)),

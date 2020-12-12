@@ -1,5 +1,6 @@
 import 'package:ehsfocus/models/aspects_model.dart';
-import 'package:ehsfocus/screens/forms/aspects/aspect_wrapper.dart';
+import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
+import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/aspect_wrapper.dart';
 import 'package:ehsfocus/screens/forms/aspects/ehs_asplect_list.dart';
 import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc.dart';
 import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_state.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AspectsList extends StatelessWidget {
+  final bool disabled;
   final Function hasChanges;
   final String title;
   final int order;
@@ -21,7 +23,8 @@ class AspectsList extends StatelessWidget {
       this.hasChanges,
       @required this.title,
       this.order,
-      this.type});
+      this.type,
+      this.disabled});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +60,6 @@ class AspectsList extends StatelessWidget {
               context: context,
               navigationEvent: (data) {
                 data.type = type;
-                // TODO why not save here?
                 hasChanges(data);
               });
         },
@@ -71,8 +73,9 @@ class AspectsList extends StatelessWidget {
     Navigator.push(
         context,
         SlideRightRoute(
-          page: SafeArea(
-            child: AspectWrapper(
+          page: BlocProvider.value(
+            value: BlocProvider.of<AreaBloc>(context),
+            child: AspectWraper2(
                 hasAction: type == 'N',
                 aspect: aspect,
                 order: order,

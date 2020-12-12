@@ -1,33 +1,34 @@
 import 'package:ehsfocus/models/aspects_model.dart';
-import 'package:ehsfocus/screens/forms/aspects/bloc/aspect_bloc.dart';
+import 'package:ehsfocus/screens/aspect_distribution/bold_elemen_text.dart';
+import 'package:ehsfocus/shared/check_box.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/photoComponents/placeholder_photo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'employee_card.dart';
 
-// TODO BIG MAKE DINAMIC
 class ActionDistributionCard extends StatelessWidget {
   final Function isSelected;
+  final Function hasDublicate;
   final Aspect aspect;
 
   const ActionDistributionCard({
     Key key,
     this.isSelected,
     this.aspect,
+    this.hasDublicate,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<AspectBloc>(context).getAspectsPhotos(aspect);
     // TODO move to service
+    bool _hasDublicate = hasDublicate == null ? false : true;
     String getResponsable() {
       if (aspect != null && aspect.action != null) {
         return aspect.action.responsable != null
             ? '${aspect.action.responsable.firstName ?? null} ${aspect.action.responsable.lastName ?? null}'
-            : 'Nu sa setat';
+            : Labels.notSet;
       }
-      return 'Nu sa setat';
+      return Labels.notSet;
     }
 
     String getCreatedBy() {
@@ -37,15 +38,16 @@ class ActionDistributionCard extends StatelessWidget {
           aspect.audit.employee.firstName != null) {
         return '${aspect.audit.employee.firstName ?? null} ${aspect.audit.employee.lastName ?? null}';
       }
-      return 'Nu sa setat';
+      return Labels.notSet;
     }
 
     String getDate() {
       if (aspect != null && aspect.action != null) {
         return aspect.action.limitDate != null
             ? aspect.action.limitDate
-            : 'fara data';
+            : Labels.notSet;
       }
+      return '';
     }
 
     return Padding(
@@ -67,12 +69,15 @@ class ActionDistributionCard extends StatelessWidget {
                     },
                     title: Text(
                         aspect.audit == null ? 'no data' : aspect.audit.area),
-                    subtitle: Container(
-                      child: Text(
-                        '${aspect.categoryType} -> ${aspect.category}',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
-                      ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${aspect.categoryType} -> ${aspect.category}',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
+                        ),
+                      ],
                     ),
                   ),
 
@@ -87,13 +92,23 @@ class ActionDistributionCard extends StatelessWidget {
                     height: 20,
                   ),
                   // Text(Labels.comment),
+
                   Container(
                     height: 60,
                     width: double.infinity,
-                    child: Text(
-                      '${aspect.comment}',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
+                    child: BoldElementText(
+                      boldText: Labels.observation,
+                      text: aspect.comment == null ? '' : '${aspect.comment}',
+                    ),
+                  ),
+                  Container(
+                    height: 60,
+                    width: double.infinity,
+                    child: BoldElementText(
+                      boldText: Labels.acction,
+                      text: aspect.action.comment == null
+                          ? ''
+                          : '${aspect.action.comment}',
                     ),
                   ),
                   SizedBox(
@@ -101,6 +116,17 @@ class ActionDistributionCard extends StatelessWidget {
                   ),
                 ],
               ),
+              !_hasDublicate
+                  ? Text('')
+                  : EhsCheckBox(
+                      spred: false,
+                      isEditable: true,
+                      value: false,
+                      label: Labels.duplicat,
+                      setValue: (value) {
+                        hasDublicate(value);
+                      },
+                    ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
                 child: Row(

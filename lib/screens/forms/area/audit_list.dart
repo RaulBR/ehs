@@ -18,9 +18,7 @@ class AreaMentenance extends StatelessWidget {
         builder: (context, state) {
           return SearchPageWrapper(
             title: Labels.area,
-            search: (data) {
-              print(data);
-            },
+            search: (data) {},
             add: () {
               BlocProvider.of<AreaBloc>(context).clearForm();
             },

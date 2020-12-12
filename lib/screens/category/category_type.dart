@@ -15,7 +15,7 @@ class CategoryTypeMentenanceForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CategoryType category = CategoryType();
-
+    TextEditingController txt;
     return PageWrapper(
       title: Labels.aspectType,
       add: () {
@@ -25,17 +25,25 @@ class CategoryTypeMentenanceForm extends StatelessWidget {
       },
       child: Column(
         children: <Widget>[
-          ClearableTextField(
-            label: Labels.aspectType,
-            inputValue: (category.type),
-            onChanged: (value) {
-              BlocProvider.of<CategoryBloc>(context).setCategoryType(value);
+          BlocBuilder<CategoryBloc, CategoryState>(
+            builder: (context, state) {
+              if (state is OneCategoryTypesState) {
+                category = state.categorie;
+              }
+              return ClearableTextField(
+                label: Labels.aspectType,
+                inputValue: (category.type),
+                onChanged: (value) {
+                  BlocProvider.of<CategoryBloc>(context).setCategoryType(value);
+                },
+                error: null,
+              );
             },
-            error: '',
           ),
           SizedBox(height: 20),
           InputContainer(
             child: TextField(
+              controller: txt,
               decoration: textInputDecoration.copyWith(
                   labelText: Labels.category, suffixIcon: Icon(Icons.search)),
               onChanged: (data) {

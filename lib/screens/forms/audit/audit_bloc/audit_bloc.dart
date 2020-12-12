@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ehsfocus/models/action_model.dart';
 import 'package:ehsfocus/models/audit_head_modal.dart';
 import 'package:ehsfocus/models/aspects_model.dart';
@@ -9,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuditBloc extends Bloc<AuditEvent, AuditState> {
   Audit _audit = Audit();
+  List<Audit> _audits = [];
   AuditBloc() : super(null);
 
   final httpAuditService = HttpAuditService();
@@ -21,31 +24,35 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
         break;
 
       case SetAuditAspect:
-        AuditRequest a = AuditRequest();
-        a.auditHead = _audit.auditHead;
-        a.aspect = event.auditRequest.aspect;
-        dynamic data = await httpAuditService.setAspect(a);
-        if (data == null) {
-          yield Error();
-          break;
-        }
-        // move to service
+        try {
+          AuditRequest a = AuditRequest();
+          a.auditHead = _audit.auditHead;
+          a.aspect = event.auditRequest.aspect;
+          dynamic data = await httpAuditService.setAspect(a);
+          if (data == null) {
+            yield Error();
+            break;
+          }
+          // move to service
 
-        _audit.auditHead = data.auditHead;
-        if (data.aspect.type == 'N') {
-          _audit.negativeAspects =
-              _handleAspectElement(_audit.negativeAspects, data.aspect);
-        } else {
-          _audit.positiveAspects =
-              _handleAspectElement(_audit.positiveAspects, data.aspect);
+          _audit.auditHead = data.auditHead;
+          if (data.aspect.type == 'N') {
+            _audit.negativeAspects =
+                _handleAspectElement(_audit.negativeAspects, data.aspect);
+          } else {
+            _audit.positiveAspects =
+                _handleAspectElement(_audit.positiveAspects, data.aspect);
+          }
+          //
+          yield AuditDataState(_audit);
+        } catch (e) {
+          yield Error(error: e);
         }
-        //
-        yield AuditDataState(_audit);
         break;
       case GetAuditsToApprove:
         try {
           List<Aspect> audits = await httpAuditService.getAuditsToApprove();
-          print(audits);
+
           yield AuditsToApproveState(audits);
           break;
         } catch (e) {
@@ -56,7 +63,6 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
       case SetAudit:
         try {
           _audit.auditHead = await httpAuditService.setAudit(_audit.auditHead);
-          print(_audit.auditHead.toJson());
         } catch (e) {
           yield Error();
           break;
@@ -66,8 +72,7 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
       case SubmitAudit:
         try {
           await httpAuditService.submitAudit(_audit.auditHead);
-          clearAudit();
-          yield AuditDataState(_audit);
+          Timer(Duration(seconds: 1), () => add(UpdateForm(audit: Audit())));
         } catch (e) {
           yield Error();
           break;
@@ -75,14 +80,28 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
         yield AuditDataState(_audit);
         break;
       case GetMyAudit:
-        yield AuditLoading();
-        dynamic a = await httpAuditService.getAudit();
-        if (a.length == 0) {
-          clearAudit();
-        } else {
-          _audit = a[0];
+        try {
+          dynamic a = await httpAuditService.getAudit();
+          if (a.length == 0) {
+            clearAudit();
+          } else {
+            _audit = a[0];
+          }
+          yield AuditDataState(_audit);
+        } catch (e) {
+          yield AuditDataState(_audit);
         }
-        yield AuditDataState(_audit);
+
+        break;
+      case GetMyAuditsEvent:
+        try {
+          List<Audit> a = await httpAuditService.getMyAudit();
+          _audits = a;
+          yield AuditsDataState(areaList: a);
+        } catch (e) {
+          yield AuditsDataState(areaList: []);
+        }
+
         break;
       case DeleteAudit:
         dynamic a = await httpAuditService.deleteAudit(event.id);
@@ -162,5 +181,19 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
     _audit.auditHead = null;
     _audit.negativeAspects = [];
     _audit.positiveAspects = [];
+  }
+
+  void getAudits() {
+    add(GetMyAuditsEvent());
+  }
+
+  void selectedAudit(data) {
+    if (data == null) {}
+    _audit = _audits.firstWhere((element) => element.auditHead.id == data.id);
+    add(UpdateForm(audit: _audit));
+  }
+
+  String getAuditType() {
+    return _audit.auditHead.auditType;
   }
 }

@@ -25,7 +25,7 @@ class FadeAnimationWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-        duration: const Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 200),
         transitionBuilder: (Widget child, Animation<double> animation) {
           return FadeTransition(
               opacity: Tween(begin: 0.0, end: 1.0).animate(animation),

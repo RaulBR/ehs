@@ -61,8 +61,6 @@ class ActionsFormWidget extends StatelessWidget {
                       _action.responsable =
                           BlocProvider.of<EmployeeBloc>(context)
                               .getEmployee(data.id);
-
-                      //   BlocProvider.of<AspectBloc>(contect).;
                       hasChanges(_action);
                     },
                     tapped: () {

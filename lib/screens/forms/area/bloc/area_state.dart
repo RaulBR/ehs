@@ -26,13 +26,18 @@ class AreaListState extends AreaState {
 }
 
 class StepListState extends AreaState {
-  final List<String> stepList;
+  final List<AreaStep> stepList;
   StepListState({this.stepList});
 }
 
 class AreaFormState extends AreaState {
   final Area area;
   AreaFormState({this.area});
+}
+
+class SelectedStepState extends AreaState {
+  final String step;
+  SelectedStepState({this.step});
 }
 
 class ClearStep extends AreaState {}

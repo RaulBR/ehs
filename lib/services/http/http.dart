@@ -5,6 +5,8 @@ import 'package:http/http.dart';
 
 class HttpService {
   final localstorageService = LocalStorageService();
+  // String url = 'https://ehs-app.herokuapp.com';
+  // String _url = 'https://ehs-app.herokuapp.com/api';
   String url = 'http://192.168.0.166:3000';
   String _url = 'http://192.168.0.166:3000/api';
   bool isDayTime;
@@ -14,7 +16,7 @@ class HttpService {
     try {
       dynamic headders = await getHeaders();
       await delete('$_url$endpint?id=$id', headers: headders);
-      return 'success'; //handlleDeleteResponce(response: response);
+      return 'success';
     } catch (e) {
       print('e: $e');
       return 'delete error';
@@ -54,7 +56,7 @@ class HttpService {
         break;
       case 400:
         if (response.body.isNotEmpty) {
-          throw json.decode(response.body)['errors'] ?? {"status": 'error'};
+          throw response.body ?? {"status": 'error'};
         }
         throw StatusList[Status.noErrorMessage];
         break;

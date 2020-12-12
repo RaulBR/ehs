@@ -23,6 +23,11 @@ class LoadingState extends AspectState {}
 
 class PhotoLoadingState extends AspectState {}
 
+class AspectIndexState extends AspectState {
+  final int index;
+  AspectIndexState({this.index = 0});
+}
+
 class AspectError extends AspectState {
   final dynamic error;
   AspectError({

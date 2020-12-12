@@ -9,6 +9,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final httpService = HttpLoginService();
   final _localStorageService = LocalStorageService();
   User _logedInUser = User();
+  User _user = User();
   LoginBloc() : super(LoginInitial()) {
     if (_localStorageService.getToken() != null) {
       amILogendIn();
@@ -54,7 +55,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       case SignUpEvent:
         try {
-          data = await httpService.signUp(event.user);
+          data = await httpService.signUp(_user);
           // if (data is String) {
           //   yield LoginError(error: data);
           // }
@@ -88,11 +89,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     add(SignInEvent(user: user));
   }
 
-  void onSignUp(User user) {
-    if (user == null) {
+  void onSignUp() {
+    if (_user == null) {
       return;
     }
-    add(SignUpEvent(user: user));
+    add(SignUpEvent());
   }
 
   void amILogendIn() {
@@ -110,5 +111,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   _storeDataLocaly(data) async {
     await _localStorageService.setToken(data.token);
     await _localStorageService.setRole(data.role);
+    await _localStorageService.setUserEmail(data.email);
+  }
+
+  void onSetEmail(value) {
+    _user.email = value;
+  }
+
+  void onSetPassWoard(value) {
+    _user.password = value;
+  }
+
+  void onSetSecondPassWoard(value) {
+    _user.password2 = value;
   }
 }

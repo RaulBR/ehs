@@ -9,9 +9,8 @@ part 'aspect_state.dart';
 class AspectBloc extends Bloc<AspectEvent, AspectState> {
   AspectBloc() : super(AspectInitial.initial());
   final httpAuditService = HttpAuditService();
-
-  List<String> types = [];
-  bool _isAction;
+  List<Aspect> _audits = [];
+  int _index = 0;
   @override
   Stream<AspectState> mapEventToState(
     AspectEvent event,
@@ -31,23 +30,18 @@ class AspectBloc extends Bloc<AspectEvent, AspectState> {
         }
 
         break;
-      case GetAspectPhotos:
-        if (event.aspect == null) {
-          return;
-        }
-        dynamic data =
-            await this.httpAuditService.getPhotosByAspectId(event.aspect);
-        if (data != null) {
-          yield AuditPhotos(data);
-        }
-        break;
       case RejectAspect:
         yield LoadingState();
         try {
           await this.httpAuditService.rejectAspect(event.aspect);
-          Timer(Duration(seconds: 1), () => add(GetAspectsToApprove()));
+          Timer(Duration(seconds: 1), () {
+            add(GetAspectsToApprove());
+          });
         } catch (e) {
           AspectError(error: e);
+          Timer(Duration(seconds: 1), () {
+            add(GetAspectsToApprove());
+          });
         }
 
         break;
@@ -55,11 +49,16 @@ class AspectBloc extends Bloc<AspectEvent, AspectState> {
         yield LoadingState();
         try {
           this.httpAuditService.resolveAspect(event.aspect);
-          Timer(Duration(seconds: 1), () => add(GetAspectsForMe()));
+          Timer(Duration(seconds: 1), () {
+            add(GetAspectsToApprove());
+          });
 
           // yield AspectToHandleState(audits);
         } catch (e) {
           AspectError(error: e);
+          Timer(Duration(seconds: 1), () {
+            add(GetAspectsToApprove());
+          });
         }
 
         break;
@@ -67,26 +66,43 @@ class AspectBloc extends Bloc<AspectEvent, AspectState> {
         yield LoadingState();
         try {
           await this.httpAuditService.acceptAspect(event.aspect);
-          Timer(Duration(seconds: 1), () => add(GetAspectsToApprove()));
+          Timer(Duration(seconds: 1), () {
+            add(GetAspectsToApprove());
+          });
         } catch (e) {
           AspectError(error: e);
+          Timer(Duration(seconds: 1), () {
+            add(GetAspectsToApprove());
+            getNextIndex();
+          });
         }
 
         break;
       case GetAspectsToApprove:
         try {
-          List<Aspect> audits = await httpAuditService.getAuditsToApprove();
-          yield AspectToHandleState(audits);
+          _audits = await httpAuditService.getAuditsToApprove();
+          getNextIndex();
+          yield AspectToHandleState(_audits);
+          break;
+        } catch (e) {
+          yield AspectError(error: e);
+          yield AspectToHandleState([]);
+          break;
+        }
+        break;
+      case GetAspectsForMe:
+        try {
+          _audits = await httpAuditService.getAuditsToFix();
+          yield AspectToHandleState(_audits);
           break;
         } catch (e) {
           yield AspectError(error: e);
           break;
         }
         break;
-      case GetAspectsForMe:
+      case AspectIndexEvent:
         try {
-          List<Aspect> audits = await httpAuditService.getAuditsToFix();
-          yield AspectToHandleState(audits);
+          yield AspectIndexState(index: 0);
           break;
         } catch (e) {
           yield AspectError(error: e);
@@ -95,13 +111,6 @@ class AspectBloc extends Bloc<AspectEvent, AspectState> {
         break;
       // yield UpdateAspectState(null);
     }
-  }
-
-  void getAspectsPhotos(Aspect aspect) {
-    if (aspect == null || aspect.id == null) {
-      return;
-    }
-    add(GetAspectPhotos(aspect: aspect));
   }
 
   void deleteAspectPhoto(AspectPhoto aspectPhoto) {
@@ -119,18 +128,37 @@ class AspectBloc extends Bloc<AspectEvent, AspectState> {
   }
 
   void rejectAspect({Aspect aspect}) {
+    findIndex(aspect);
     add(RejectAspect(aspect: aspect));
   }
 
   void acceptAspect({Aspect aspect}) {
+    findIndex(aspect);
     add(AcceptAspect(aspect: aspect));
   }
 
   void resolveAspect({Aspect aspect}) {
+    findIndex(aspect);
     add(ResolveAspect(aspect: aspect));
   }
 
-  bool navigate() {
-    return !_isAction;
+  void findIndex(aspect) {
+    _index = _audits.indexWhere((element) => element.id == aspect.id);
+  }
+
+  void getNextIndex() {
+    int size = _audits.length;
+    if (size == 0) {
+      _index = -1;
+      return;
+    }
+    if (size <= _index) {
+      _index = size - 1;
+      return;
+    }
+  }
+
+  int getIndex() {
+    return _index;
   }
 }

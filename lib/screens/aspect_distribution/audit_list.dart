@@ -1,6 +1,7 @@
 import 'package:ehsfocus/models/aspects_model.dart';
 import 'package:ehsfocus/screens/aspect_distribution/action_list.dart';
 import 'package:ehsfocus/screens/aspect_distribution/aspect_triaj_footer.dart';
+import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/aspect_wrapper.dart';
 import 'package:ehsfocus/screens/forms/aspects/bloc/aspect_bloc.dart';
 import 'package:ehsfocus/services/animations/animation_wrapper.dart';
 import 'package:ehsfocus/shared/constants.dart';
@@ -10,13 +11,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuditList extends StatelessWidget {
+  final bool hasDuplicate;
   final List<String> actions;
   final Function action;
-  const AuditList({Key key, this.actions, this.action}) : super(key: key);
+
+  const AuditList({Key key, this.actions, this.action, this.hasDuplicate})
+      : super(key: key);
+  openAspect(context, aspect) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AspectWraper2(
+          isEditable: false,
+          isFooterEditable: true,
+          aspect: aspect ?? Aspect(),
+          hasChanges: (action) {
+            action(aspect, action);
+          },
+          title: Labels.aspectTitle,
+          type: 'N',
+          hasAction: true,
+          buttons: [Labels.acceped, Labels.rejected],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Aspect> _aspects = [];
     int index = 0;
+    bool _hasDuplicate = hasDuplicate == null ? false : hasDuplicate;
     return BlocBuilder<AspectBloc, AspectState>(
       buildWhen: (previous, current) =>
           current is AspectToHandleState || current is LoadingState,
@@ -31,24 +56,44 @@ class AuditList extends StatelessWidget {
                   ),
                 )
               : FadeAnimationWrapper(
-                  child: ActionDistributionList(
-                    index: null,
-                    indexOut: (indexOut) {
-                      index = indexOut;
+                  child: BlocBuilder<AspectBloc, AspectState>(
+                    builder: (context, state) {
+                      index = BlocProvider.of<AspectBloc>(context).getIndex();
+                      if (index == -1) {
+                        Navigator.pop(context);
+                      }
+                      return ActionDistributionList(
+                        hasDublicate: !_hasDuplicate
+                            ? null
+                            : (value) {
+                                if (value) {
+                                  _aspects[index].type = 'D';
+                                }
+                              },
+                        index: index,
+                        indexOut: (indexOut) {
+                          index = indexOut;
+                        },
+                        listElements:
+                            state is AspectToHandleState ? state.aspects : [],
+                      );
                     },
-                    listElements:
-                        state is AspectToHandleState ? state.aspects : [],
                   ),
                 ),
           bottomNavigationBar: (state is LoadingState)
               ? null
               : AspectTriajFooter(
                   actions: actions,
-                  getAction: (aspect, actionVal) {
-                    action(aspect, actionVal);
+                  getAction: (actionVal) {
+                    if (actionVal == Labels.ditail) {
+                      openAspect(
+                        context,
+                        _aspects[index],
+                      );
+                      return;
+                    }
+                    action(_aspects[index], actionVal);
                   },
-                  aspect:
-                      _aspects.length == 0 ? Aspect() : _aspects[index ?? 0],
                 ),
         );
       },

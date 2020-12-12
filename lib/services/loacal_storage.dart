@@ -35,4 +35,14 @@ class LocalStorageService {
     final SharedPreferences prefs = await _prefs;
     prefs.getString(key);
   }
+
+  Future setUserEmail(email) async {
+    final SharedPreferences prefs = await _prefs;
+    await prefs.setString('email', email);
+  }
+
+  Future getEmail() async {
+    final SharedPreferences prefs = await _prefs;
+    return prefs.getString('email');
+  }
 }

@@ -4,7 +4,7 @@ class Area {
   String id;
   String area;
   String areaInfo;
-  List<Step> steps;
+  List<AreaStep> steps;
   List<AreaRole> roles;
 
   Area({this.id, this.area, this.areaInfo, this.steps, this.roles});
@@ -15,7 +15,7 @@ class Area {
         "areaInfo": areaInfo,
         "steps": steps == null
             ? []
-            : steps.map((Step data) => data.toJson()).toList(),
+            : steps.map((AreaStep data) => data.toJson()).toList(),
         "roles": roles == null
             ? []
             : roles.map((AreaRole data) => data.toJson()).toList()
@@ -29,7 +29,7 @@ class Area {
     steps = parsedJson['steps'] == null
         ? []
         : (parsedJson['steps'] as List<dynamic>)
-            .map((i) => Step.fromJson(i))
+            .map((i) => AreaStep.fromJson(i))
             .toList();
 
     roles = parsedJson['roles'] == null
@@ -40,17 +40,17 @@ class Area {
   }
 }
 
-class Step {
+class AreaStep {
   String id;
   String step;
   String stepinfo;
   String areaId;
-  Step({this.id, this.areaId, this.stepinfo, this.step});
+  AreaStep({this.id, this.areaId, this.stepinfo, this.step});
 
   Map<String, dynamic> toJson() =>
       {"id": id, "step": step, "stepinfo": stepinfo, "areaId": areaId};
 
-  Step.fromJson(Map<String, dynamic> parsedJson) {
+  AreaStep.fromJson(Map<String, dynamic> parsedJson) {
     id = parsedJson['id'].toString();
     step = parsedJson['step'].toString();
     areaId = parsedJson['areaId'].toString();

@@ -15,6 +15,7 @@ class DistributeAspectsLsit extends StatelessWidget {
         return _aspect;
       },
       child: AuditList(
+          hasDuplicate: true,
           actions: [Labels.rejected, Labels.acceped],
           action: (Aspect aspect, action) {
             print(action);

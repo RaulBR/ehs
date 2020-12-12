@@ -4,6 +4,7 @@ import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/screens/forms/aspects/ehs_asplect_list.dart';
 
 class AuditListElement extends StatelessWidget {
+  final bool disabled;
   final String title;
   final String subtitle;
   final int order;
@@ -17,10 +18,12 @@ class AuditListElement extends StatelessWidget {
       this.order,
       this.isDone,
       this.trailing,
-      @required this.onTap});
+      @required this.onTap,
+      this.disabled});
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      enabled: disabled == null ? true : !disabled,
       contentPadding: auditList,
       leading: order != null
           ? AuditListAvatar(order: '$order', isDone: isDone)
@@ -37,6 +40,7 @@ class AuditListElement extends StatelessWidget {
 }
 
 class DropDownAuditListElement extends StatelessWidget {
+  final bool disabled;
   final String title;
   final String subtitle;
   final int order;
@@ -52,7 +56,8 @@ class DropDownAuditListElement extends StatelessWidget {
       this.isDone,
       this.onTap,
       this.aspects,
-      this.selected});
+      this.selected,
+      this.disabled});
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +82,7 @@ class DropDownAuditListElement extends StatelessWidget {
     return ExpansionTile(
       tilePadding: EdgeInsets.fromLTRB(0, 0, 20, 0),
       title: AuditListElement(
+          disabled: disabled,
           title: title,
           subtitle: setSubtitle(),
           order: order,
