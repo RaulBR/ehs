@@ -126,7 +126,7 @@ class PageWrapper extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
       body: BodyContainer(child: child),
-      bottomNavigationBar: _isKeyboard
+      bottomNavigationBar: _isKeyboard || footerAction == null
           ? null
           : FormFooter(
               actions:

@@ -1,6 +1,9 @@
 import 'package:ehsfocus/models/generic_list_model.dart';
-import 'package:ehsfocus/screens/category/category_grup.dart';
+import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
+import 'package:ehsfocus/screens/category/category_picker.dart';
+import 'package:ehsfocus/screens/forms/area/are_dropdown_picker.dart';
 import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
+import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc.dart';
 import 'package:ehsfocus/services/camera_service.dart';
 import 'package:ehsfocus/shared/action_button.dart';
 import 'package:ehsfocus/shared/fields/search_picker/custom_list_search.dart';
@@ -37,10 +40,14 @@ class PhotoCommentForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Aspect _aspect = Aspect();
+
     final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
     _aspect.type = type;
     _aspect = aspect == null ? _aspect : aspect;
-
+    _aspect.categoryType = BlocProvider.of<AuditBloc>(context).getAuditType();
+    BlocProvider.of<CategoryBloc>(context)
+        .getForCategoryType(_aspect.categoryType);
+    BlocProvider.of<AreaBloc>(context).getStepes();
     return Scaffold(
       key: _key,
       resizeToAvoidBottomPadding: false,
@@ -65,37 +72,19 @@ class PhotoCommentForm extends StatelessWidget {
                         .remove((element) => element.id == picture.id);
                   },
                 ),
-                BlocBuilder<AreaBloc, AreaState>(
-                  buildWhen: (previous, current) => current is StepListState,
-                  builder: (context, state) => EhsSearchListPicker(
-                    isEditable: isEditable,
-                    label: Labels.area2,
-                    list: state is StepListState
-                        ? state.stepList
-                            .map((element) => GenericListObject(title: element))
-                            .toList()
-                        : [],
-                    preselected: null, //_area.step,
-                    selected: (data) {
-                      //  BlocProvider.of<AuditBloc>(context).setArea(_area);
-                    },
-                    tapped: () {},
-                    searchFor: (data) {
-                      //  areaBloc.searchAreas(data);
-                    },
-                  ),
-                ),
-                CategoryGroupPicker(
-                  error: null,
-                  categoryType: _aspect.categoryType,
-                  category: _aspect.category,
+                EquipmantDroptDownPicker(
+                  equipment: _aspect.equipment,
                   isEditable: isEditable,
-                  getCategory: (category) {
-                    _aspect.category = category;
-                    hasChanges(_aspect);
+                  getData: (equipment) {
+                    _aspect.equipment = equipment;
                   },
-                  getCategoryType: (categoryType) {
-                    _aspect.categoryType = categoryType;
+                ),
+                CategoryPiker(
+                  error: null,
+                  input: _aspect.category,
+                  isEditable: isEditable,
+                  hasChanges: (_category) {
+                    _aspect.category = _category;
                     hasChanges(_aspect);
                   },
                 ),

@@ -2,6 +2,7 @@ import 'package:ehsfocus/models/action_model.dart';
 import 'package:ehsfocus/models/audit_head_modal.dart';
 import 'package:ehsfocus/models/aspects_model.dart';
 import 'package:ehsfocus/screens/forms/area/area_form.dart';
+import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspects.dart';
 import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc_index.dart';
 import 'package:ehsfocus/screens/forms/shared_form_components/audit_list_element.dart';
@@ -62,47 +63,55 @@ class _AuditFormState extends State<AuditForm> {
   }
 
   Widget getNav(int number, context) {
-    return EhsNavigatorWidget(
-      action: (data) {
-        if (data == 0) {
-          BlocProvider.of<AuditBloc>(context).setAudit();
-        }
-      },
-      displayWidgets: [
-        AreaFromWidget(
-          title: Labels.areaId,
-          order: 1,
-          area: area,
-          getData: (data) {
-            BlocProvider.of<AuditBloc>(context).setArea(data);
-          },
-        ),
-        AspectsList(
-          aspects: _positiveAspects,
-          order: 2,
-          type: 'P',
-          title: Labels.positiveAcctionMessage,
-          hasChanges: (data) {
-            if (data == null) {
-              return;
-            }
+    return BlocProvider(
+      create: (context) {
+        AreaBloc areaBloc = AreaBloc(preseSelect: area.area);
+        areaBloc.getAreas();
 
-            BlocProvider.of<AuditBloc>(context).setAspect(data);
-          },
-        ),
-        AspectsList(
-            aspects: _negativeAspects,
-            order: 3,
-            type: 'N',
-            title: Labels.negativeAcctionMessage,
+        return areaBloc;
+      },
+      child: EhsNavigatorWidget(
+        action: (data) {
+          if (data == 0) {
+            BlocProvider.of<AuditBloc>(context).setAudit();
+          }
+        },
+        displayWidgets: [
+          AreaFromWidget(
+            title: Labels.areaId,
+            order: 1,
+            area: area,
+            getData: (data) {
+              BlocProvider.of<AuditBloc>(context).setArea(data);
+            },
+          ),
+          AspectsList(
+            aspects: _positiveAspects,
+            order: 2,
+            type: 'P',
+            title: Labels.positiveAcctionMessage,
             hasChanges: (data) {
               if (data == null) {
                 return;
               }
+
               BlocProvider.of<AuditBloc>(context).setAspect(data);
-            }),
-      ],
-      pageStart: number,
+            },
+          ),
+          AspectsList(
+              aspects: _negativeAspects,
+              order: 3,
+              type: 'N',
+              title: Labels.negativeAcctionMessage,
+              hasChanges: (data) {
+                if (data == null) {
+                  return;
+                }
+                BlocProvider.of<AuditBloc>(context).setAspect(data);
+              }),
+        ],
+        pageStart: number,
+      ),
     );
   }
 
@@ -117,20 +126,7 @@ class _AuditFormState extends State<AuditForm> {
             ),
       // maybe can bereoved
       body: BlocListener<AuditBloc, AuditState>(
-        listener: (BuildContext context, AuditState state) {
-          // if (state is AuditDataState) {
-          //   area = state.audit.auditHead;
-          //   areaTitle = state.audit.auditHead != null ? '${area.area}' : null;
-          //   _negativeAspects = state.audit.negativeAspects ?? [];
-          //   _positiveAspects = state.audit.positiveAspects ?? [];
-          // }
-          // if (state is DeleteSucsesfull) {
-          //   area = null;
-          //   areaTitle = null;
-          //   _negativeAspects = [];
-          //   _positiveAspects = [];
-          // }
-        },
+        listener: (BuildContext context, AuditState state) {},
         child: BlocBuilder<AuditBloc, AuditState>(
           builder: (BuildContext context, state) {
             if (state is AuditDataState) {

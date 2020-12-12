@@ -1,4 +1,5 @@
 import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/aspect_wrapper.dart';
 import 'package:ehsfocus/screens/forms/aspects/ehs_asplect_list.dart';
 import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc.dart';
@@ -72,16 +73,19 @@ class AspectsList extends StatelessWidget {
     Navigator.push(
         context,
         SlideRightRoute(
-          page: AspectWraper2(
-              hasAction: type == 'N',
-              aspect: aspect,
-              order: order,
-              type: type,
-              title: title,
-              hasChanges: (Aspect data, action) {
-                data.type = type;
-                navigationEvent(data);
-              }),
+          page: BlocProvider.value(
+            value: BlocProvider.of<AreaBloc>(context),
+            child: AspectWraper2(
+                hasAction: type == 'N',
+                aspect: aspect,
+                order: order,
+                type: type,
+                title: title,
+                hasChanges: (Aspect data, action) {
+                  data.type = type;
+                  navigationEvent(data);
+                }),
+          ),
         ));
   }
 }

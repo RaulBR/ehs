@@ -6,13 +6,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CategorySertvice {
-  void openCategoryModal(context, {Function add, String selected}) async {
+  void openCategoryModal(context,
+      {Function add, String selected, String title}) async {
     String _localValoue = '';
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(Labels.addCategory),
+          title: Text(title == null ? Labels.addCategory : title),
           content: Container(
             height: 200,
             child: Column(
@@ -20,16 +21,16 @@ class CategorySertvice {
                 ClearableTextField(
                   enabled: true,
                   inputValue: selected,
-                  label: Labels.category,
+                  label: title == null ? Labels.category : title,
                   onChanged: (data) {
                     _localValoue = data;
                   },
                   error: '',
                 ),
-                Switch(
-                  value: false,
-                  onChanged: (value) {},
-                ),
+                // Switch(
+                //   value: false,
+                //   onChanged: (value) {},
+                // ),
               ],
             ),
           ),

@@ -5,6 +5,7 @@ class AuditHead {
   String area;
   String step;
   String sector;
+  String auditType;
   String auditStatus;
   Employee employee;
   String createdDate;
@@ -14,6 +15,7 @@ class AuditHead {
         "area": area,
         "step": step,
         "sector": sector,
+        "auditType": auditType,
         "id": id,
         "auditStatus": auditStatus
       };
@@ -24,8 +26,9 @@ class AuditHead {
 
   AuditHead.fromJson(Map<String, dynamic> parsedJson) {
     id = parsedJson['id'].toString();
-    area = parsedJson['area'].toString();
-    step = parsedJson['step'].toString();
+    area = parsedJson['area']?.toString();
+    step = parsedJson['step']?.toString();
+    auditType = parsedJson['auditType']?.toString();
     sector =
         parsedJson['sector'] == null ? null : parsedJson['sector'].toString();
     auditStatus = parsedJson['auditStatus'].toString();

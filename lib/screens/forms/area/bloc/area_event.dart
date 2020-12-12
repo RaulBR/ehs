@@ -55,12 +55,15 @@ class SearchAreas extends AreaEvent {
   SearchAreas(this.areaString);
 }
 
+class EmitSteptsEvent extends AreaEvent {}
+
 // class SetSelectedArea extends AreaEvent {
 //   final Area areaValue;
 //   SetSelectedArea({
 //     this.areaValue,
 //   });
 // }
+class EmitSteptEvent extends AreaEvent {}
 
 class SearchStepts extends AreaEvent {
   final String areaString;

@@ -101,6 +101,12 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     add(PropagateCategoryTypeEvent());
   }
 
+  getForCategoryType(String categoryType) {
+    _selectedCategoryType = _categoryesType.firstWhere(
+        (element) => element.type == categoryType,
+        orElse: () => CategoryType());
+  }
+
   addCategoryType(CategoryType categoryType) {
     _selectedCategoryType = categoryType;
   }
@@ -171,4 +177,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     add(ClearCategoryEvent());
     add(PropagateCategoryEvent());
   }
+
+  void selectedTypeName(String categoryType) {}
 }

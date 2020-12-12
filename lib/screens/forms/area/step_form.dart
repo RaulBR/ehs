@@ -1,0 +1,79 @@
+import 'package:ehsfocus/models/area_modal.dart';
+import 'package:ehsfocus/screens/category/category_service.dart';
+import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
+import 'package:ehsfocus/screens/forms/shared_form_components/generic_element.dart';
+import 'package:ehsfocus/services/popup_service/generic_message_popup.dart';
+import 'package:ehsfocus/shared/constants.dart';
+import 'package:ehsfocus/shared/form_eleements/form_container.dart';
+import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/generic_list_page_search.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class StepForm extends StatelessWidget {
+  final CategorySertvice _categorySertvice = CategorySertvice();
+  @override
+  Widget build(BuildContext context) {
+    Area _area = Area();
+    TextEditingController txt;
+    return BlocBuilder<AreaBloc, AreaState>(builder: (context, state) {
+      // return widget here based on BlocA's state
+      return PageWrapper(
+        title: Labels.area2,
+        add: () {
+          _categorySertvice.openCategoryModal(context,
+              add: (data) => BlocProvider.of<AreaBloc>(context).addStep(data),
+              title: Labels.area2);
+        },
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: 20),
+            InputContainer(
+              child: TextField(
+                controller: txt,
+                decoration: textInputDecoration.copyWith(
+                    labelText: 'Adauga pas', suffixIcon: Icon(Icons.search)),
+                onChanged: null,
+              ),
+            ),
+            SizedBox(height: 20),
+            BlocBuilder<AreaBloc, AreaState>(
+                buildWhen: (previous, current) => current is StepListState,
+                builder: (context, state) {
+                  List<dynamic> stepts = [];
+                  if (state is StepListState) {
+                    stepts = state.stepList;
+                  }
+                  return Flexible(
+                    child: ListView.builder(
+                      itemCount: stepts.length,
+                      itemBuilder: (context, index) {
+                        return GennericListElement(
+                          title: stepts[index].step,
+                          deleted: () async {
+                            if (await EhsGennericPopup().showPupup(
+                              context,
+                              what: _area.steps[index].step,
+                              title: Labels.area2,
+                            )) {
+                              // add delete function
+                            }
+                          },
+                          isSelected: () {
+                            _categorySertvice.openCategoryModal(context,
+                                title: Labels.area2,
+                                selected: _area.steps[index].step,
+                                add: (data) =>
+                                    BlocProvider.of<AreaBloc>(context)
+                                        .addStep(data));
+                          },
+                        );
+                      },
+                    ),
+                  );
+                }),
+          ],
+        ),
+      );
+    });
+  }
+}

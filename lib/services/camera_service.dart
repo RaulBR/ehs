@@ -11,12 +11,18 @@ class CameraService {
   ImagePicker _imagePicker = ImagePicker();
   Future<PickedFile> openGalery(context) async {
     return await _imagePicker.getImage(
-        source: ImageSource.gallery, maxHeight: 800, maxWidth: 800);
+        source: ImageSource.gallery,
+        maxHeight: 800,
+        maxWidth: 800,
+        imageQuality: 50);
   }
 
   Future<PickedFile> openCamera(context) async {
     return await _imagePicker.getImage(
-        source: ImageSource.camera, maxHeight: 800, maxWidth: 800);
+        source: ImageSource.camera,
+        maxHeight: 800,
+        maxWidth: 800,
+        imageQuality: 50);
   }
 
   Future<File> moveFile(File sourceFile, String newPath) async {

@@ -40,7 +40,7 @@ class AspectWrapperBloc extends Bloc<AspectWrapperEvent, AspectWrapperState> {
             break;
           }
         }
-        if (_aspect.category == null || _aspect.categoryType == null) {
+        if (_aspect.category == null || _aspect.equipment == null) {
           _isEditable = false;
           yield EditableSate(false);
           break;

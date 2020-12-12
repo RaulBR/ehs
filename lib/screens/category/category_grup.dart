@@ -39,7 +39,6 @@ class CategoryGroupPicker extends StatelessWidget {
             input: category,
             isEditable: isEditable,
             hasChanges: (_category) => getCategory(_category),
-            label: Labels.category,
           ),
         ],
       ),

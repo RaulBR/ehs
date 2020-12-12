@@ -1,4 +1,6 @@
+import 'package:ehsfocus/main_app.dart';
 import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/aspects/actions_form.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_dependencys.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/aspect_wrapper_service.dart';
@@ -48,71 +50,68 @@ class AspectWraper2 extends StatelessWidget {
     _aspect.type = type;
     return BuilderProvider(
       child: SafeArea(
-        child: AspectBlocDependencyes(
-          child: Scaffold(
-            resizeToAvoidBottomPadding: false,
-            body: Container(
-              child: BlocBuilder<AspectWrapperBloc, AspectWrapperState>(
-                  buildWhen: (previous, current) => current is FormPageSate,
-                  builder: (context, state) {
-                    _isAction = state.isPhoto == null ? false : !state.isPhoto;
-                    checkForm(context, _aspect);
-                    return _isAction
-                        ? AnimationWrapper(
-                            child: ActionsFormWidget(
-                              isEditable: _aspect.status != "A",
-                              aspect: _aspect,
-                              order: order != null ? order + 1 : null,
-                              title: Labels.corectiveAcction,
-                              navigate: () => changeForm(context),
-                              hasChanges: (data) {
-                                _aspect.action = data;
-                                checkForm(context, _aspect);
-                              }, //setActions(data),
-                            ),
-                          )
-                        : AnimationWrapper(
-                            child: PhotoCommentForm(
-                                error: null,
-                                isEditable: isEditable ?? true,
-                                hasAction: hasAction,
-                                aspect: _aspect,
-                                order: order,
-                                type: type,
-                                title: title,
-                                navigate: () =>
-                                    changeForm(context), //navigate()
-                                hasChanges: (Aspect data) {
-                                  _aspect = data;
-                                  checkForm(context, _aspect);
-                                }),
-                          );
-                  }),
-            ),
-            bottomNavigationBar: BlocBuilder<AspectWrapperBloc,
-                    AspectWrapperState>(
-                //     buildWhen: (previous, current) => current is EditableSate,
+        child: Scaffold(
+          resizeToAvoidBottomPadding: false,
+          body: Container(
+            child: BlocBuilder<AspectWrapperBloc, AspectWrapperState>(
+                buildWhen: (previous, current) => current is FormPageSate,
                 builder: (context, state) {
-              bool _isEnabled = isFooterEditable == null
-                  ? (state.isEditable ?? false)
-                  : isFooterEditable;
-              return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: _aspectWpService.generateButtons(
-                      buttons: buttons,
-                      isEnabled: _isEnabled,
-                      hasChanges: (change) {
-                        if (change == Labels.back) {
-                          Navigator.pop(context);
-                          return;
-                        }
-                        if (change == Labels.add) {
-                          Navigator.pop(context);
-                        }
-                        hasChanges(_aspect, change);
-                      }));
-            }),
+                  _isAction = state.isPhoto == null ? false : !state.isPhoto;
+                  checkForm(context, _aspect);
+                  return _isAction
+                      ? AnimationWrapper(
+                          child: ActionsFormWidget(
+                            isEditable: _aspect.status != "A",
+                            aspect: _aspect,
+                            order: order != null ? order + 1 : null,
+                            title: Labels.corectiveAcction,
+                            navigate: () => changeForm(context),
+                            hasChanges: (data) {
+                              _aspect.action = data;
+                              checkForm(context, _aspect);
+                            }, //setActions(data),
+                          ),
+                        )
+                      : AnimationWrapper(
+                          child: PhotoCommentForm(
+                              error: null,
+                              isEditable: isEditable ?? true,
+                              hasAction: hasAction,
+                              aspect: _aspect,
+                              order: order,
+                              type: type,
+                              title: title,
+                              navigate: () => changeForm(context), //navigate()
+                              hasChanges: (Aspect data) {
+                                _aspect = data;
+                                checkForm(context, _aspect);
+                              }),
+                        );
+                }),
           ),
+          bottomNavigationBar: BlocBuilder<AspectWrapperBloc,
+                  AspectWrapperState>(
+              //     buildWhen: (previous, current) => current is EditableSate,
+              builder: (context, state) {
+            bool _isEnabled = isFooterEditable == null
+                ? (state.isEditable ?? false)
+                : isFooterEditable;
+            return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: _aspectWpService.generateButtons(
+                    buttons: buttons,
+                    isEnabled: _isEnabled,
+                    hasChanges: (change) {
+                      if (change == Labels.back) {
+                        Navigator.pop(context);
+                        return;
+                      }
+                      if (change == Labels.add) {
+                        Navigator.pop(context);
+                      }
+                      hasChanges(_aspect, change);
+                    }));
+          }),
         ),
       ),
     );
@@ -125,7 +124,57 @@ class BuilderProvider extends StatelessWidget {
   const BuilderProvider({Key key, this.child}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AspectWrapperBloc>(
+            create: (context) => AspectWrapperBloc(), child: child)
+      ],
+      child: child,
+    );
+  }
+}
+
+class GenericPageSwitcher extends StatelessWidget {
+  final Widget pageOne;
+  final Widget pageTow;
+
+  const GenericPageSwitcher({Key key, this.pageOne, this.pageTow})
+      : super(key: key);
+
+  changeForm(context) {
+    BlocProvider.of<AspectWrapperBloc>(context).add(ChangeFormEvent());
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocProvider<AspectWrapperBloc>(
-        create: (context) => AspectWrapperBloc(), child: child);
+      create: (context) => AspectWrapperBloc(),
+      child: Container(
+        child: BlocBuilder<AspectWrapperBloc, AspectWrapperState>(
+            buildWhen: (previous, current) => current is FormPageSate,
+            builder: (context, state) {
+              bool _isAction = state.isPhoto == null ? false : !state.isPhoto;
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      _isAction
+                          ? AnimationWrapper(
+                              child: pageOne,
+                            )
+                          : AnimationWrapper(
+                              child: pageTow,
+                            ),
+                    ],
+                  ),
+                  FlatButton(
+                      onPressed: () => changeForm(context),
+                      child: Text('switch'))
+                ],
+              );
+            }),
+      ),
+    );
   }
 }

@@ -9,7 +9,9 @@ abstract class AspectWrapperState extends Equatable {
   List<Object> get props => [isEditable, isPhoto];
 }
 
-class AspectWrapperInitial extends AspectWrapperState {}
+class AspectWrapperInitial extends AspectWrapperState {
+  final bool isPhoto = true;
+}
 
 class FormPageSate extends AspectWrapperState {
   final bool isPhoto;

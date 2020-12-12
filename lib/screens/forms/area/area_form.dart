@@ -1,5 +1,7 @@
 import 'package:ehsfocus/models/audit_head_modal.dart';
+import 'package:ehsfocus/screens/category/category_type_picker.dart';
 import 'package:ehsfocus/screens/forms/area/are_dropdown_picker.dart';
+import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc_index.dart';
 
 import 'package:ehsfocus/services/qr_scanning.dart';
@@ -23,9 +25,10 @@ class AreaFromWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     QrScanService scan = QrScanService();
     AuditHead _area = AuditHead();
+    AuditHead error = AuditHead();
     _area = area ?? _area;
 
-    var children2 = [
+    var children = [
       SizedBox(
         height: 40,
       ),
@@ -36,9 +39,21 @@ class AreaFromWidget extends StatelessWidget {
           }
           return AreaDropDownPiker(
             area: _area,
-            getData: (data) => getData(data),
+            getData: (data) {
+              getData(data);
+              BlocProvider.of<AreaBloc>(context).setAreaFormByArea(data);
+            },
           );
         },
+      ),
+      CategoryTypePiker(
+        error: error == null ? null : error.auditType,
+        input: _area.auditType,
+        isEditable: true,
+        hasChanges: (_categoryType) {
+          _area.auditType = _categoryType;
+        },
+        label: Labels.aspectType,
       ),
       SizedBox(
         height: 50,
@@ -68,7 +83,7 @@ class AreaFromWidget extends StatelessWidget {
       child: AuditFormWraper(
         title: Labels.areaId,
         order: order,
-        children: children2,
+        children: children,
       ),
     );
   }

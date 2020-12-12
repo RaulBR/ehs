@@ -13,12 +13,16 @@ part 'area_state.dart';
 
 class AreaBloc extends Bloc<AreaEvent, AreaState> {
   Area _area = Area();
+  final String preseSelect;
+  String _step;
   PaginationObject _requestParams = PaginationObject();
   HttpAreaService httpAreaService = HttpAreaService();
   List<Area> _areasList = [];
 
-  AreaBloc() : super(AreaInitial.initial()) {
-    getAreas();
+  AreaBloc({this.preseSelect}) : super(AreaInitial.initial()) {
+    if (_areasList.length == 0) {
+      getAreas();
+    }
   }
 
   @override
@@ -40,7 +44,9 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
                 steps: ucelenssLamngauageListElement.steps,
                 roles: ucelenssLamngauageListElement.roles))
             .toList();
-
+        if (preseSelect != null) {
+          setAreaFormByArea(preseSelect);
+        }
         yield AreaListState(areaList: _areasList ?? []);
         break;
       case SearchAreas:
@@ -58,7 +64,7 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
         yield AreaListState(areaList: b);
         break;
       case GetStepsEvent:
-        //    yield StepListState(stepList: areas['1']);
+        yield StepListState(stepList: _area.steps ?? []);
 
         break;
       case DeleteAreaEvent:
@@ -96,7 +102,12 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
         }
         _area.roles.add(event.areaRole);
         yield AreaFormState(area: _area);
-
+        break;
+      case EmitSteptsEvent:
+        yield StepListState(stepList: _area.steps);
+        break;
+      case EmitSteptEvent:
+        yield SelectedStepState(step: _step);
         break;
       default:
       // yield AreaListState(areaList: _data ?? []);
@@ -132,6 +143,13 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
     setAreaForm(_area);
   }
 
+  setAreaFormByArea(String area) {
+    if (area == null) {
+      return;
+    }
+    _area = _areasList.firstWhere((element) => element.area == area);
+  }
+
   setAreaForm(Area area) {
     _area = area;
     add(UpdateAreaFormEvent(area: _area));
@@ -146,5 +164,18 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
 
   setRole(AreaRole data) {
     add(SetRoleEvent(data));
+  }
+
+  addStep(data) {
+    AreaStep step = AreaStep();
+    step.step = data;
+    _area.steps == null ? _area.steps = [] : _area.steps;
+    _area.steps.add(step);
+    add(EmitSteptsEvent());
+  }
+
+  void selectedStep(String data) {
+    _step = data;
+    add(EmitSteptEvent());
   }
 }

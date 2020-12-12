@@ -192,4 +192,8 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
     _audit = _audits.firstWhere((element) => element.auditHead.id == data.id);
     add(UpdateForm(audit: _audit));
   }
+
+  String getAuditType() {
+    return _audit.auditHead.auditType;
+  }
 }

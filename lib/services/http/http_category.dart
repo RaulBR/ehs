@@ -6,12 +6,16 @@ class HttpCategoryService extends HttpService {
   String _categoryUrl = '/category';
   String _deleteUrl = '/category/delete-categoryType';
   getCategoryTypes() async {
-    String data = await postRequest(
-        endpint: '$_categoryUrl/get', jsonValue: null, hasHeadder: true);
+    try {
+      String data = await postRequest(
+          endpint: '$_categoryUrl/get', jsonValue: null, hasHeadder: true);
 
-    return (json.decode(data) as List)
-        .map((i) => CategoryType.fromJson(i))
-        .toList();
+      return (json.decode(data) as List)
+          .map((i) => CategoryType.fromJson(i))
+          .toList();
+    } catch (e) {
+      return [];
+    }
   }
 
   setCategoryType({CategoryType categoryType}) async {
