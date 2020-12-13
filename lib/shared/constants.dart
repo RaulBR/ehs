@@ -33,7 +33,7 @@ class Labels {
   static String enviroment = 'Audit de Mediu';
   static String helth = 'Audit de Sanatatea Muncii';
   static String incident = 'Incident';
-  static String areaId = 'Identifica Zona';
+  static String areaId = 'Identificare';
   static String qrScannerMesasge = 'Utilizaa scanare QR sau alege zona';
   static String positiveAcctionMessage = 'Aspecte pozitive';
   static String negativeAcctionMessage = 'Aspecte Negative';

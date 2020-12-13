@@ -26,7 +26,7 @@ class AreaFromWidget extends StatelessWidget {
     QrScanService scan = QrScanService();
     AuditHead _area = AuditHead();
     AuditHead error = AuditHead();
-    _area = area ?? _area;
+    _area = area == null ? _area : area;
 
     var children = [
       SizedBox(
@@ -35,13 +35,16 @@ class AreaFromWidget extends StatelessWidget {
       BlocBuilder<AuditBloc, AuditState>(
         builder: (context, state) {
           if (state is AuditDataState) {
-            _area = state.audit.auditHead;
+            _area = state.audit.auditHead == null
+                ? AuditHead()
+                : state.audit.auditHead;
           }
           return AreaDropDownPiker(
             area: _area,
             getData: (data) {
-              getData(data);
-              BlocProvider.of<AreaBloc>(context).setAreaFormByArea(data);
+              _area.area = data.area;
+              BlocProvider.of<AreaBloc>(context).updatFormByString(_area.area);
+              getData(_area);
             },
           );
         },
@@ -52,6 +55,7 @@ class AreaFromWidget extends StatelessWidget {
         isEditable: true,
         hasChanges: (_categoryType) {
           _area.auditType = _categoryType;
+          getData(_area);
         },
         label: Labels.aspectType,
       ),

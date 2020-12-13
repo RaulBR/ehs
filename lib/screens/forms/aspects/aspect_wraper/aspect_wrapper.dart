@@ -1,8 +1,7 @@
-import 'package:ehsfocus/main_app.dart';
 import 'package:ehsfocus/models/aspects_model.dart';
-import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
+
 import 'package:ehsfocus/screens/forms/aspects/actions_form.dart';
-import 'package:ehsfocus/screens/forms/aspects/aspect_dependencys.dart';
+
 import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/aspect_wrapper_service.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/bloc/aspect_wrapper_bloc.dart';
 import 'package:ehsfocus/screens/forms/aspects/photo_comment_form.dart';
@@ -11,7 +10,7 @@ import 'package:ehsfocus/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AspectWraper2 extends StatelessWidget {
+class AspectWraper extends StatelessWidget {
   final Aspect aspect;
   final Function hasChanges;
   final String title;
@@ -22,7 +21,7 @@ class AspectWraper2 extends StatelessWidget {
   final bool isFooterEditable;
   final List<String> buttons;
   final AspectWrapperServie _aspectWpService = AspectWrapperServie();
-  AspectWraper2(
+  AspectWraper(
       {Key key,
       this.aspect,
       this.hasChanges,

@@ -1,3 +1,4 @@
+import 'package:ehsfocus/models/employee_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
@@ -26,6 +27,14 @@ class LocalStorageService {
     await prefs.setString("role", role);
   }
 
+  Future setData(key, value) async {
+    if (key == null || value == null) {
+      return;
+    }
+    final SharedPreferences prefs = await _prefs;
+    await prefs.setString(key, value);
+  }
+
   Future removeRole() async {
     final SharedPreferences prefs = await _prefs;
     prefs.getString("role");
@@ -44,5 +53,10 @@ class LocalStorageService {
   Future getEmail() async {
     final SharedPreferences prefs = await _prefs;
     return prefs.getString('email');
+  }
+
+  Future getData(String s) async {
+    final SharedPreferences prefs = await _prefs;
+    return prefs.getString(s);
   }
 }

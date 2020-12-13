@@ -30,6 +30,7 @@ class _AuditFormState extends State<AuditForm> {
   List<Aspect> _positiveAspects = [];
   AuditHead area = AuditHead();
   String areaTitle;
+  String areaSubtitle;
   String pageType;
   Audit formData = Audit();
   bool _hasData = false;
@@ -65,9 +66,10 @@ class _AuditFormState extends State<AuditForm> {
   Widget getNav(int number, context) {
     return BlocProvider(
       create: (context) {
-        AreaBloc areaBloc = AreaBloc(preseSelect: area.area);
-        areaBloc.getAreas();
-
+        AreaBloc areaBloc = AreaBloc();
+        if (area != null) {
+          areaBloc.setareaString(area.area);
+        }
         return areaBloc;
       },
       child: EhsNavigatorWidget(
@@ -131,13 +133,16 @@ class _AuditFormState extends State<AuditForm> {
           builder: (BuildContext context, state) {
             if (state is AuditDataState) {
               area = state.audit.auditHead;
-              areaTitle = state.audit.auditHead != null ? '${area.area}' : null;
+              areaTitle = area != null ? '${area.area}' : null;
+              areaSubtitle =
+                  area != null ? 'audit de: ${area.auditType}' : null;
               _negativeAspects = state.audit.negativeAspects ?? [];
               _positiveAspects = state.audit.positiveAspects ?? [];
             }
             if (state is DeleteSucsesfull) {
               area = null;
               areaTitle = null;
+              areaSubtitle = null;
               _negativeAspects = [];
               _positiveAspects = [];
             }
@@ -147,9 +152,9 @@ class _AuditFormState extends State<AuditForm> {
                   height: 10,
                 ),
                 AuditListElement(
-                  title: Labels.areaId,
+                  title: areaTitle == null ? Labels.areaId : areaTitle,
                   order: 1,
-                  subtitle: areaTitle,
+                  subtitle: areaSubtitle,
                   isDone: areaTitle != null,
                   onTap: () {
                     openWidget(getNav(0, context));

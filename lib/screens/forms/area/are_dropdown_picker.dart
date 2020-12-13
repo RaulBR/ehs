@@ -18,28 +18,39 @@ class AreaDropDownPiker extends StatelessWidget {
     AuditHead _area = AuditHead();
     _area = area ?? _area;
     return BlocBuilder<AreaBloc, AreaState>(
-      buildWhen: (previous, current) => current is AreaListState,
-      builder: (context, state) => EhsSearchListPicker(
-        label: Labels.area1,
-        list: state is AreaListState
-            ? state.areaList
-                .map((element) => GenericListObject(
-                    id: element.id, title: element.area ?? null))
-                .toList()
-            : [],
-        preselected: area != null ? area.area : null,
-        selected: (data) {
-          _area.step = data == _area.area ? _area.step : null;
-          _area.area = data.title;
-          getData(_area);
-        },
-        tapped: () {
-          //BlocProvider.of<AreaBloc>(context).getAreas();
-        },
-        searchFor: (data) {
-          BlocProvider.of<AreaBloc>(context).searchAreas(data);
-        },
-      ),
+      buildWhen: (previous, current) =>
+          current is AreaListState || current is AreaFormState,
+      builder: (context, state) {
+        String selected = area != null ? area.area : null;
+        List<Area> list = [];
+        if (state is AreaListState) {
+          list = state.areaList != null ? state.areaList : [];
+        }
+        if (state is AreaFormState) {
+          selected = state.area != null ? state.area.area : selected;
+        }
+
+        return EhsSearchListPicker(
+          label: Labels.area1,
+          list: list
+              .map((element) => GenericListObject(
+                  id: element.id, title: element.area ?? null))
+              .toList(),
+          preselected: selected,
+          selected: (data) {
+            _area.step = data == _area.area ? _area.step : null;
+            _area.area = data.title;
+            // BlocProvider.of<AreaBloc>(context).setAreaFormByArea(data.area);
+            getData(_area);
+          },
+          tapped: () {
+            BlocProvider.of<AreaBloc>(context).getAreas();
+          },
+          searchFor: (data) {
+            BlocProvider.of<AreaBloc>(context).searchAreas(data);
+          },
+        );
+      },
     );
   }
 }

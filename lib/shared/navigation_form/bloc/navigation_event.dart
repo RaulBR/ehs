@@ -14,6 +14,10 @@ class NavigateRightEvent extends NavigationEvent {
   NavigateRightEvent(int currnetPage) : super(currnetPage);
 }
 
+class CurrentPageEvent extends NavigationEvent {
+  CurrentPageEvent(int currnetPage) : super(currnetPage);
+}
+
 class SubmitRightEvent extends NavigationEvent {
   SubmitRightEvent(int currnetPage) : super(currnetPage);
 }

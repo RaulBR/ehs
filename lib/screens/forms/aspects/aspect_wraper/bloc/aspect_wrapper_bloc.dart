@@ -25,6 +25,10 @@ class AspectWrapperBloc extends Bloc<AspectWrapperEvent, AspectWrapperState> {
         yield FormPageSate(_isPhoto);
         yield EditableSate(_isEditable);
         break;
+      case RefreshFromEvent:
+        yield FormPageSate(_isPhoto);
+        yield EditableSate(_isEditable);
+        break;
       case CheckIfValidEvent:
         Aspect _aspect = event.aspect;
         AuditAction action = _aspect.action;

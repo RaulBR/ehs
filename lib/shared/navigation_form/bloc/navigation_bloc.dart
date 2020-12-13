@@ -32,6 +32,13 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
         }
         yield NavigateState(index);
         break;
+      case CurrentPageEvent:
+        currentPage = event.currnetPage;
+        index = currentPage - 1;
+
+        yield NavigateState(event.currnetPage);
+
+        break;
       default:
     }
   }
@@ -42,5 +49,9 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
       return;
     }
     add(NavigateLeftEvent(curentPage));
+  }
+
+  void currentPage(int curentPage) {
+    add(CurrentPageEvent(curentPage));
   }
 }

@@ -1,4 +1,3 @@
-import 'package:ehsfocus/models/generic_list_model.dart';
 import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
 import 'package:ehsfocus/screens/category/category_picker.dart';
 import 'package:ehsfocus/screens/forms/area/are_dropdown_picker.dart';
@@ -6,7 +5,6 @@ import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc.dart';
 import 'package:ehsfocus/services/camera_service.dart';
 import 'package:ehsfocus/shared/action_button.dart';
-import 'package:ehsfocus/shared/fields/search_picker/custom_list_search.dart';
 import 'package:ehsfocus/shared/form_eleements/audit_form_wraper.dart';
 import 'package:ehsfocus/models/aspects_model.dart';
 import 'package:ehsfocus/shared/constants.dart';

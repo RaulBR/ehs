@@ -6,6 +6,7 @@ class Aspect {
   String id;
   String category;
   String comment;
+  String rejectComment;
   String categoryType;
   String equipment;
   String auditId;
@@ -34,6 +35,7 @@ class Aspect {
     id = parsedJson['id']?.toString();
     category = parsedJson['category']?.toString();
     comment = parsedJson['comment']?.toString();
+    rejectComment = parsedJson['rejectComment']?.toString();
     auditId = parsedJson['auditId']?.toString();
     equipment = parsedJson['equipment']?.toString();
     categoryType = parsedJson['categoryType']?.toString();
@@ -62,6 +64,7 @@ class Aspect {
         "type": type ?? null,
         "categoryType": categoryType ?? null,
         "status": status ?? null,
+        "rejectComment": rejectComment,
         "auditActionId": auditActionId ?? null,
         "equipment": equipment ?? null,
         "auditAction": action == null ? null : action.toJson(),

@@ -13,13 +13,13 @@ part 'area_state.dart';
 
 class AreaBloc extends Bloc<AreaEvent, AreaState> {
   Area _area = Area();
-  final String preseSelect;
+  String _preseSelect;
   String _step;
   PaginationObject _requestParams = PaginationObject();
   HttpAreaService httpAreaService = HttpAreaService();
   List<Area> _areasList = [];
 
-  AreaBloc({this.preseSelect}) : super(AreaInitial.initial()) {
+  AreaBloc() : super(AreaInitial.initial()) {
     if (_areasList.length == 0) {
       getAreas();
     }
@@ -44,8 +44,9 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
                 steps: ucelenssLamngauageListElement.steps,
                 roles: ucelenssLamngauageListElement.roles))
             .toList();
-        if (preseSelect != null) {
-          setAreaFormByArea(preseSelect);
+
+        if (_preseSelect != null) {
+          setAreaFormByArea(_preseSelect);
         }
         yield AreaListState(areaList: _areasList ?? []);
         break;
@@ -150,6 +151,14 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
     _area = _areasList.firstWhere((element) => element.area == area);
   }
 
+  updatFormByString(String area) {
+    if (area == null) {
+      return;
+    }
+    setAreaFormByArea(area);
+    add(UpdateAreaFormEvent());
+  }
+
   setAreaForm(Area area) {
     _area = area;
     add(UpdateAreaFormEvent(area: _area));
@@ -177,5 +186,9 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
   void selectedStep(String data) {
     _step = data;
     add(EmitSteptEvent());
+  }
+
+  void setareaString(area) {
+    _preseSelect = area;
   }
 }

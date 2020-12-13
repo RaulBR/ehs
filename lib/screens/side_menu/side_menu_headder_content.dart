@@ -1,9 +1,7 @@
 import 'package:ehsfocus/models/employee_model.dart';
-import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SideMenuHeaderContent extends StatelessWidget {
   final Employee employee;
@@ -14,7 +12,7 @@ class SideMenuHeaderContent extends StatelessWidget {
   Widget build(BuildContext context) {
     Employee _employee = employee ?? Employee();
 
-    BlocProvider.of<EmployeeBloc>(context).getMyself();
+    // BlocProvider.of<EmployeeBloc>(context).getMyself();
     return Column(
       children: [
         Text(

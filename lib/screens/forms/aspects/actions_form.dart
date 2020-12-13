@@ -1,8 +1,10 @@
 import 'package:ehsfocus/models/action_model.dart';
 import 'package:ehsfocus/models/aspects_model.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_service.dart';
+import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/bloc/aspect_wrapper_bloc.dart';
 import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
 import 'package:ehsfocus/shared/action_button.dart';
+import 'package:ehsfocus/shared/date_picker.dart/datepiker.dart';
 import 'package:ehsfocus/shared/fields/search_picker/custom_list_search.dart';
 import 'package:ehsfocus/shared/form_eleements/audit_form_wraper.dart';
 import 'package:ehsfocus/shared/check_box.dart';
@@ -11,6 +13,7 @@ import 'package:ehsfocus/shared/datepiker.dart';
 import 'package:ehsfocus/shared/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class ActionsFormWidget extends StatelessWidget {
   final Aspect aspect;
@@ -30,8 +33,11 @@ class ActionsFormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String label = Labels.backToAspects;
+
     AuditAction _action = AuditAction();
     _action = aspect.action ?? _action;
+    _action.imidiatAcction =
+        _action.imidiatAcction == null ? false : _action.imidiatAcction;
     String getName() {
       if (_action != null) {
         if (_action.responsable != null) {
@@ -53,7 +59,7 @@ class ActionsFormWidget extends StatelessWidget {
               children: [
                 BlocBuilder<EmployeeBloc, EmployeeState>(
                   builder: (context, state) => EhsSearchListPicker(
-                    isEditable: isEditable,
+                    isEditable: isEditable && !_action.imidiatAcction,
                     list: AspectService()
                         .handleResponsableForAspect(context, state),
                     label: Labels.responsabile,
@@ -78,14 +84,25 @@ class ActionsFormWidget extends StatelessWidget {
                     value: _action.imidiatAcction ?? false,
                     setValue: (value) {
                       _action.imidiatAcction = value;
+                      if (value) {
+                        _action.limitDate =
+                            DateFormat('dd-MM-yyyy').format(DateTime.now());
+                        print(_action.limitDate);
+                        _action.responsable =
+                            BlocProvider.of<EmployeeBloc>(context).getMe();
+                      }
+                      BlocProvider.of<AspectWrapperBloc>(context)
+                          .add(RefreshFromEvent());
+                      //_action.limitDate =
                       hasChanges(_action);
                     },
                   ),
                 ),
                 Container(
                   padding: EdgeInsets.only(right: 12),
-                  child: DatePiker(
-                      isEditable: isEditable,
+                  child: DatePiker2(
+                      isEditable: isEditable && !_action.imidiatAcction,
+                      isTodaty: _action.imidiatAcction,
                       label: Labels.limitDate,
                       inputDate:
                           (_action == null ? null : _action.limitDate) ?? null,

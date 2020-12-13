@@ -9,17 +9,17 @@ import 'package:ehsfocus/shared/constants.dart';
 class DatePiker extends StatefulWidget {
   final String inputDate;
   final String label;
-  final DateTime date;
   final Function getDate;
   final bool isEditable;
+  final bool isTodaty;
   final Color color;
   DatePiker(
       {this.inputDate,
       this.label,
       this.getDate,
       this.color,
-      this.date,
-      this.isEditable});
+      this.isEditable,
+      this.isTodaty});
   @override
   _DatePikerState createState() => _DatePikerState();
 }
@@ -29,7 +29,7 @@ class _DatePikerState extends State<DatePiker> {
 
   DateFormat dateFormat = DateFormat("dd-MMM-yyyy");
   DateTime _dateTime;
-
+  DateTime _date;
   @override
   void initState() {
     txt.text = widget.inputDate;
@@ -38,6 +38,10 @@ class _DatePikerState extends State<DatePiker> {
 
   @override
   Widget build(BuildContext context) {
+    bool _isToday = widget.isTodaty == null ? false : widget.isTodaty;
+    _date = widget.inputDate == null
+        ? DateTime.now()
+        : DateTime.parse(widget.inputDate);
     return InputContainer(
       child: FlatButton(
         padding: EdgeInsets.all(0),
@@ -50,8 +54,7 @@ class _DatePikerState extends State<DatePiker> {
                   context: context,
                   locale: const Locale("ro", "RO"),
                   fieldLabelText: widget.label,
-                  initialDate:
-                      widget.date == null ? DateTime.now() : widget.date,
+                  initialDate: _date,
                   firstDate: DateTime(2016),
                   lastDate: DateTime(2222))
               .then((date) => {
@@ -81,7 +84,6 @@ class _DatePikerState extends State<DatePiker> {
                   Container(
                     width: 140,
                     child: TextFormField(
-                      // initialValue: widget.inputDate == null ? null :  widget.inputDate,
                       controller: txt,
                       enabled: false,
                       decoration: textInputDecoration.copyWith(

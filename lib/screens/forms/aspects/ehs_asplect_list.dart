@@ -15,7 +15,7 @@ class EhsAspectList extends StatelessWidget with Labels {
       itemBuilder: (context, index) {
         return GennericListElement(
           simbol: aspects[index].status,
-          title: aspects[index].categoryType,
+          title: aspects[index].equipment,
           subtitle: aspects[index].category,
           isSelected: () {
             selected(aspects[index]);

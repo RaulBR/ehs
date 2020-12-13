@@ -12,6 +12,8 @@ class ResetFormEvent extends AspectWrapperEvent {}
 
 class ChangeFormEvent extends AspectWrapperEvent {}
 
+class RefreshFromEvent extends AspectWrapperEvent {}
+
 class CheckIfValidEvent extends AspectWrapperEvent {
   final Aspect aspect;
 

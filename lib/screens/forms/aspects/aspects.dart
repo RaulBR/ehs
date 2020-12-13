@@ -75,7 +75,7 @@ class AspectsList extends StatelessWidget {
         SlideRightRoute(
           page: BlocProvider.value(
             value: BlocProvider.of<AreaBloc>(context),
-            child: AspectWraper2(
+            child: AspectWraper(
                 hasAction: type == 'N',
                 aspect: aspect,
                 order: order,

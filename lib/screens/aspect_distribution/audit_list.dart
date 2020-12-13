@@ -21,7 +21,7 @@ class AuditList extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AspectWraper2(
+        builder: (context) => AspectWraper(
           isEditable: false,
           isFooterEditable: true,
           aspect: aspect ?? Aspect(),

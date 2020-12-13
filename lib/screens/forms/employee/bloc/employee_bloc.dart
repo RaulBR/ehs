@@ -81,6 +81,10 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     add(GetMyselfEvent());
   }
 
+  Employee getMe() {
+    return _appEmployee;
+  }
+
   void getEmployees() {
     add(GetEmployeesEvent());
   }
