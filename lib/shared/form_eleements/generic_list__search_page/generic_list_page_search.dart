@@ -106,34 +106,38 @@ class _SearchPageWrapperState extends State<SearchPageWrapper> {
 }
 
 class PageWrapper extends StatelessWidget {
-  final String title;
+  final Widget appBarr;
   final Widget child;
   final Function footerAction;
   final Function add;
-  final List<FooterStates> footerActions;
+  final List<String> footerActions;
   const PageWrapper({
     Key key,
-    this.title,
     this.child,
     this.footerAction,
     this.footerActions,
     this.add,
+    this.appBarr,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     bool _isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0.0;
+    List<String> _formActions =
+        footerActions == null ? [Labels.delete, Labels.save] : footerActions;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
+      appBar: appBarr == null ? null : appBarr,
       body: BodyContainer(child: child),
       bottomNavigationBar: _isKeyboard || footerAction == null
           ? null
           : FormFooter(
-              actions:
-                  footerActions ?? [FooterStates.delete, FooterStates.save],
-              action: (action) {
-                footerAction(action);
-              },
+              actions: _formActions,
+              action: footerActions == null
+                  ? null
+                  : (action) {
+                      footerAction(action);
+                    },
             ),
       floatingActionButton: add == null
           ? null

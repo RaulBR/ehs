@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 class BottomGroupButtons extends StatelessWidget {
   final bool isLast;
   final bool isFirst;
+  final bool isEnabled;
   final Function navigate;
   final Function submit;
-  BottomGroupButtons({this.navigate, this.submit, this.isFirst, this.isLast});
+  BottomGroupButtons(
+      {this.navigate, this.submit, this.isFirst, this.isLast, this.isEnabled});
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -37,13 +39,15 @@ class BottomGroupButtons extends StatelessWidget {
               //   ),
               // ),
               FlatButton(
-                child: Row(
-                  children: [
-                    isLast ? Text('inchide') : Text('urmatorul'),
-                    isLast ? Text('') : Icon(Icons.chevron_right),
-                  ],
-                ),
-                onPressed: () => navigate(1),
+                child: !isEnabled
+                    ? Text('')
+                    : Row(
+                        children: [
+                          isLast ? Text('inchide') : Text('urmatorul'),
+                          isLast ? Text('') : Icon(Icons.chevron_right),
+                        ],
+                      ),
+                onPressed: !isEnabled ? null : () => navigate(1),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),

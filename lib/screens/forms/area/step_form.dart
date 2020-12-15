@@ -10,19 +10,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StepForm extends StatelessWidget {
+  final String area;
   final CategorySertvice _categorySertvice = CategorySertvice();
+
+  StepForm({Key key, this.area}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     Area _area = Area();
     TextEditingController txt;
+
     return BlocBuilder<AreaBloc, AreaState>(builder: (context, state) {
       // return widget here based on BlocA's state
+      BlocProvider.of<AreaBloc>(context).getStepes();
       return PageWrapper(
-        title: Labels.area2,
+        // title: Labels.area2,
+        appBarr: AppBar(title: Text(Labels.area2)),
         add: () {
           _categorySertvice.openCategoryModal(context,
               add: (data) => BlocProvider.of<AreaBloc>(context).addStep(data),
               title: Labels.area2);
+        },
+        footerActions: [Labels.back],
+        footerAction: (data) {
+          if (data == Labels.back) {
+            Navigator.pop(context);
+          }
         },
         child: Column(
           children: <Widget>[
@@ -31,7 +43,7 @@ class StepForm extends StatelessWidget {
               child: TextField(
                 controller: txt,
                 decoration: textInputDecoration.copyWith(
-                    labelText: 'Adauga pas', suffixIcon: Icon(Icons.search)),
+                    labelText: Labels.area2, suffixIcon: Icon(Icons.search)),
                 onChanged: null,
               ),
             ),
@@ -48,6 +60,7 @@ class StepForm extends StatelessWidget {
                       itemCount: stepts.length,
                       itemBuilder: (context, index) {
                         return GennericListElement(
+                          subtitle: area,
                           title: stepts[index].step,
                           deleted: () async {
                             if (await EhsGennericPopup().showPupup(
@@ -55,16 +68,17 @@ class StepForm extends StatelessWidget {
                               what: _area.steps[index].step,
                               title: Labels.area2,
                             )) {
-                              // add delete function
+                              BlocProvider.of<AreaBloc>(context)
+                                  .deleteStep(_area.steps[index]);
+                              print('data');
                             }
                           },
                           isSelected: () {
                             _categorySertvice.openCategoryModal(context,
-                                title: Labels.area2,
-                                selected: _area.steps[index].step,
                                 add: (data) =>
                                     BlocProvider.of<AreaBloc>(context)
-                                        .addStep(data));
+                                        .addStep(data),
+                                title: Labels.area2);
                           },
                         );
                       },

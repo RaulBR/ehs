@@ -81,10 +81,10 @@ class EditableTextAreaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var focusNode = FocusNode();
     final double screenSize = MediaQuery.of(context).size.height;
     final double keyboardSize = MediaQuery.of(context).viewInsets.bottom;
     final myController = TextEditingController();
+    var focusNode = FocusNode();
     myController.text = text;
     return Scaffold(
       appBar: AppBar(title: Text(label)),
@@ -108,7 +108,7 @@ class EditableTextAreaWidget extends StatelessWidget {
                       readOnly: isEditable == null ? false : !isEditable,
                       focusNode: focusNode,
                       controller: myController,
-                      decoration: new InputDecoration(
+                      decoration: InputDecoration(
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
                         enabledBorder: InputBorder.none,

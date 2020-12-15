@@ -22,7 +22,6 @@ class AreaMentenanceForm extends StatelessWidget {
     Area _area = Area();
 
     return PageWrapper(
-      title: Labels.audits,
       child: SingleChildScrollView(
         child: BlocListener<AreaBloc, AreaState>(
           listener: (context, state) {
@@ -68,23 +67,23 @@ class AreaMentenanceForm extends StatelessWidget {
                       onPressed: () {
                         final myModel =
                             Provider.of<AreaBloc>(context, listen: false);
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (context) => BlocProvider.value(
-                              value: myModel, child: StepForm()),
-                        );
-                        // Navigator.push(
-                        //     context,
-                        //     SlideRightRoute(
-                        //         page: BlocProvider.value(
-                        //             value: BlocProvider.of<AreaBloc>(context),
-                        //             child: StepForm())));
+                        // showModalBottomSheet(
+                        //   context: context,
+                        //   builder: (context) => BlocProvider.value(
+                        //       value: myModel, child: StepForm()),
+                        // );
+                        Navigator.push(
+                            context,
+                            SlideRightRoute(
+                                page: BlocProvider.value(
+                                    value: BlocProvider.of<AreaBloc>(context),
+                                    child: StepForm(area: _area.area))));
                       },
                     ),
                   ),
                   OpenTextAreaWidget(
                     icon: Icon(Icons.info_outline),
-                    label: 'Inflarmatii ${Labels.area1}',
+                    label: 'Informatii ${Labels.area1}',
                     text: _area.areaInfo ?? null,
                     onEdit: (text) {
                       _area.areaInfo = text;

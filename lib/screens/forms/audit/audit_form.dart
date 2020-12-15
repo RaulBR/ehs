@@ -198,23 +198,19 @@ class _AuditFormState extends State<AuditForm> {
                 }
                 return FormFooter(
                   isEditable: false,
-                  actions: [
-                    FooterStates.delete,
-                    FooterStates.save,
-                    FooterStates.send
-                  ],
+                  actions: [Labels.delete, Labels.save, Labels.send],
                   action: (action) {
                     switch (action) {
-                      case FooterStates.delete:
+                      case Labels.delete:
                         // TODO add popup
                         BlocProvider.of<AuditBloc>(context)
                             .deleteAuidit(area.id);
                         break;
-                      case FooterStates.save:
+                      case Labels.save:
                         BlocProvider.of<AuditBloc>(context).setAudit();
 
                         break;
-                      case FooterStates.send:
+                      case Labels.send:
                         BlocProvider.of<AuditBloc>(context).submitAudit();
                         break;
                     }

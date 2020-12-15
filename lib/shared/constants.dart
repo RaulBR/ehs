@@ -27,89 +27,91 @@ const labelPadding = EdgeInsets.only(left: 10, right: 10, top: 10);
 
 @immutable
 class Labels {
-  static String ok = 'ok';
-  static String ehsTitle = 'EHS Focus';
-  static String safty = 'Audit EHS';
-  static String enviroment = 'Audit de Mediu';
-  static String helth = 'Audit de Sanatatea Muncii';
-  static String incident = 'Incident';
-  static String areaId = 'Identificare';
-  static String qrScannerMesasge = 'Utilizaa scanare QR sau alege zona';
-  static String positiveAcctionMessage = 'Aspecte pozitive';
-  static String negativeAcctionMessage = 'Aspecte Negative';
-  static String insertPositive = 'Introduceti o observatie pozitiva';
-  static String insertNegative = 'Introduceti o observatie negative';
-  static String corectiveAcction = 'Actiune corectiva';
-  static String insertcorectiveAcction = 'Introduce-ti o Actiune ccorectiva';
-  static String responsibal = 'Responsabil';
-  static String area1 = 'Zona';
-  static String area2 = 'Echipament/Pas proces';
-  static String scanButton = 'QR scan';
-  static String pictureButton = 'Adauga poza';
-  static String category = 'Categorie';
-  static String admin = 'Administartatie';
-  static String addAudit = "Audit";
-  static String email = 'Email';
-  static String responsabile = 'Responsibil';
-  static String passwoard = 'Password';
-  static String add = 'Adauga';
-  static String save = 'Salveaza';
-  static String incidentDocumentation = 'Documenteaza incident';
-  static String selectGravitty = 'Selecteaza Gravitatea';
-  static String imidiateActtion = 'Actiune Imediata?';
-  static String galery = 'Galerie';
-  static String camera = 'Camera';
-  static String addAnother = 'Mai adauga';
-  static String back = 'Inapoi';
-  static String chose = 'Alege:';
-  static String addAspect = 'nici un aspect';
-  static String limitDate = 'Data limita';
-  static String addComment = 'Adauga Comentariu';
-  static String comment = 'Comentariu';
-  static String scan = 'Scaneaza';
-  static String addCorectiveAcction = 'Adauga Actiune corectiva';
-  static String goTocorectiveAcction = 'Actiunea corectiva';
-  static String backToAspects = 'Inapoi la aspecte';
-  static String aspects = 'aspecte';
-  static String aspect = 'un aspect';
-  static String delete = 'Sterge';
-  static String send = 'Trimite';
-  static String audits = "Auditele mele";
-  static String mainPage = 'Pagina Principala';
-  static String settings = 'Setari';
-  static String statistics = 'Statistici';
-  static String aspectType = 'Tip audit';
-  static String myData = 'Contul Meu';
-  static String noData = 'Nu sunt date';
-  static String close = 'Inchide';
-  static String area = 'Area';
-  static String clear = 'Sterge';
-  static String addCategory = 'Adauga Categorie';
-  static String areYouShoure = 'Esti sigur?';
-  static String areYouShoureText = 'Va fi sterge definitiv!';
-  static String employees = 'Auditori';
-  static String name = 'Prenume';
-  static String surName = 'Nume';
-  static String role = 'Departament';
-  static String logout = 'Log out';
-  static String search = 'Cauta';
-  static String signIn = 'Sign in';
-  static String signup = 'Sign up';
-  static String auditTitle = 'Audituri';
-  static String aspectsResponsiBilittyTitle = 'Aspecte de rezolvat';
-  static String doneBy = 'Facut de:';
-  static String responsable = 'Responsabil:';
-  static String rejected = 'Respins';
-  static String acceped = 'Acceptat';
-  static String modify = 'Modifica';
-  static String aspectTitle = 'Aspect';
-  static String ditail = 'Detalii';
-  static String notAdded = 'NU A FOST ADAUGAT';
-  static String unKnown = 'Necunosct';
-  static String notSet = 'Nu s-a setat';
-  static String observation = 'Observatii: ';
-  static String acction = 'Actiuni: ';
-  static String duplicat = 'Duplicat?';
+  static const String ok = 'ok';
+  static const String ehsTitle = 'EHS Focus';
+  static const String safty = 'Audit EHS';
+  static const String enviroment = 'Audit de Mediu';
+  static const String helth = 'Audit de Sanatatea Muncii';
+  static const String incident = 'Incident';
+  static const String areaId = 'Identificare';
+  static const String qrScannerMesasge = 'Utilizaa scanare QR sau alege zona';
+  static const String positiveAcctionMessage = 'Aspecte pozitive';
+  static const String negativeAcctionMessage = 'Aspecte Negative';
+  static const String insertPositive = 'Introduceti o observatie pozitiva';
+  static const String insertNegative = 'Introduceti o observatie negative';
+  static const String corectiveAcction = 'Actiune corectiva';
+  static const String insertcorectiveAcction =
+      'Introduce-ti o Actiune ccorectiva';
+  static const String responsibal = 'Responsabil';
+  static const String area1 = 'Zona';
+  static const String area2 = 'Echipamente din zona';
+  static const String scanButton = 'QR scan';
+  static const String pictureButton = 'Adauga poza';
+  static const String category = 'Categorie';
+  static const String admin = 'Administartatie';
+  static const String addAudit = "Audit";
+  static const String email = 'Email';
+  static const String responsabile = 'Responsibil';
+  static const String passwoard = 'Password';
+  static const String add = 'Adauga';
+  static const String save = 'Salveaza';
+  static const String incidentDocumentation = 'Documenteaza incident';
+  static const String selectGravitty = 'Selecteaza Gravitatea';
+  static const String imidiateActtion = 'Actiune Imediata?';
+  static const String galery = 'Galerie';
+  static const String camera = 'Camera';
+  static const String addAnother = 'Mai adauga';
+  static const String back = 'Inapoi';
+  static const String chose = 'Alege:';
+  static const String addAspect = 'nici un aspect';
+  static const String limitDate = 'Data limita';
+  static const String addComment = 'Adauga Comentariu';
+  static const String comment = 'Comentariu';
+  static const String scan = 'Scaneaza';
+  static const String addCorectiveAcction = 'Adauga Actiune corectiva';
+  static const String goTocorectiveAcction = 'Actiunea corectiva';
+  static const String backToAspects = 'Inapoi la aspecte';
+  static const String aspects = 'aspecte';
+  static const String aspect = 'un aspect';
+  static const String delete = 'Sterge';
+  static const String send = 'Trimite';
+  static const String audits = "Auditele mele";
+  static const String mainPage = 'Pagina Principala';
+  static const String settings = 'Setari';
+  static const String statistics = 'Statistici';
+  static const String aspectType = 'Tip audit';
+  static const String myData = 'Contul Meu';
+  static const String noData = 'Nu sunt date';
+  static const String close = 'Inchide';
+  static const String area = 'Area';
+  static const String clear = 'Sterge';
+  static const String addCategory = 'Adauga Categorie';
+  static const String areYouShoure = 'Esti sigur?';
+  static const String areYouShoureText = 'Va fi sterge definitiv!';
+  static const String employees = 'Auditori';
+  static const String name = 'Prenume';
+  static const String surName = 'Nume';
+  static const String role = 'Departament';
+  static const String logout = 'Log out';
+  static const String search = 'Cauta';
+  static const String signIn = 'Sign in';
+  static const String signup = 'Sign up';
+  static const String auditTitle = 'Audituri';
+  static const String aspectsResponsiBilittyTitle = 'Aspecte de rezolvat';
+  static const String doneBy = 'Facut de:';
+  static const String responsable = 'Responsabil:';
+  static const String rejected = 'Respins';
+  static const String acceped = 'Acceptat';
+  static const String modify = 'Modifica';
+  static const String aspectTitle = 'Aspect';
+  static const String ditail = 'Detalii';
+  static const String notAdded = 'NU A FOST ADAUGAT';
+  static const String unKnown = 'Necunosct';
+  static const String notSet = 'Nu s-a setat';
+  static const String observation = 'Observatii: ';
+  static const String acction = 'Actiuni: ';
+  static const String duplicat = 'Duplicat?';
+  static const String edit = 'Editeaza';
 }
 
 Map<String, String> dinamicTitles = {
@@ -161,6 +163,7 @@ class RoutPath {
   static const loading = '/loading';
   static const overwiewAudits = '/overwiewAudits';
   static const myResponsibility = '/myResponsibility';
+  static const myRejectedAspects = '/myRejected';
   static const myAudits = '/myAudits';
 }
 
@@ -195,8 +198,8 @@ class PageTitles {
 enum FooterStates { delete, save, send }
 enum PopupStates { ok, cancel }
 
-Map<FooterStates, String> footerLagels = {
-  FooterStates.delete: Labels.delete,
-  FooterStates.save: Labels.save,
-  FooterStates.send: Labels.send,
-};
+// Map<FooterStates, String> footerLagels = {
+//   FooterStates.delete: Labels.delete,
+//   FooterStates.save: Labels.save,
+//   FooterStates.send: Labels.send,
+// };

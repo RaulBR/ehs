@@ -31,6 +31,8 @@ class AspectIndexEvent extends AspectEvent {
   AspectIndexEvent({this.index = 0});
 }
 
+class GetMyRejectedAspectsEvent extends AspectEvent {}
+
 class GetAspectsForMe extends AspectEvent {
   final List<Aspect> aspects;
   GetAspectsForMe({this.aspects});

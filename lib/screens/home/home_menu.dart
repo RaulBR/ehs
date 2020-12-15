@@ -62,12 +62,33 @@ class HomeMenu extends StatelessWidget with Labels {
                 return Text('');
               return HomeCard(
                 expanded: true,
-                color: AppColors.fieldInFocus,
+                color: AppColors.pending,
                 icon: 58828,
                 title: 'Aveti $distributinCount actiune/i de distribuit',
                 acction: () {
                   Navigator.pushNamed(context, RoutPath.overwiewAudits);
                 },
+              );
+            },
+          ),
+          BlocBuilder<AuditSocketBloc, AuditSocketState>(
+            buildWhen: (previous, current) =>
+                current is AuditRejectedCountState,
+            builder: (context, state) {
+              int distributinCount = 0;
+              if (state is AuditRejectedCountState)
+                distributinCount = state.distributeAuditCount == 0
+                    ? null
+                    : state.distributeAuditCount;
+              if (distributinCount == 0 || distributinCount == null)
+                return Text('');
+              return HomeCard(
+                expanded: true,
+                color: AppColors.fieldInFocus,
+                icon: 58828,
+                title: 'Aveti $distributinCount actiuni rejectate',
+                acction: () =>
+                    Navigator.pushNamed(context, RoutPath.myRejectedAspects),
               );
             },
           ),

@@ -18,6 +18,12 @@ class AuditDistributionCountEvent extends AuditSocketEvent {
   AuditDistributionCountEvent(this.count);
 }
 
+class AuditRejectedCountEvent extends AuditSocketEvent {
+  final int count;
+
+  AuditRejectedCountEvent(this.count);
+}
+
 class DisconnectFromSocketEvent extends AuditSocketEvent {}
 
 class AlertUserEvent extends AuditSocketEvent {}

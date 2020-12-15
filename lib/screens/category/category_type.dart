@@ -17,7 +17,6 @@ class CategoryTypeMentenanceForm extends StatelessWidget {
     CategoryType category = CategoryType();
     TextEditingController txt;
     return PageWrapper(
-      title: Labels.aspectType,
       add: () {
         _categorySertvice.openCategoryModal(context,
             add: (data) =>

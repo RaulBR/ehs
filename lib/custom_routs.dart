@@ -1,6 +1,7 @@
 import 'package:ehsfocus/screens/admin_screen/admin_screen.dart';
 import 'package:ehsfocus/screens/aspect_distribution/aspects_to_distribute.dart';
 import 'package:ehsfocus/screens/aspect_distribution/aspects_to_fix_list.dart';
+import 'package:ehsfocus/screens/aspect_distribution/rejected_aspects.dart';
 import 'package:ehsfocus/screens/audits_sumery.dart/all_audits.dart';
 import 'package:ehsfocus/screens/category/audit_type.dart';
 import 'package:ehsfocus/screens/forms/area/audit_list.dart';
@@ -22,6 +23,7 @@ class CustomRouter {
   CustomRouter({this.context});
   final _localStorageService = LocalStorageService();
   Route<dynamic> generateRoute(RouteSettings settings) {
+    var myRejectedAspects;
     switch (settings.name) {
       case RoutPath.homeRout:
         return checkRoute(Home(), settings);
@@ -74,6 +76,8 @@ class CustomRouter {
         return checkRoute(DistributeAspectsLsit(), settings);
       case RoutPath.myResponsibility:
         return checkRoute(AuditsToFixLsit(), settings);
+      case RoutPath.myRejectedAspects:
+        return checkRoute(RejectedAspects(), settings);
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

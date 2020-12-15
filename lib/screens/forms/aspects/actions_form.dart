@@ -9,7 +9,6 @@ import 'package:ehsfocus/shared/fields/search_picker/custom_list_search.dart';
 import 'package:ehsfocus/shared/form_eleements/audit_form_wraper.dart';
 import 'package:ehsfocus/shared/check_box.dart';
 import 'package:ehsfocus/shared/constants.dart';
-import 'package:ehsfocus/shared/datepiker.dart';
 import 'package:ehsfocus/shared/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -86,7 +85,7 @@ class ActionsFormWidget extends StatelessWidget {
                       _action.imidiatAcction = value;
                       if (value) {
                         _action.limitDate =
-                            DateFormat('dd-MM-yyyy').format(DateTime.now());
+                            DateFormat('dd-MMM-yyyy').format(DateTime.now());
                         print(_action.limitDate);
                         _action.responsable =
                             BlocProvider.of<EmployeeBloc>(context).getMe();

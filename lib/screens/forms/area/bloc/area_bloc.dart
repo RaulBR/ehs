@@ -191,4 +191,8 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
   void setareaString(area) {
     _preseSelect = area;
   }
+
+  void deleteStep(AreaStep step) {
+    add(DeleteSteptEvent());
+  }
 }

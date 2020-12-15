@@ -16,20 +16,6 @@ class AspectBloc extends Bloc<AspectEvent, AspectState> {
     AspectEvent event,
   ) async* {
     switch (event.runtimeType) {
-      case SetAspect:
-        break;
-
-      case DeleteAspectPhoto:
-        if (event.aspectPhoto == null) {
-          return;
-        }
-        dynamic data =
-            await this.httpAuditService.deleteAspectPhoto(event.aspectPhoto);
-        if (data != null) {
-          // yield AuditPhotos(data);
-        }
-
-        break;
       case RejectAspect:
         yield LoadingState();
         try {
@@ -100,6 +86,18 @@ class AspectBloc extends Bloc<AspectEvent, AspectState> {
           break;
         }
         break;
+
+      case GetMyRejectedAspectsEvent:
+        try {
+          _audits = await httpAuditService.getMyRejectedAudits();
+          yield AspectToHandleState(_audits);
+          break;
+        } catch (e) {
+          yield AspectError(error: e);
+          break;
+        }
+        break;
+
       case AspectIndexEvent:
         try {
           yield AspectIndexState(index: 0);
@@ -125,6 +123,10 @@ class AspectBloc extends Bloc<AspectEvent, AspectState> {
 
   void getAspectsForMe() {
     add(GetAspectsForMe());
+  }
+
+  void getMyRejectedAspects() {
+    add(GetMyRejectedAspectsEvent());
   }
 
   void rejectAspect({Aspect aspect}) {

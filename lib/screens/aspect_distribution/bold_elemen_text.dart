@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class BoldElementText extends StatelessWidget {
+  final Color color;
   final String boldText;
   final String text;
 
-  const BoldElementText({Key key, this.boldText, this.text}) : super(key: key);
+  const BoldElementText({Key key, this.boldText, this.text, this.color})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return RichText(
@@ -12,7 +14,9 @@ class BoldElementText extends StatelessWidget {
       maxLines: text == null ? 1 : 3,
       text: TextSpan(
         text: boldText,
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        style: TextStyle(
+            color: color == null ? Colors.black : color,
+            fontWeight: FontWeight.bold),
         children: <TextSpan>[
           TextSpan(
             text: text,

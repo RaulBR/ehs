@@ -12,7 +12,6 @@ class GetStepsEvent extends AreaEvent {}
 
 class DeleteAreasEvent extends AreaEvent {
   final String areaString;
-
   DeleteAreasEvent(this.areaString);
 }
 
@@ -57,13 +56,9 @@ class SearchAreas extends AreaEvent {
 
 class EmitSteptsEvent extends AreaEvent {}
 
-// class SetSelectedArea extends AreaEvent {
-//   final Area areaValue;
-//   SetSelectedArea({
-//     this.areaValue,
-//   });
-// }
 class EmitSteptEvent extends AreaEvent {}
+
+class DeleteSteptEvent extends AreaEvent {}
 
 class SearchStepts extends AreaEvent {
   final String areaString;

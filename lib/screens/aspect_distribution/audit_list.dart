@@ -1,6 +1,7 @@
 import 'package:ehsfocus/models/aspects_model.dart';
 import 'package:ehsfocus/screens/aspect_distribution/action_list.dart';
 import 'package:ehsfocus/screens/aspect_distribution/aspect_triaj_footer.dart';
+import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/aspect_wrapper.dart';
 import 'package:ehsfocus/screens/forms/aspects/bloc/aspect_bloc.dart';
 import 'package:ehsfocus/services/animations/animation_wrapper.dart';
@@ -17,21 +18,29 @@ class AuditList extends StatelessWidget {
 
   const AuditList({Key key, this.actions, this.action, this.hasDuplicate})
       : super(key: key);
-  openAspect(context, aspect) {
+  openAspect(context, Aspect aspect) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AspectWraper(
-          isEditable: false,
-          isFooterEditable: true,
-          aspect: aspect ?? Aspect(),
-          hasChanges: (action) {
-            action(aspect, action);
+        builder: (context) => BlocProvider(
+          create: (context) {
+            AreaBloc areaBloc = AreaBloc();
+            String area = aspect.audit.area;
+            areaBloc.setareaString(area);
+            return areaBloc;
           },
-          title: Labels.aspectTitle,
-          type: 'N',
-          hasAction: true,
-          buttons: [Labels.acceped, Labels.rejected],
+          child: AspectWraper(
+            isEditable: false,
+            isFooterEditable: true,
+            aspect: aspect ?? Aspect(),
+            hasChanges: (action) {
+              action(aspect, action);
+            },
+            title: Labels.aspectTitle,
+            type: 'N',
+            hasAction: true,
+            buttons: [Labels.acceped, Labels.rejected],
+          ),
         ),
       ),
     );
@@ -49,6 +58,7 @@ class AuditList extends StatelessWidget {
         _aspects = state is AspectToHandleState ? state.aspects : [];
         return Scaffold(
           appBar: AppBar(title: Text(Labels.auditTitle)),
+          resizeToAvoidBottomInset: false,
           body: state is LoadingState
               ? FadeAnimationWrapper(
                   child: Loading(

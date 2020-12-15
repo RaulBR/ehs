@@ -3,6 +3,7 @@ import 'package:ehsfocus/screens/aspect_distribution/bold_elemen_text.dart';
 import 'package:ehsfocus/shared/check_box.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/photoComponents/placeholder_photo.dart';
+import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 import 'employee_card.dart';
 
@@ -22,6 +23,7 @@ class ActionDistributionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO move to service
     bool _hasDublicate = hasDublicate == null ? false : true;
+    _hasDublicate = aspect.status == 'Z' ? false : _hasDublicate;
     String getResponsable() {
       if (aspect != null && aspect.action != null) {
         return aspect.action.responsable != null
@@ -111,6 +113,20 @@ class ActionDistributionCard extends StatelessWidget {
                           : '${aspect.action.comment}',
                     ),
                   ),
+                  aspect.rejectComment == null
+                      ? Text('')
+                      : Container(
+                          height: 60,
+                          width: double.infinity,
+                          child: BoldElementText(
+                            color: AppColors.fieldInFocus,
+                            boldText: '${Labels.rejected}:',
+                            text: aspect.action.comment == null
+                                ? ''
+                                : '${aspect.rejectComment}',
+                          ),
+                        ),
+
                   SizedBox(
                     height: 20,
                   ),

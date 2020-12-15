@@ -43,6 +43,9 @@ class AuditSocketBloc extends Bloc<AuditSocketEvent, AuditSocketState> {
           notyfyDistributionchange(e);
           // notyfychange(e);
         });
+        _webSocket.on("myRejectedAspects", (e) {
+          notyfyRejectedChange(e);
+        });
         _webSocket.on("disconect", (_) {
           _reconnectCouter = _reconnectCouter + 1;
           print('Disconnected ${_webSocket.id}');
@@ -68,7 +71,11 @@ class AuditSocketBloc extends Bloc<AuditSocketEvent, AuditSocketState> {
           yield new AuditDistributionCountState(
               distributeAuditCount: event.count);
         }
-
+        break;
+      case AuditRejectedCountEvent:
+        if (event is AuditRejectedCountEvent) {
+          yield new AuditRejectedCountState(distributeAuditCount: event.count);
+        }
         break;
       case CheckConenctionEvent:
         Timer.periodic(new Duration(seconds: 60), (timer) {
@@ -111,6 +118,10 @@ class AuditSocketBloc extends Bloc<AuditSocketEvent, AuditSocketState> {
     if (!_isConnected) {
       add(ConnectToSocketEvent());
     }
+  }
+
+  void notyfyRejectedChange(count) {
+    add(AuditRejectedCountEvent(count));
   }
 
   disconnect() {

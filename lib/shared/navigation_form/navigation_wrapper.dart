@@ -40,12 +40,14 @@ class EhsNavigatorWidget extends StatelessWidget {
                 dragStartBehavior: DragStartBehavior.start,
                 controller: _controller,
                 onPageChanged: (value) {
+                  action(value);
                   BlocProvider.of<NavigationBloc>(context).currentPage(value);
                 },
                 pageSnapping: true,
                 children: displayWidgets,
               ),
               bottomNavigationBar: BottomGroupButtons(
+                isEnabled: true,
                 isLast: page == 2,
                 isFirst: page == 0,
                 navigate: (value) {

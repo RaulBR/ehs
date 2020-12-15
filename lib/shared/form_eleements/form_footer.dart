@@ -1,11 +1,10 @@
-import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 
 class FormFooter extends StatelessWidget {
   final Function action;
   final bool isEditable;
-  final List<FooterStates> actions;
+  final List<String> actions;
   const FormFooter({Key key, this.action, this.actions, this.isEditable})
       : super(key: key);
   @override
@@ -13,7 +12,7 @@ class FormFooter extends StatelessWidget {
     List<Widget> getGeneratedList() {
       return actions
           .map((element) => FlatRoundedButton(
-                lable: footerLagels[element],
+                lable: element,
                 onPressed: () {
                   action(element);
                 },
