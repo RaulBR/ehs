@@ -4,7 +4,8 @@ import 'package:ehsfocus/screens/aspect_distribution/aspect_triaj_footer.dart';
 import 'package:ehsfocus/bloc/category/area/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/aspect_wrapper.dart';
 import 'package:ehsfocus/bloc/aspect/aspect_bloc.dart';
-import 'package:ehsfocus/services/animations/animation_wrapper.dart';
+import 'package:ehsfocus/shared/animations/animation_wrapper.dart';
+
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/loading.dart';
 import 'package:ehsfocus/theme.dart';

@@ -1,11 +1,10 @@
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
-
 import 'package:ehsfocus/screens/forms/aspects/actions_form.dart';
-
 import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/aspect_wrapper_service.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/bloc/aspect_wrapper_bloc.dart';
 import 'package:ehsfocus/screens/forms/aspects/photo_comment_form.dart';
-import 'package:ehsfocus/services/animations/animation_wrapper.dart';
+
+import 'package:ehsfocus/shared/animations/animation_wrapper.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
