@@ -42,6 +42,7 @@ class Labels {
   static const String corectiveAcction = 'Actiune corectiva';
   static const String insertcorectiveAcction =
       'Introduce-ti o Actiune ccorectiva';
+  static const String setResposible = 'Seteaza responsabili';
   static const String responsibal = 'Responsabil';
   static const String area1 = 'Zona';
   static const String area2 = 'Echipamente din zona';
@@ -99,7 +100,7 @@ class Labels {
   static const String auditTitle = 'Audituri';
   static const String aspectsResponsiBilittyTitle = 'Aspecte de rezolvat';
   static const String doneBy = 'Facut de:';
-  static const String responsable = 'Responsabil:';
+  static const String responsible = 'Responsabil:';
   static const String rejected = 'Respins';
   static const String acceped = 'Acceptat';
   static const String modify = 'Modifica';
@@ -188,6 +189,7 @@ class RoutPath {
   static const myResponsibility = '/myResponsibility';
   static const myRejectedAspects = '/myRejected';
   static const myAudits = '/myAudits';
+  static const myManaagers = '/myManaagers';
 }
 
 class CurrentPath {
@@ -218,7 +220,7 @@ class PageTitles {
   String ok = 'ok';
 }
 
-enum FooterStates { delete, save, send }
+// enum FooterStates { delete, save, send }
 enum PopupStates { ok, cancel }
 
 // Map<FooterStates, String> footerLagels = {

@@ -1,6 +1,5 @@
 import 'package:ehsfocus/models/area/area_model.dart';
 import 'package:ehsfocus/models/area/area_role_model.dart';
-import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
 import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/area/role_dialog.dart';
 import 'package:ehsfocus/screens/forms/area/step_form.dart';
@@ -66,8 +65,7 @@ class AreaMentenanceForm extends StatelessWidget {
                       icon: Icon(Icons.arrow_right_sharp),
                       label: Labels.area2,
                       onPressed: () {
-                        final myModel =
-                            Provider.of<AreaBloc>(context, listen: false);
+                        Provider.of<AreaBloc>(context, listen: false);
                         // showModalBottomSheet(
                         //   context: context,
                         //   builder: (context) => BlocProvider.value(
@@ -97,8 +95,9 @@ class AreaMentenanceForm extends StatelessWidget {
           ),
         ),
       ),
+      footerActions: [Labels.delete, Labels.save],
       footerAction: (data) {
-        if (data == FooterStates.save) {
+        if (data == Labels.save) {
           BlocProvider.of<AreaBloc>(context).setAreaForm(_area);
           BlocProvider.of<AreaBloc>(context).add(SetAreaEvent());
         }
@@ -106,19 +105,16 @@ class AreaMentenanceForm extends StatelessWidget {
     );
   }
 
-  void _showDialog(context2, AreaRole input, Function add) async {
+  void _showDialog(context, AreaRole input, Function add) async {
     await showDialog(
-      context: context2,
+      context: context,
       builder: (BuildContext context) {
-        return BlocProvider.value(
-          value: BlocProvider.of<CategoryBloc>(context2),
-          child: RoleDialog(
-            areaRole: input,
-            add: (areaRole) {
-              add(areaRole);
-              Navigator.of(context).pop();
-            },
-          ),
+        return RoleDialog(
+          areaRole: input,
+          add: (areaRole) {
+            add(areaRole);
+            Navigator.of(context).pop();
+          },
         );
       },
     );

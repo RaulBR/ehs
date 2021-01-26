@@ -23,7 +23,8 @@ class EmployeeAdmin extends StatelessWidget {
         child: BlocBuilder<EmployeeBloc, EmployeeState>(
           buildWhen: (previous, current) => current is EmployeesValueState,
           builder: (context, state) {
-            List<GenericListObject> list = employeeService.mapToList(state);
+            List<GenericListObject> list =
+                employeeService.mapEmployeesToList(state);
             return SearchPageWrapper(
               title: Labels.employees,
               searchLabel: Labels.search,

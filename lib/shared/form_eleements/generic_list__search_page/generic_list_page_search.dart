@@ -83,7 +83,9 @@ class _SearchPageWrapperState extends State<SearchPageWrapper> {
                             },
                       selected: (data) {
                         widget.selected(data);
-                        openWidget(widget.addForm);
+                        if (widget.addForm != null) {
+                          openWidget(widget.addForm);
+                        }
                       },
                     ),
             ),
@@ -98,6 +100,7 @@ class _SearchPageWrapperState extends State<SearchPageWrapper> {
                   widget.add();
                   openWidget(widget.addForm);
                 }
+                widget.add();
               },
               child: Icon(Icons.add),
             ),

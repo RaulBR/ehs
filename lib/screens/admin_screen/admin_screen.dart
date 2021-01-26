@@ -16,7 +16,7 @@ class AdminScreen extends StatelessWidget {
           runSpacing: 8,
           children: <Widget>[
             HomeCard(
-              icon: 59387,
+              icon: 59639,
               title: Labels.employees,
               acction: () {
                 Navigator.pushNamed(context, RoutPath.employeeRout);
@@ -31,10 +31,17 @@ class AdminScreen extends StatelessWidget {
               },
             ),
             HomeCard(
-              icon: 59607,
+              icon: 57636,
               title: Labels.area,
               acction: () {
                 Navigator.pushNamed(context, RoutPath.areaRoute);
+              },
+            ),
+            HomeCard(
+              icon: 57725,
+              title: Labels.managerMantanence,
+              acction: () {
+                Navigator.pushNamed(context, RoutPath.myManaagers);
               },
             ),
           ],

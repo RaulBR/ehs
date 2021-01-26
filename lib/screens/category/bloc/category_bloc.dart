@@ -180,4 +180,9 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   void selectedTypeName(String categoryType) {}
+  getCategoryformId(id) {
+    _selectedCategoryType = _categoryesType
+        .firstWhere((element) => element.id == id, orElse: () => null);
+    return _selectedCategoryType;
+  }
 }

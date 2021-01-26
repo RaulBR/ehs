@@ -15,6 +15,7 @@ class CategoryTypeMentenanceForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CategoryType category = CategoryType();
+
     TextEditingController txt;
     return PageWrapper(
       add: () {
@@ -83,8 +84,9 @@ class CategoryTypeMentenanceForm extends StatelessWidget {
           }),
         ],
       ),
+      footerActions: [Labels.delete, Labels.save],
       footerAction: (data) {
-        if (data == FooterStates.save) {
+        if (data == Labels.save) {
           BlocProvider.of<CategoryBloc>(context).saveCategoryType(category);
           Navigator.pop(context);
         }

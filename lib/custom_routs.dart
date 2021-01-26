@@ -4,6 +4,7 @@ import 'package:ehsfocus/screens/aspect_distribution/aspects_to_fix_list.dart';
 import 'package:ehsfocus/screens/aspect_distribution/rejected_aspects.dart';
 import 'package:ehsfocus/screens/audits_sumery.dart/all_audits.dart';
 import 'package:ehsfocus/screens/category/audit_type.dart';
+import 'package:ehsfocus/screens/category/category_management_setings.dart/employee_mentenance.dart';
 import 'package:ehsfocus/screens/forms/area/audit_list.dart';
 import 'package:ehsfocus/screens/forms/audit/audit_form.dart';
 import 'package:ehsfocus/screens/forms/employee/employee_admin.dart';
@@ -14,7 +15,7 @@ import 'package:ehsfocus/screens/login/login.dart';
 import 'package:ehsfocus/screens/login/signup_form.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/screens/statitstics/statistics.dart';
-import 'package:ehsfocus/services/loacal_storage.dart';
+import 'package:ehsfocus/services/repository/loacal_storage.dart';
 import 'package:ehsfocus/shared/loading.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,6 @@ class CustomRouter {
   CustomRouter({this.context});
   final _localStorageService = LocalStorageService();
   Route<dynamic> generateRoute(RouteSettings settings) {
-    var myRejectedAspects;
     switch (settings.name) {
       case RoutPath.homeRout:
         return checkRoute(Home(), settings);
@@ -74,10 +74,14 @@ class CustomRouter {
 
       case RoutPath.overwiewAudits:
         return checkRoute(DistributeAspectsLsit(), settings);
+
       case RoutPath.myResponsibility:
         return checkRoute(AuditsToFixLsit(), settings);
+
       case RoutPath.myRejectedAspects:
         return checkRoute(RejectedAspects(), settings);
+      case RoutPath.myManaagers:
+        return checkRoute(ManagersMentenanceScreen(), settings);
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

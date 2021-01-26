@@ -112,4 +112,9 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     _selectedEmployee = getEmployee(id);
     add(GetEmployeeEvent(employee: _selectedEmployee));
   }
+
+  void updateEmployee(Employee employee) {
+    if (employee == null) employee = Employee();
+    add(UpdateSelectedEmployeeEvent(employee));
+  }
 }
