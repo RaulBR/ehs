@@ -14,7 +14,7 @@ class CategoryType extends Equatable {
   @HiveField(2)
   Employee responsible;
   @HiveField(3)
-  List<Category> categories;
+  List<AuditCategory> categories;
 
   CategoryType({
     this.id,
@@ -28,7 +28,7 @@ class CategoryType extends Equatable {
         "responsible": responsible?.toJson(),
         "categories": categories == null
             ? []
-            : categories.map((Category data) => data.toJson()).toList(),
+            : categories.map((AuditCategory data) => data.toJson()).toList(),
       };
 
   CategoryType.fromJson(Map<String, dynamic> parsedJson) {
@@ -44,7 +44,7 @@ class CategoryType extends Equatable {
     categories = parsedJson['categories'] == null
         ? []
         : (parsedJson['categories'] as List<dynamic>)
-            .map((i) => Category.fromJson(i))
+            .map((i) => AuditCategory.fromJson(i))
             .toList();
   }
 

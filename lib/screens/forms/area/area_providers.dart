@@ -1,4 +1,4 @@
-import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
+import 'package:ehsfocus/bloc/category/category_bloc.dart';
 import 'package:ehsfocus/screens/forms/area/area_service.dart';
 import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';

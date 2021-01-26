@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:ehsfocus/models/aspect/aspect_photo.dart';
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
-import 'package:ehsfocus/shared/photoComponents/camera_service.dart';
+
 import 'package:ehsfocus/services/repository/photo_repo.dart';
+import 'package:ehsfocus/shared/photoComponents/camera_service.dart';
 import 'package:equatable/equatable.dart';
 
 part 'photo_event.dart';

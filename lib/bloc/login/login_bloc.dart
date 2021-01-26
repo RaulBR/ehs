@@ -1,14 +1,16 @@
 import 'package:bloc/bloc.dart';
 import 'package:ehsfocus/models/user.model.dart';
-import 'package:ehsfocus/screens/login/login_bloc/login_event.dart';
-import 'package:ehsfocus/screens/login/login_bloc/login_state.dart';
+import 'package:ehsfocus/bloc/login/login_event.dart';
+import 'package:ehsfocus/bloc/login/login_state.dart';
 import 'package:ehsfocus/services/http/http_login.dart';
 import 'package:ehsfocus/services/loacal_storage.dart';
+import 'package:ehsfocus/services/repository/repo_service.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final httpService = HttpLoginService();
   final _localStorageService = LocalStorageService();
   User _logedInUser = User();
+  final RepoService _repoService = RepoService();
   User _user = User();
   LoginBloc() : super(LoginInitial()) {
     if (_localStorageService.getToken() != null) {
@@ -46,6 +48,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           data = await httpService.login(event.user);
           _logedInUser = data;
           await _storeDataLocaly(_logedInUser);
+          _repoService.clearAllHives();
           yield AuthorizedState(user: data);
         } catch (e) {
           yield UserFormState(event.user ?? User());
@@ -72,6 +75,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       case SignOutEvent:
         data = await httpService.signOut();
+        _repoService.clearAllHives();
         await _localStorageService.removeToken();
         await _localStorageService.removeRole();
         yield LogoutState();

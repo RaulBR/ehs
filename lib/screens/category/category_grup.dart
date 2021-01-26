@@ -1,4 +1,4 @@
-import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
+import 'package:ehsfocus/bloc/category/category_bloc.dart';
 import 'package:ehsfocus/screens/category/category_picker.dart';
 import 'package:ehsfocus/screens/category/category_type_picker.dart';
 import 'package:ehsfocus/shared/constants.dart';

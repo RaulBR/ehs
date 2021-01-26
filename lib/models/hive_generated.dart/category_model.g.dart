@@ -6,24 +6,24 @@ part of '../category/category_model.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CategoryAdapter extends TypeAdapter<Category> {
+class CategoryAdapter extends TypeAdapter<AuditCategory> {
   @override
   final int typeId = 2;
 
   @override
-  Category read(BinaryReader reader) {
+  AuditCategory read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Category(
+    return AuditCategory(
       id: fields[0] as String,
       category: fields[1] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Category obj) {
+  void write(BinaryWriter writer, AuditCategory obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)

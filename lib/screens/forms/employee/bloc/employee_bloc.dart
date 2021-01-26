@@ -4,6 +4,7 @@ import 'package:ehsfocus/models/employee/employee_model.dart';
 
 import 'package:ehsfocus/services/http/http_employee.dart';
 import 'package:ehsfocus/services/loacal_storage.dart';
+import 'package:ehsfocus/services/repository/employee_repo.dart';
 import 'package:meta/meta.dart';
 part 'employee_event.dart';
 part 'employee_state.dart';
@@ -14,14 +15,15 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   Employee _selectedEmployee;
   List<Employee> _appEmployees = [];
   final _localStorageService = LocalStorageService();
-  final httpEmployeeService = HttpEmployeeService();
+  final _employeeRepo = EmployeeRepo();
+  // final httpEmployeeService = HttpEmployeeService();
   @override
   Stream<EmployeeState> mapEventToState(
     EmployeeEvent event,
   ) async* {
     switch (event.runtimeType) {
       case GetEmployeesEvent:
-        dynamic data = await httpEmployeeService.getAllEmployees();
+        dynamic data = await _employeeRepo.getAllEmployees();
         _appEmployees = data;
 
         yield EmployeesValueState(employees: _appEmployees);
@@ -29,7 +31,8 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       case DeleteEmployeeEvent:
         Employee e = Employee();
         e.id = event is DeleteEmployeeEvent ? event.id : null;
-        await httpEmployeeService.deleteEmployees(e);
+        // await httpEmployeeService.deleteEmployees(e);
+        await _employeeRepo.deleteEmployee(e);
         add(GetEmployeesEvent());
         break;
       case UpdateSelectedEmployeeEvent:
@@ -40,7 +43,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       case SetEmployeeEvent:
         Employee employee = event is SetEmployeeEvent ? event.employee : null;
         try {
-          dynamic data = await httpEmployeeService.setEmployee(employee);
+          dynamic data = await _employeeRepo.setEmployee(employee);
           yield EmployeeValueState(data);
           yield Sucsess();
           add(GetEmployeesEvent());
@@ -66,7 +69,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
           break;
         }
 
-        dynamic data = await httpEmployeeService.getMyself();
+        dynamic data = await _employeeRepo.getMyself();
         _appEmployee = data;
         if (_appEmployee.email == null) {
           _appEmployee.email = await _localStorageService.getEmail();

@@ -1,9 +1,14 @@
-part of 'category_bloc.dart';
+import 'package:ehsfocus/models/category/category_model.dart';
+import 'package:ehsfocus/models/category/category_type_model.dart';
+import 'package:flutter/foundation.dart';
 
 @immutable
 abstract class CategoryState {}
 
 class CategoryInitial extends CategoryState {
+  final CategoryType categorie;
+
+  CategoryInitial({this.categorie});
   // factory CategoryInitial.initial() => CategoryInitial();
 }
 
@@ -22,14 +27,14 @@ class OneCategoryTypesState extends CategoryState {
 }
 
 class OneCategoryState extends CategoryState {
-  final Category categorie;
+  final AuditCategory categorie;
   OneCategoryState({
     this.categorie,
   });
 }
 
 class CategorysState extends CategoryState {
-  final List<Category> categoryes;
+  final List<AuditCategory> categoryes;
   CategorysState({
     this.categoryes,
   });

@@ -1,5 +1,5 @@
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
-import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
+import 'package:ehsfocus/bloc/category/category_bloc.dart';
 import 'package:ehsfocus/screens/category/category_picker.dart';
 import 'package:ehsfocus/screens/forms/area/are_dropdown_picker.dart';
 import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';

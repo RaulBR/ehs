@@ -130,6 +130,21 @@ class HiveName {
   static const String aspectUpdate = 'aspectUpdate';
   static const String aspectDelete = 'aspectDelete';
   static const String audit = 'audit';
+  List<String> toListElements() {
+    return [
+      mySelf,
+      employees,
+      categoryType,
+      categoryTypeSelected,
+      area,
+      selectedArea,
+      aspect,
+      aspectAdd,
+      aspectUpdate,
+      aspectDelete,
+      audit
+    ];
+  }
 }
 
 class Errors {

@@ -32,7 +32,7 @@ class CategoryRepo {
     }
   }
 
-  Future<Category> getCategoryTypeById(
+  Future<AuditCategory> getCategoryTypeById(
       CategoryType categoryType, String id) async {
     if (id == null) return null;
     return _categoryLocalDb.getCategoryTypeById(categoryType, id);

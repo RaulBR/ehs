@@ -19,7 +19,7 @@ class CategoryTypeAdapter extends TypeAdapter<CategoryType> {
     return CategoryType(
       id: fields[0] as String,
       type: fields[1] as String,
-      categories: (fields[3] as List)?.cast<Category>(),
+      categories: (fields[3] as List)?.cast<AuditCategory>(),
       responsible: fields[2] as Employee,
     );
   }

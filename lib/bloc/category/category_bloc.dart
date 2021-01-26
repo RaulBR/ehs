@@ -1,14 +1,10 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
+import 'package:ehsfocus/bloc/category/category_state.dart';
+import 'package:ehsfocus/bloc/category/category_event.dart';
 import 'package:ehsfocus/models/category/category_model.dart';
 import 'package:ehsfocus/models/category/category_type_model.dart';
-
 import 'package:ehsfocus/services/http/http_category.dart';
-import 'package:meta/meta.dart';
-
-part 'category_event.dart';
-part 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   CategoryBloc() : super(CategoryInitial()) {
@@ -17,7 +13,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   HttpCategoryService httpCategoryService = HttpCategoryService();
   List<CategoryType> _categoryesType = [];
   CategoryType _selectedCategoryType = CategoryType();
-  Category _selectedCategory = Category();
+  AuditCategory _selectedCategory = AuditCategory();
   CategoryType _initialStateCategoryType = CategoryType();
 
   @override
@@ -98,7 +94,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       add(CategoryError(errorMessage: 'Categoria exista'));
       return;
     }
-    _selectedCategoryType.categories.add(Category(category: category));
+    _selectedCategoryType.categories.add(AuditCategory(category: category));
     add(PropagateCategoryTypeEvent());
   }
 
@@ -148,7 +144,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     add(DeleteCategoryEvent(categoryType: CategoryType(id: id)));
   }
 
-  deleteCategory(Category category) {}
+  deleteCategory(AuditCategory category) {}
 
   // bool _categoryTypeExists(categoryType) {
   //   if (_selectedCategoryType.categories == null) {
@@ -166,6 +162,10 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     return _selectedCategoryType.categories
             .singleWhere((it) => it.category == category, orElse: () => null) !=
         null;
+  }
+
+  void addGetCategoryTypeEvent() {
+    add(GetCategoryTypeEvent());
   }
 
   void selectCategory(id) {

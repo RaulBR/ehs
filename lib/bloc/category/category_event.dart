@@ -1,4 +1,5 @@
-part of 'category_bloc.dart';
+import 'package:ehsfocus/models/category/category_type_model.dart';
+import 'package:flutter/cupertino.dart';
 
 @immutable
 abstract class CategoryEvent {

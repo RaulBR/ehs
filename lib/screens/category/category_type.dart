@@ -1,5 +1,6 @@
+import 'package:ehsfocus/bloc/category/category_state.dart';
 import 'package:ehsfocus/models/category/category_type_model.dart';
-import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
+import 'package:ehsfocus/bloc/category/category_bloc.dart';
 import 'package:ehsfocus/screens/category/category_service.dart';
 import 'package:ehsfocus/screens/forms/shared_form_components/generic_element.dart';
 import 'package:ehsfocus/services/popup_service/generic_message_popup.dart';

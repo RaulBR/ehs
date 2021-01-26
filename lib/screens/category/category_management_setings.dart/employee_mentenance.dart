@@ -2,7 +2,6 @@ import 'package:ehsfocus/models/category/category_type_responsible.dart';
 import 'package:ehsfocus/screens/category/category_management_setings.dart/bloc/category_management_bloc.dart';
 import 'package:ehsfocus/screens/category/category_service.dart';
 import 'package:ehsfocus/screens/forms/area/role_dialog.dart';
-
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/generic_list_page_search.dart';
 import 'package:flutter/material.dart';

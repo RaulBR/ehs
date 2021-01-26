@@ -1,10 +1,11 @@
+import 'package:ehsfocus/bloc/category/category_state.dart';
 import 'package:ehsfocus/screens/category/category_service.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/fields/search_picker/custom_list_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'bloc/category_bloc.dart';
+import '../../bloc/category/category_bloc.dart';
 
 class CategoryPiker extends StatelessWidget {
   final String error;

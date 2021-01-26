@@ -1,7 +1,7 @@
 import 'package:ehsfocus/Initiate_app_service.dart';
 import 'package:ehsfocus/main_app.dart';
-import 'package:ehsfocus/screens/login/login_bloc/login_bloc.dart';
-import 'package:ehsfocus/screens/login/login_bloc/login_state.dart';
+import 'package:ehsfocus/bloc/login/login_bloc.dart';
+import 'package:ehsfocus/bloc/login/login_state.dart';
 import 'package:ehsfocus/screens/login/login_wrapper.dart';
 import 'package:ehsfocus/services/animations/animation_wrapper.dart';
 import 'package:ehsfocus/shared/loading.dart';

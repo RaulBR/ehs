@@ -43,7 +43,7 @@ class HttpEmployeeService extends HttpService {
     return data;
   }
 
-  deleteEmployees(Employee employee) async {
+  _deleteEmployee(Employee employee) async {
     String data = await postRequest(
         endpint: '$employeeUrl/delete',
         jsonValue: json.encode(employee),

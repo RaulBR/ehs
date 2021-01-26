@@ -1,5 +1,5 @@
 import 'package:ehsfocus/screens/login/login.dart';
-import 'package:ehsfocus/screens/login/login_bloc/login.dart';
+import 'package:ehsfocus/bloc/login/login.dart';
 import 'package:ehsfocus/screens/login/signup_form.dart';
 import 'package:ehsfocus/shared/loading.dart';
 import 'package:ehsfocus/theme.dart';

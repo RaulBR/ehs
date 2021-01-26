@@ -1,7 +1,8 @@
+import 'package:ehsfocus/bloc/category/category_state.dart';
 import 'package:ehsfocus/models/area/area_role_model.dart';
 import 'package:ehsfocus/models/category/category_type_responsible.dart';
 import 'package:ehsfocus/models/generic_list_model.dart';
-import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
+import 'package:ehsfocus/bloc/category/category_bloc.dart';
 import 'package:ehsfocus/screens/category/category_type_picker.dart';
 import 'package:ehsfocus/screens/forms/area/area_service.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_service.dart';
@@ -59,7 +60,7 @@ class _RoleDialogState extends State<RoleDialog> {
                 },
                 tapped: () {
                   BlocProvider.of<CategoryBloc>(context)
-                      .add(GetCategoryTypeEvent());
+                      .addGetCategoryTypeEvent();
                 },
                 preselected: _areaRole.role,
               ),
