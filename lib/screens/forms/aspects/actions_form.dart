@@ -1,5 +1,5 @@
-import 'package:ehsfocus/models/action_model.dart';
-import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/models/action/audit_action_model.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_service.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/bloc/aspect_wrapper_bloc.dart';
 import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
@@ -39,8 +39,8 @@ class ActionsFormWidget extends StatelessWidget {
         _action.imidiatAcction == null ? false : _action.imidiatAcction;
     String getName() {
       if (_action != null) {
-        if (_action.responsable != null) {
-          return '${_action.responsable.firstName} ${_action.responsable.lastName}';
+        if (_action.responsible != null) {
+          return '${_action.responsible.firstName} ${_action.responsible.lastName}';
         }
       }
       return '';
@@ -63,7 +63,7 @@ class ActionsFormWidget extends StatelessWidget {
                         .handleResponsableForAspect(context, state),
                     label: Labels.responsabile,
                     selected: (data) {
-                      _action.responsable =
+                      _action.responsible =
                           BlocProvider.of<EmployeeBloc>(context)
                               .getEmployee(data.id);
                       hasChanges(_action);
@@ -87,7 +87,7 @@ class ActionsFormWidget extends StatelessWidget {
                         _action.limitDate =
                             DateFormat('dd-MMM-yyyy').format(DateTime.now());
                         print(_action.limitDate);
-                        _action.responsable =
+                        _action.responsible =
                             BlocProvider.of<EmployeeBloc>(context).getMe();
                       }
                       BlocProvider.of<AspectWrapperBloc>(context)

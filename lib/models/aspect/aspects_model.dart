@@ -1,21 +1,38 @@
-import 'package:ehsfocus/models/audit_head_modal.dart';
+import 'package:ehsfocus/models/action/audit_action_model.dart';
+import 'package:ehsfocus/models/aspect/aspect_photo.dart';
+import 'package:ehsfocus/models/action/audit_head_modal.dart';
+import 'package:hive/hive.dart';
+part '../hive_generated.dart/aspects_model.g.dart';
 
-import 'action_model.dart';
-
+@HiveType(typeId: 13)
 class Aspect {
+  @HiveField(0)
   String id;
+  @HiveField(1)
   String category;
+  @HiveField(2)
   String comment;
+  @HiveField(3)
   String rejectComment;
+  @HiveField(4)
   String categoryType;
+  @HiveField(5)
   String equipment;
+  @HiveField(6)
   String auditId;
+  @HiveField(7)
   String type;
+  @HiveField(8)
   String status;
+  @HiveField(9)
   String auditActionId;
+  @HiveField(10)
   String createdDate;
+  @HiveField(11)
   AuditHead audit;
+  @HiveField(12)
   AuditAction action;
+  @HiveField(13)
   List<AspectPhoto> photos;
   Aspect(
       {this.id,
@@ -71,38 +88,5 @@ class Aspect {
         "photos": photos == null
             ? []
             : photos.map((AspectPhoto data) => data.toJson()).toList(),
-      };
-}
-
-class AspectPhoto {
-  String photo;
-  String id;
-  String name;
-  String type;
-  String size;
-  String aspectId;
-  String createdDate;
-  AspectPhoto({this.id, this.name, this.photo, this.size, this.type});
-  AspectPhoto.fromJson(parsedJson) {
-    if (parsedJson == null) {
-      return;
-    }
-    if (parsedJson['photo'] != null) {
-      photo = parsedJson['photo'].toString();
-    }
-
-    id = parsedJson['id'] == null ? null : parsedJson['id'].toString();
-    name = parsedJson['name'].toString();
-    type = parsedJson['type'].toString();
-    createdDate = parsedJson['createdDate'].toString();
-    size = parsedJson['size'].toString();
-  }
-  Map<String, dynamic> toJson() => {
-        "photo": photo ?? null,
-        "id": id ?? null,
-        "name": name ?? null,
-        "type": type ?? null,
-        "size": size ?? null,
-        "aspectId": aspectId ?? null
       };
 }

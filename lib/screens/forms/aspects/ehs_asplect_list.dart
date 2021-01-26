@@ -1,4 +1,4 @@
-import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/screens/forms/shared_form_components/generic_element.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:flutter/material.dart';

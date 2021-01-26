@@ -1,4 +1,5 @@
-import 'package:ehsfocus/models/area_modal.dart';
+import 'package:ehsfocus/models/area/area_model.dart';
+import 'package:ehsfocus/models/area/area_role_model.dart';
 import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
 import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/area/role_dialog.dart';

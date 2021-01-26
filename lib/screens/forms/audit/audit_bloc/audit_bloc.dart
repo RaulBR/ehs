@@ -1,8 +1,8 @@
 import 'dart:async';
-
-import 'package:ehsfocus/models/action_model.dart';
-import 'package:ehsfocus/models/audit_head_modal.dart';
-import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/models/action/audit_head_modal.dart';
+import 'package:ehsfocus/models/action/audit_model.dart';
+import 'package:ehsfocus/models/action/audit_request_model.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_event.dart';
 import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_state.dart';
 import 'package:ehsfocus/services/http/http_audit.dart';

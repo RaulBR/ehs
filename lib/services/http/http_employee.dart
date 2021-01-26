@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:ehsfocus/models/employee_model.dart';
+import 'package:ehsfocus/models/employee/employee_model.dart';
 import 'package:ehsfocus/services/http/http.dart';
 
 class HttpEmployeeService extends HttpService {

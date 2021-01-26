@@ -1,5 +1,6 @@
-import 'package:ehsfocus/models/area_modal.dart';
-import 'package:ehsfocus/models/audit_head_modal.dart';
+import 'package:ehsfocus/models/action/audit_head_modal.dart';
+import 'package:ehsfocus/models/area/area_model.dart';
+import 'package:ehsfocus/models/area/area_step_model.dart';
 import 'package:ehsfocus/models/generic_list_model.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/fields/search_picker/custom_list_search.dart';

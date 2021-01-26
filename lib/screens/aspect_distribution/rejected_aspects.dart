@@ -1,4 +1,4 @@
-import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/screens/aspect_distribution/audit_list.dart';
 import 'package:ehsfocus/screens/forms/aspects/bloc/aspect_bloc.dart';
 import 'package:ehsfocus/shared/constants.dart';

@@ -1,5 +1,5 @@
-import 'package:ehsfocus/models/audit_head_modal.dart';
-import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/models/action/audit_head_modal.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/screens/forms/area/area_form.dart';
 
 import 'package:ehsfocus/screens/forms/aspects/photo_comment_form.dart';

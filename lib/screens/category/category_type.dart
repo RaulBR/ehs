@@ -1,4 +1,4 @@
-import 'package:ehsfocus/models/category_model.dart';
+import 'package:ehsfocus/models/category/category_type_model.dart';
 import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
 import 'package:ehsfocus/screens/category/category_service.dart';
 import 'package:ehsfocus/screens/forms/shared_form_components/generic_element.dart';

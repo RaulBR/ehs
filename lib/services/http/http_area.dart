@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:ehsfocus/models/area_modal.dart';
+import 'package:ehsfocus/models/area/area_model.dart';
+import 'package:ehsfocus/models/area/area_role_model.dart';
 import 'package:ehsfocus/services/http/http.dart';
 
 class HttpAreaService extends HttpService {

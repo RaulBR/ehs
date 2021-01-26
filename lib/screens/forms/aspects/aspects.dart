@@ -1,4 +1,4 @@
-import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/aspect_wrapper.dart';
 import 'package:ehsfocus/screens/forms/aspects/ehs_asplect_list.dart';

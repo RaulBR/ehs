@@ -1,4 +1,4 @@
-import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
 
 import 'package:ehsfocus/screens/forms/aspects/actions_form.dart';
 

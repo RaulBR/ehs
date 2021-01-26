@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:ehsfocus/models/area_modal.dart';
-import 'package:ehsfocus/models/audit_head_modal.dart';
+import 'package:ehsfocus/models/action/audit_head_modal.dart';
+import 'package:ehsfocus/models/area/area_model.dart';
+import 'package:ehsfocus/models/area/area_role_model.dart';
+import 'package:ehsfocus/models/area/area_step_model.dart';
 import 'package:ehsfocus/models/request_models.dart';
 import 'package:ehsfocus/services/http/http_area.dart';
 import 'package:flutter/cupertino.dart';

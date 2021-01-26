@@ -1,4 +1,4 @@
-import 'package:ehsfocus/models/area_modal.dart';
+import 'package:ehsfocus/models/area/area_role_model.dart';
 import 'package:ehsfocus/models/generic_list_model.dart';
 import 'package:ehsfocus/shared/ehs_generic_list.dart';
 import 'package:ehsfocus/shared/constants.dart';
@@ -87,7 +87,7 @@ class ExpandableRoleTile extends StatelessWidget {
       listElements: roles
           .map((e) => GenericListObject(
               id: e.id,
-              title: '${e.responsable.firstName} ${e.responsable.lastName}',
+              title: '${e.responsible.firstName} ${e.responsible.lastName}',
               subtitle: e.role))
           .toList(),
     );

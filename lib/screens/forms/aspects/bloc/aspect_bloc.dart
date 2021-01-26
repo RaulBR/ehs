@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/models/aspect/aspect_photo.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/services/http/http_audit.dart';
 import 'package:meta/meta.dart';
 part 'aspect_event.dart';

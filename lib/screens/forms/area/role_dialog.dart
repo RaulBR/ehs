@@ -1,4 +1,4 @@
-import 'package:ehsfocus/models/area_modal.dart';
+import 'package:ehsfocus/models/area/area_role_model.dart';
 import 'package:ehsfocus/models/generic_list_model.dart';
 import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
 import 'package:ehsfocus/screens/forms/area/area_service.dart';
@@ -26,7 +26,7 @@ class _RoleDialogState extends State<RoleDialog> {
       _responsable = data.title;
     });
     // get if
-    _areaRole.responsable =
+    _areaRole.responsible =
         BlocProvider.of<EmployeeBloc>(context).getEmployee(data.id);
   }
 
@@ -89,7 +89,7 @@ class _RoleDialogState extends State<RoleDialog> {
         FlatButton(
           child: Text(Labels.add),
           onPressed: () {
-            if (_areaRole.responsable != null) {
+            if (_areaRole.responsible != null) {
               widget.add(_areaRole);
             }
             //    Navigator.of(context).pop();

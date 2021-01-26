@@ -1,30 +1,12 @@
 import 'dart:convert';
-import 'dart:typed_data';
-import 'package:ehsfocus/models/aspects_model.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'package:ehsfocus/shared/constants.dart';
-import 'package:flutter/material.dart';
+import 'dart:typed_data';
+
+import 'package:ehsfocus/models/aspect/aspect_photo.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
-class CameraService {
-  ImagePicker _imagePicker = ImagePicker();
-  Future<PickedFile> openGalery(context) async {
-    return await _imagePicker.getImage(
-        source: ImageSource.gallery,
-        maxHeight: 800,
-        maxWidth: 800,
-        imageQuality: 50);
-  }
-
-  Future<PickedFile> openCamera(context) async {
-    return await _imagePicker.getImage(
-        source: ImageSource.camera,
-        maxHeight: 800,
-        maxWidth: 800,
-        imageQuality: 50);
-  }
-
+class PhotoLocalDb {
   Future<File> moveFile(File sourceFile, String newPath) async {
     try {
       // prefer using rename as it is probably faster
@@ -113,46 +95,6 @@ class CameraService {
     } catch (e) {
       return null;
     }
-  }
-
-  handleShowDialog(BuildContext context, Function getPicture) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              title: Text(Labels.chose),
-              content: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FlatButton.icon(
-                        onPressed: () async {
-                          PickedFile image = await openGalery(context);
-                          if (image == null) {
-                            return;
-                          }
-                          getPicture(
-                              await cocnvertFromFileTOBase64Object(image));
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.photo_album),
-                        label: Text(Labels.galery)),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    FlatButton.icon(
-                        onPressed: () async {
-                          PickedFile image = await openCamera(context);
-                          getPicture(
-                              await cocnvertFromFileTOBase64Object(image));
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.camera_alt),
-                        label: Text(Labels.camera)),
-                  ],
-                ),
-              ));
-        });
   }
 
   Future<String> copyPhotoToPhone(AspectPhoto element) async {

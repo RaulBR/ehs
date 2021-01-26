@@ -1,9 +1,19 @@
+import 'package:hive/hive.dart';
+part '../hive_generated.dart/employee_model.g.dart';
+
+@HiveType(typeId: 0)
 class Employee {
+  @HiveField(0)
   String id;
+  @HiveField(1)
   String firstName;
+  @HiveField(2)
   String lastName;
+  @HiveField(3)
   String role;
+  @HiveField(4)
   String email;
+  @HiveField(5)
   String createdDate;
 
   Employee(
@@ -15,11 +25,11 @@ class Employee {
       this.email});
 
   Map<String, dynamic> toJson() => {
-        "id": id ?? null,
-        "firstName": firstName ?? null,
-        "lastName": lastName ?? null,
-        "role": role ?? null,
-        "email": email ?? null
+        "id": id,
+        "firstName": firstName,
+        "lastName": lastName,
+        "role": role,
+        "email": email
       };
 
   Employee.fromJson(Map<String, dynamic> parsedJson) {

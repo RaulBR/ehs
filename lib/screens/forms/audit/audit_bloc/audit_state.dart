@@ -1,5 +1,5 @@
-import 'package:ehsfocus/models/action_model.dart';
-import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/models/action/audit_model.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
 
 abstract class AuditState {}
 

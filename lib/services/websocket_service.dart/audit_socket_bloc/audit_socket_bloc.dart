@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:ehsfocus/models/audit_head_modal.dart';
+import 'package:ehsfocus/models/action/audit_head_modal.dart';
+
 import 'package:ehsfocus/services/http/audit_socket.dart';
 import 'package:equatable/equatable.dart';
 import 'package:socket_io_client/socket_io_client.dart';

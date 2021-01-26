@@ -1,10 +1,19 @@
-import 'package:ehsfocus/models/employee_model.dart';
+import 'package:ehsfocus/models/area/area_role_model.dart';
+import 'package:ehsfocus/models/area/area_step_model.dart';
+import 'package:hive/hive.dart';
+part '../hive_generated.dart/area_model.g.dart';
 
+@HiveType(typeId: 3)
 class Area {
+  @HiveField(0)
   String id;
+  @HiveField(1)
   String area;
+  @HiveField(2)
   String areaInfo;
+  @HiveField(3)
   List<AreaStep> steps;
+  @HiveField(4)
   List<AreaRole> roles;
 
   Area({this.id, this.area, this.areaInfo, this.steps, this.roles});
@@ -38,39 +47,4 @@ class Area {
             .map((i) => AreaRole.fromJson(i))
             .toList();
   }
-}
-
-class AreaStep {
-  String id;
-  String step;
-  String stepinfo;
-  String areaId;
-  AreaStep({this.id, this.areaId, this.stepinfo, this.step});
-
-  Map<String, dynamic> toJson() =>
-      {"id": id, "step": step, "stepinfo": stepinfo, "areaId": areaId};
-
-  AreaStep.fromJson(Map<String, dynamic> parsedJson) {
-    id = parsedJson['id'].toString();
-    step = parsedJson['step'].toString();
-    areaId = parsedJson['areaId'].toString();
-    stepinfo = parsedJson['stepinfo'].toString();
-    // steps =
-  }
-}
-
-class AreaRole {
-  String role;
-  String id;
-  Employee responsable;
-  AreaRole({this.id, this.role, this.responsable});
-  AreaRole.fromJson(Map<String, dynamic> parsedJson) {
-    id = parsedJson['id'].toString();
-    role = parsedJson['role'].toString();
-    responsable = parsedJson['responsable'] == null
-        ? null
-        : Employee.fromJson(parsedJson['responsable']);
-  }
-  Map<String, dynamic> toJson() =>
-      {"id": id, "role": role, "responsable": responsable?.toJson()};
 }

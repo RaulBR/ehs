@@ -1,4 +1,4 @@
-import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/screens/aspect_distribution/action_list.dart';
 import 'package:ehsfocus/screens/aspect_distribution/aspect_triaj_footer.dart';
 import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';

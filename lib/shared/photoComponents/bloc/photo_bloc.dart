@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:ehsfocus/models/aspects_model.dart';
-import 'package:ehsfocus/services/camera_service.dart';
-import 'package:ehsfocus/services/http/http_audit.dart';
+import 'package:ehsfocus/models/aspect/aspect_photo.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
+import 'package:ehsfocus/shared/photoComponents/camera_service.dart';
+import 'package:ehsfocus/services/repository/photo_repo.dart';
 import 'package:equatable/equatable.dart';
 
 part 'photo_event.dart';
@@ -11,8 +12,8 @@ part 'photo_state.dart';
 
 class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
   PhotoBloc() : super(PhotoInitial(null));
-  final httpAuditService = HttpAuditService();
   final cameraService = CameraService();
+  final _photoRepo = PhotoRepo();
   final List<AspectPhoto> photoList = [];
   @override
   Stream<PhotoState> mapEventToState(
@@ -28,7 +29,7 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
           }
           AspectPhoto photo;
           String photoName = aspect.photos[0].name;
-          photo = await cameraService.getFromFile(photoName);
+          photo = await _photoRepo.getFromFile(photoName);
 
           if (photo != null) {
             aspect.photos[0].photo = photo.photo;
@@ -36,13 +37,11 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
             break;
           }
           dynamic data =
-              await this.httpAuditService.getPhotosByAspectId(event.photoSorce);
+              await this._photoRepo.getPhotosByAspectId(event.photoSorce);
           if (data.length > 0) {
             data.forEach((element) {
               photoList.add(element);
-              cameraService.copyPhotoToPhone(element);
             });
-
             yield ShowPhotoState(photo: photoList[0]);
           }
         }
@@ -53,8 +52,8 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
       case DeletePhotoEvent:
         if (event.photoSorce is AspectPhoto) {
           try {
-            await this.httpAuditService.deleteAspectPhoto(event.photoSorce);
-            await cameraService.removePhoto(event.photoSorce);
+            await this._photoRepo.deleteAspectPhoto(event.photoSorce);
+
             yield ShowPhotoState(photo: AspectPhoto());
             yield DeletedPicture(photo: event.photoSorce);
             break;
@@ -66,7 +65,7 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
       case RefreshPhotoEvent:
         if (event is GetPhotoEvent && event.photoSorce is Aspect) {
           dynamic data =
-              await this.httpAuditService.getPhotosByAspectId(event.photoSorce);
+              await this._photoRepo.getPhotosByAspectId(event.photoSorce);
           if (data != null) {
             yield ShowPhotoState(photo: data);
           }

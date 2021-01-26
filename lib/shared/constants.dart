@@ -112,6 +112,29 @@ class Labels {
   static const String acction = 'Actiuni: ';
   static const String duplicat = 'Duplicat?';
   static const String edit = 'Editeaza';
+  static const String typeManager = 'Responsabil pe Tip';
+  static const String managerMantanence = 'Manageri';
+  static const String manager = 'Manager';
+}
+
+class HiveName {
+  static const String mySelf = 'mySelf';
+  static const String employees = 'employees';
+  static const String categoryType = 'categoryType';
+  static const String categoryTypeSelected = 'categoryTypeSelected';
+  static const String area = 'area';
+  static const String selectedArea = 'selectedArea';
+  static const String aspect = 'aspect';
+  static const String aspectAdd = 'aspectAdd';
+  static const String aspectUpdate = 'aspectUpdate';
+  static const String aspectDelete = 'aspectDelete';
+  static const String audit = 'audit';
+}
+
+class Errors {
+  static const String getError = 'get error';
+  static const String setError = 'set error';
+  static const String deleteError = 'delete error';
 }
 
 Map<String, String> dinamicTitles = {

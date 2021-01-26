@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:ehsfocus/models/category_model.dart';
+import 'package:ehsfocus/models/category/category_model.dart';
+import 'package:ehsfocus/models/category/category_type_model.dart';
 
 import 'package:ehsfocus/services/http/http_category.dart';
 import 'package:meta/meta.dart';

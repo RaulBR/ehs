@@ -1,4 +1,4 @@
-import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/screens/aspect_distribution/bold_elemen_text.dart';
 import 'package:ehsfocus/shared/check_box.dart';
 import 'package:ehsfocus/shared/constants.dart';
@@ -26,8 +26,8 @@ class ActionDistributionCard extends StatelessWidget {
     _hasDublicate = aspect.status == 'Z' ? false : _hasDublicate;
     String getResponsable() {
       if (aspect != null && aspect.action != null) {
-        return aspect.action.responsable != null
-            ? '${aspect.action.responsable.firstName ?? null} ${aspect.action.responsable.lastName ?? null}'
+        return aspect.action.responsible != null
+            ? '${aspect.action.responsible.firstName ?? null} ${aspect.action.responsible.lastName ?? null}'
             : Labels.notSet;
       }
       return Labels.notSet;
