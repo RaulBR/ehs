@@ -180,7 +180,7 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
   addStep(data) {
     AreaStep step = AreaStep();
     step.step = data;
-    _area.steps == null ? _area.steps = [] : _area.steps;
+    _area.steps = _area.steps == null ? [] : _area.steps;
     _area.steps.add(step);
     add(EmitSteptsEvent());
   }

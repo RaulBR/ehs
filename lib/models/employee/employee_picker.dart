@@ -1,5 +1,5 @@
 import 'package:ehsfocus/models/employee/employee_model.dart';
-import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
+import 'package:ehsfocus/bloc/employee/employee_bloc.dart';
 import 'package:ehsfocus/screens/forms/employee/employee_service.dart';
 import 'package:ehsfocus/shared/fields/search_picker/custom_list_search.dart';
 import 'package:flutter/material.dart';

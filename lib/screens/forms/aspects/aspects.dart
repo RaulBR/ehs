@@ -1,9 +1,9 @@
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
-import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
+import 'package:ehsfocus/bloc/category/area/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/aspect_wrapper.dart';
 import 'package:ehsfocus/screens/forms/aspects/ehs_asplect_list.dart';
-import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc.dart';
-import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_state.dart';
+import 'package:ehsfocus/bloc/audit_bloc/audit_bloc.dart';
+import 'package:ehsfocus/bloc/audit_bloc/audit_state.dart';
 import 'package:ehsfocus/services/animations/slide_right_router.dart';
 import 'package:ehsfocus/shared/form_eleements/audit_form_wraper.dart';
 import 'package:ehsfocus/shared/constants.dart';

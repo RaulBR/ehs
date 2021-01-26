@@ -1,9 +1,9 @@
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/screens/aspect_distribution/action_list.dart';
 import 'package:ehsfocus/screens/aspect_distribution/aspect_triaj_footer.dart';
-import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
+import 'package:ehsfocus/bloc/category/area/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/aspect_wrapper.dart';
-import 'package:ehsfocus/screens/forms/aspects/bloc/aspect_bloc.dart';
+import 'package:ehsfocus/bloc/aspect/aspect_bloc.dart';
 import 'package:ehsfocus/services/animations/animation_wrapper.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/loading.dart';

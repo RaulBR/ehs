@@ -2,8 +2,8 @@ import 'package:ehsfocus/models/action/audit_head_modal.dart';
 
 import 'package:ehsfocus/screens/category/category_type_picker.dart';
 import 'package:ehsfocus/screens/forms/area/are_dropdown_picker.dart';
-import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
-import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc_index.dart';
+import 'package:ehsfocus/bloc/category/area/area_bloc.dart';
+import 'package:ehsfocus/bloc/audit_bloc/audit_bloc_index.dart';
 
 import 'package:ehsfocus/services/qr_scanning.dart';
 

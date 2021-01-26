@@ -38,7 +38,6 @@ class _DatePikerState extends State<DatePiker> {
 
   @override
   Widget build(BuildContext context) {
-    bool _isToday = widget.isTodaty == null ? false : widget.isTodaty;
     _date = widget.inputDate == null
         ? DateTime.now()
         : DateTime.parse(widget.inputDate);

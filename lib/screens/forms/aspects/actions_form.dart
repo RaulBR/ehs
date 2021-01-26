@@ -2,7 +2,7 @@ import 'package:ehsfocus/models/action/audit_action_model.dart';
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_service.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/bloc/aspect_wrapper_bloc.dart';
-import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
+import 'package:ehsfocus/bloc/employee/employee_bloc.dart';
 import 'package:ehsfocus/shared/action_button.dart';
 import 'package:ehsfocus/shared/date_picker.dart/datepiker.dart';
 import 'package:ehsfocus/shared/fields/search_picker/custom_list_search.dart';
@@ -59,8 +59,7 @@ class ActionsFormWidget extends StatelessWidget {
                 BlocBuilder<EmployeeBloc, EmployeeState>(
                   builder: (context, state) => EhsSearchListPicker(
                     isEditable: isEditable && !_action.imidiatAcction,
-                    list: AspectService()
-                        .handleResponsableForAspect(context, state),
+                    list: AspectService().handleResponsableForAspect(state),
                     label: Labels.responsabile,
                     selected: (data) {
                       _action.responsible =

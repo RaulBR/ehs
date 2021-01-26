@@ -7,7 +7,7 @@ import 'package:ehsfocus/shared/fields/search_picker/custom_list_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'bloc/area_bloc.dart';
+import '../../../bloc/category/area/area_bloc.dart';
 
 class AreaDropDownPiker extends StatelessWidget {
   final AuditHead area;

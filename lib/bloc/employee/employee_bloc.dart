@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:ehsfocus/models/employee/employee_model.dart';
-
-import 'package:ehsfocus/services/http/http_employee.dart';
 import 'package:ehsfocus/services/loacal_storage.dart';
 import 'package:ehsfocus/services/repository/employee_repo.dart';
 import 'package:meta/meta.dart';

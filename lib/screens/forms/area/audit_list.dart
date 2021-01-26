@@ -1,7 +1,7 @@
 import 'package:ehsfocus/models/generic_list_model.dart';
 import 'package:ehsfocus/screens/forms/area/area_providers.dart';
 import 'package:ehsfocus/screens/forms/area/area_mentenance_form.dart';
-import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
+import 'package:ehsfocus/bloc/category/area/area_bloc.dart';
 import 'package:ehsfocus/shared/constants.dart';
 
 import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/generic_list_page_search.dart';

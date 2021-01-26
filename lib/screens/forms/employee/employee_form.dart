@@ -1,5 +1,5 @@
 import 'package:ehsfocus/models/employee/employee_model.dart';
-import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
+import 'package:ehsfocus/bloc/employee/employee_bloc.dart';
 
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/clerable%20_text_field.dart';

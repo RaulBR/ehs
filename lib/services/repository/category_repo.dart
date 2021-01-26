@@ -4,8 +4,6 @@ import 'package:ehsfocus/models/category/category_type_model.dart';
 import 'package:ehsfocus/services/http/http_category.dart';
 import 'package:ehsfocus/services/repository/local_database/category_local_db.dart';
 
-import 'package:ehsfocus/shared/constants.dart';
-
 class CategoryRepo {
   HttpCategoryService _httpCategoryService = HttpCategoryService();
   CategoryLocalDb _categoryLocalDb = CategoryLocalDb();

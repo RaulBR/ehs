@@ -1,6 +1,6 @@
 import 'package:ehsfocus/models/area/area_model.dart';
 import 'package:ehsfocus/screens/category/category_service.dart';
-import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
+import 'package:ehsfocus/bloc/category/area/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/shared_form_components/generic_element.dart';
 import 'package:ehsfocus/services/popup_service/generic_message_popup.dart';
 import 'package:ehsfocus/shared/constants.dart';

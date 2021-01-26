@@ -43,13 +43,6 @@ class HttpEmployeeService extends HttpService {
     return data;
   }
 
-  _deleteEmployee(Employee employee) async {
-    String data = await postRequest(
-        endpint: '$employeeUrl/delete',
-        jsonValue: json.encode(employee),
-        hasHeadder: true);
-    return Employee.fromJson(json.decode(data));
-  }
   // Future<dynamic> signOut() async {
   //   return postTeamplate('/api/user/logout', null);
   // }

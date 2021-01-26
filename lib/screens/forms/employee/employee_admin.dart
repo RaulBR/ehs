@@ -1,5 +1,5 @@
 import 'package:ehsfocus/models/generic_list_model.dart';
-import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
+import 'package:ehsfocus/bloc/employee/employee_bloc.dart';
 import 'package:ehsfocus/screens/forms/employee/employee_form.dart';
 import 'package:ehsfocus/screens/forms/employee/employee_service.dart';
 import 'package:ehsfocus/services/popup_service/generic_message_popup.dart';

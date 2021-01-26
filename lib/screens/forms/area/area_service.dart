@@ -1,5 +1,5 @@
 import 'package:ehsfocus/models/generic_list_model.dart';
-import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
+import 'package:ehsfocus/bloc/employee/employee_bloc.dart';
 
 class AreaService {
   List<GenericListObject> addEmployeesToDropDown(context, state) {

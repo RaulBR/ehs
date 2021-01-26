@@ -6,7 +6,7 @@ import 'package:ehsfocus/bloc/category/category_bloc.dart';
 import 'package:ehsfocus/screens/category/category_type_picker.dart';
 import 'package:ehsfocus/screens/forms/area/area_service.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_service.dart';
-import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
+import 'package:ehsfocus/bloc/employee/employee_bloc.dart';
 import 'package:ehsfocus/screens/forms/employee/employee_picker.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/fields/search_picker/custom_list_search.dart';
@@ -51,8 +51,7 @@ class _RoleDialogState extends State<RoleDialog> {
           children: [
             BlocBuilder<CategoryBloc, CategoryState>(
               builder: (context, state) => EhsSearchListPicker(
-                list:
-                    AspectService().handleCategorysStateChange(context, state),
+                list: AspectService().handleCategorysStateChange(state),
                 error: null,
                 label: Labels.aspectType,
                 selected: (data) {

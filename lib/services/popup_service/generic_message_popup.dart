@@ -1,7 +1,5 @@
-import 'package:ehsfocus/shared/comment.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/clerable%20_text_field.dart';
-import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 
 class EhsGennericPopup {

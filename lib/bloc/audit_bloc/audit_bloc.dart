@@ -3,8 +3,8 @@ import 'package:ehsfocus/models/action/audit_head_modal.dart';
 import 'package:ehsfocus/models/action/audit_model.dart';
 import 'package:ehsfocus/models/action/audit_request_model.dart';
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
-import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_event.dart';
-import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_state.dart';
+import 'package:ehsfocus/bloc/audit_bloc/audit_event.dart';
+import 'package:ehsfocus/bloc/audit_bloc/audit_state.dart';
 import 'package:ehsfocus/services/http/http_audit.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';

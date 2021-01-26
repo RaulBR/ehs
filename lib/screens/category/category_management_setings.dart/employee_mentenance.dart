@@ -1,5 +1,5 @@
 import 'package:ehsfocus/models/category/category_type_responsible.dart';
-import 'package:ehsfocus/screens/category/category_management_setings.dart/bloc/category_management_bloc.dart';
+import 'package:ehsfocus/bloc/category/category_mentenance/category_management_bloc.dart';
 import 'package:ehsfocus/screens/category/category_service.dart';
 import 'package:ehsfocus/screens/forms/area/role_dialog.dart';
 import 'package:ehsfocus/shared/constants.dart';
