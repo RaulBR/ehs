@@ -6,6 +6,7 @@ import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/bloc/audit_bloc/audit_event.dart';
 import 'package:ehsfocus/bloc/audit_bloc/audit_state.dart';
 import 'package:ehsfocus/services/http/http_audit.dart';
+import 'package:ehsfocus/services/repository/audit_repo.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,6 +16,7 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
   AuditBloc() : super(null);
 
   final httpAuditService = HttpAuditService();
+  final _auditRepo = AuditRepo();
   @override
   Stream<AuditState> mapEventToState(AuditEvent event) async* {
     yield AuditLoading();
@@ -28,6 +30,8 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
           AuditRequest a = AuditRequest();
           a.auditHead = _audit.auditHead;
           a.aspect = event.auditRequest.aspect;
+          a.aspect.audit = _audit.auditHead;
+          a.aspect.status = 'S';
           dynamic data = await httpAuditService.setAspect(a);
           if (data == null) {
             yield Error();
@@ -44,6 +48,7 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
                 _handleAspectElement(_audit.positiveAspects, data.aspect);
           }
           //
+          // _auditRepo.setAspect2(a.aspect);
           yield AuditDataState(_audit);
         } catch (e) {
           yield Error(error: e);
@@ -81,11 +86,11 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
         break;
       case GetMyAudit:
         try {
-          dynamic a = await httpAuditService.getAudit();
-          if (a.length == 0) {
-            clearAudit();
+          Audit a = await _auditRepo.getAudit();
+          if (a == null) {
+            _clearAudit();
           } else {
-            _audit = a[0];
+            _audit = a;
           }
           yield AuditDataState(_audit);
         } catch (e) {
@@ -107,7 +112,7 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
         dynamic a = await httpAuditService.deleteAudit(event.id);
         if (a == 'success') {
           yield DeleteSucsesfull();
-          clearAudit();
+          _clearAudit();
           yield AuditDataState(_audit);
           // yield AuditDataState(_audit);
           break;
@@ -177,7 +182,7 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
     add(GetAuditsToApprove());
   }
 
-  void clearAudit() {
+  void _clearAudit() {
     _audit.auditHead = null;
     _audit.negativeAspects = [];
     _audit.positiveAspects = [];
@@ -195,5 +200,9 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
 
   String getAuditType() {
     return _audit.auditHead.auditType;
+  }
+
+  String getAuditArea() {
+    return _audit.auditHead.area;
   }
 }

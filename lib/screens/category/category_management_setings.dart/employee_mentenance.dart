@@ -3,6 +3,7 @@ import 'package:ehsfocus/bloc/category/category_mentenance/category_management_b
 import 'package:ehsfocus/screens/category/category_service.dart';
 import 'package:ehsfocus/screens/forms/area/role_dialog.dart';
 import 'package:ehsfocus/shared/constants.dart';
+import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/bloc/ehs_generic_list_bloc.dart';
 import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/generic_list_page_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,13 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ManagersMentenanceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) {
-        CategoryManagementBloc categoryManagementBloc =
-            CategoryManagementBloc();
-
-        return categoryManagementBloc;
-      },
+    return BlocDependencys(
       child: BlocBuilder<CategoryManagementBloc, CategoryManagementState>(
         buildWhen: (previous, current) =>
             current is CategoryManagementListState,
@@ -72,6 +67,27 @@ class ManagersMentenanceScreen extends StatelessWidget {
           },
         );
       },
+    );
+  }
+}
+
+class BlocDependencys extends StatelessWidget {
+  final Widget child;
+
+  const BlocDependencys({Key key, this.child}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CategoryManagementBloc>(
+          create: (_) => CategoryManagementBloc(),
+        ),
+        BlocProvider<EhsGenericListBloc>(
+          create: (_) => EhsGenericListBloc(),
+        ),
+      ],
+      child: child,
+      // ),
     );
   }
 }

@@ -9,9 +9,9 @@ abstract class HiveRepo {
     }
     print(Hive.isBoxOpen(hiveName));
     if (!Hive.isBoxOpen(hiveName)) {
-      box = await Hive.openBox(hiveName);
+      box = await Hive.openBox<T>(hiveName);
     } else {
-      box = Hive.box(hiveName);
+      box = Hive.box<T>(hiveName);
     }
     return box;
   }

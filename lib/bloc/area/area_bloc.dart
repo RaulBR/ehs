@@ -1,12 +1,10 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:ehsfocus/models/action/audit_head_modal.dart';
 import 'package:ehsfocus/models/area/area_model.dart';
 import 'package:ehsfocus/models/area/area_role_model.dart';
 import 'package:ehsfocus/models/area/area_step_model.dart';
-import 'package:ehsfocus/models/request_models.dart';
-import 'package:ehsfocus/services/http/http_area.dart';
+import 'package:ehsfocus/services/repository/area_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 
@@ -17,8 +15,8 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
   Area _area = Area();
   String _preseSelect;
   String _step;
-  PaginationObject _requestParams = PaginationObject();
-  HttpAreaService httpAreaService = HttpAreaService();
+
+  AreaRepo _areaRepo = AreaRepo();
   List<Area> _areasList = [];
 
   AreaBloc() : super(AreaInitial.initial()) {
@@ -33,20 +31,7 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
   ) async* {
     switch (event.runtimeType) {
       case GetAreasEvent:
-        _requestParams.fromRow = 0;
-        _requestParams.toRow = 10;
-        List<dynamic> ucelessLanguageList =
-            await httpAreaService.getAudit(_requestParams);
-
-        _areasList = ucelessLanguageList
-            .map((ucelenssLamngauageListElement) => Area(
-                id: ucelenssLamngauageListElement.id,
-                area: ucelenssLamngauageListElement.area,
-                areaInfo: ucelenssLamngauageListElement.areaInfo,
-                steps: ucelenssLamngauageListElement.steps,
-                roles: ucelenssLamngauageListElement.roles))
-            .toList();
-
+        List<Area> _areasList = await _areaRepo.getAreas();
         if (_preseSelect != null) {
           setAreaFormByArea(_preseSelect);
         }
@@ -67,12 +52,15 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
         yield AreaListState(areaList: b);
         break;
       case GetStepsEvent:
+        List<Area> _areasList = await _areaRepo.getAreas();
+        _area =
+            _areasList.firstWhere((element) => element.area == event.area.area);
         yield StepListState(stepList: _area.steps ?? []);
 
         break;
       case DeleteAreaEvent:
         try {
-          await httpAreaService.deleteArea(Area(id: event.areaString));
+          await _areaRepo.deleteArea(Area(id: event.areaString));
           yield Success();
           getAreas();
           yield AreaListState(areaList: _areasList);
@@ -81,15 +69,14 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
         break;
 
       case DeleteRoleEvent:
-        _area =
-            await httpAreaService.deleteRole(AreaRole(id: event.areaString));
+        _area = await _areaRepo.deleteRole(AreaRole(id: event.areaString));
         yield AreaFormState(area: _area);
         try {} catch (e) {}
 
         break;
 
       case SetAreaEvent:
-        _area = await httpAreaService.setAudit(_area);
+        _area = await _areaRepo.setArea(_area);
         yield Success();
         getAreas();
         yield AreaFormState(area: _area);
@@ -98,6 +85,11 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
       case UpdateAreaFormEvent:
         yield AreaFormState(area: _area);
 
+        break;
+      case UpdateAreaFormByIdEvent:
+        if (event is UpdateAreaFormByIdEvent)
+          _area = await _areaRepo.getAreaById(event.id);
+        yield AreaFormState(area: _area);
         break;
       case SetRoleEvent:
         if (_area.roles == null) {
@@ -112,6 +104,18 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
       case EmitSteptEvent:
         yield SelectedStepState(step: _step);
         break;
+      case UpdateAreaData:
+        if (event is UpdateAreaData) {
+          _area = await _areaRepo.getAreaByName(event.area.area);
+        }
+
+        // _area = _areasList.firstWhere((element) => element.area == area);
+        break;
+      // case AddVisibilittyEvent:
+      //   if (event is AddVisibilittyEvent) {
+      //     yield IsAddVisible(isAddVisible: event.isAddVisible);
+      //   }
+      //   break;
       default:
       // yield AreaListState(areaList: _data ?? []);
     }
@@ -125,8 +129,9 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
     add(GetAreasEvent());
   }
 
-  getStepes() {
-    add(GetStepsEvent());
+  getStepes(String area) {
+    if (area == null) return;
+    add(GetStepsEvent(Area(area: area)));
   }
 
   clearForm() {
@@ -142,15 +147,16 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
   }
 
   setAreaFormById(String id) {
-    _area = _areasList.firstWhere((element) => element.id == id);
-    setAreaForm(_area);
+    add(UpdateAreaFormByIdEvent(id: id));
   }
 
   setAreaFormByArea(String area) {
     if (area == null) {
       return;
     }
-    _area = _areasList.firstWhere((element) => element.area == area);
+
+    Area(area: area);
+    UpdateAreaData(area: Area(area: area));
   }
 
   updatFormByString(String area) {

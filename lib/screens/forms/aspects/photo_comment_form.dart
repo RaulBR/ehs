@@ -1,8 +1,8 @@
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/bloc/category/category_bloc.dart';
 import 'package:ehsfocus/screens/category/category_picker.dart';
-import 'package:ehsfocus/screens/forms/area/are_dropdown_picker.dart';
-import 'package:ehsfocus/bloc/category/area/area_bloc.dart';
+import 'package:ehsfocus/screens/forms/area/area_dropdown_picker.dart';
+import 'package:ehsfocus/bloc/area/area_bloc.dart';
 import 'package:ehsfocus/bloc/audit_bloc/audit_bloc.dart';
 import 'package:ehsfocus/shared/photoComponents/camera_service.dart';
 import 'package:ehsfocus/shared/action_button.dart';
@@ -43,9 +43,10 @@ class PhotoCommentForm extends StatelessWidget {
     _aspect.type = type;
     _aspect = aspect == null ? _aspect : aspect;
     _aspect.categoryType = BlocProvider.of<AuditBloc>(context).getAuditType();
+    String area = BlocProvider.of<AuditBloc>(context).getAuditArea();
     BlocProvider.of<CategoryBloc>(context)
         .getForCategoryType(_aspect.categoryType);
-    BlocProvider.of<AreaBloc>(context).getStepes();
+    BlocProvider.of<AreaBloc>(context).getStepes(area);
     return Scaffold(
       key: _key,
       resizeToAvoidBottomPadding: false,

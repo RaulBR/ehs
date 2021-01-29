@@ -7,7 +7,7 @@ import 'package:ehsfocus/shared/fields/search_picker/custom_list_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../bloc/category/area/area_bloc.dart';
+import '../../../bloc/area/area_bloc.dart';
 
 class AreaDropDownPiker extends StatelessWidget {
   final AuditHead area;
@@ -57,12 +57,13 @@ class AreaDropDownPiker extends StatelessWidget {
 }
 
 class EquipmantDroptDownPicker extends StatelessWidget {
+  final String area;
   final String equipment;
   final bool isEditable;
   final Function getData;
 
   const EquipmantDroptDownPicker(
-      {Key key, this.equipment, this.getData, this.isEditable})
+      {Key key, this.equipment, this.getData, this.isEditable, this.area})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -91,7 +92,7 @@ class EquipmantDroptDownPicker extends StatelessWidget {
               getData(data.title);
             },
             tapped: () {
-              BlocProvider.of<AreaBloc>(context).getStepes();
+              BlocProvider.of<AreaBloc>(context).getStepes(area);
             },
             searchFor: (data) {
               //  areaBloc.searchAreas(data);

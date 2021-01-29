@@ -4,13 +4,13 @@ import 'package:ehsfocus/bloc/category/category_state.dart';
 import 'package:ehsfocus/bloc/category/category_event.dart';
 import 'package:ehsfocus/models/category/category_model.dart';
 import 'package:ehsfocus/models/category/category_type_model.dart';
-import 'package:ehsfocus/services/http/http_category.dart';
+import 'package:ehsfocus/services/repository/category_repo.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   CategoryBloc() : super(CategoryInitial()) {
     getCategoryesTypes();
   }
-  HttpCategoryService httpCategoryService = HttpCategoryService();
+  CategoryRepo _categoryRepo = CategoryRepo();
   List<CategoryType> _categoryesType = [];
   CategoryType _selectedCategoryType = CategoryType();
   AuditCategory _selectedCategory = AuditCategory();
@@ -23,7 +23,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     switch (event.runtimeType) {
       case GetCategoryTypeEvent:
         if (_categoryesType.length == 0) {
-          dynamic data = await httpCategoryService.getCategoryTypes();
+          dynamic data = await _categoryRepo.getCategoryTypes();
           _categoryesType = data;
         }
         yield CategorysTypesState(categoryes: _categoryesType);
@@ -50,8 +50,8 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       case DeleteCategoryEvent:
         CategoryType categoryType =
             event is DeleteCategoryEvent ? event.categoryType : null;
-        dynamic data = await httpCategoryService.deleteCategoryTypes(
-            categoryType: categoryType);
+        dynamic data =
+            await _categoryRepo.deleteCategoryTypes(categoryType: categoryType);
         _categoryesType = data;
         yield CategorysTypesState(categoryes: _categoryesType);
         break;
@@ -59,7 +59,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         CategoryType toBeSated =
             event is SetCategoryTypeEvent ? event.categoryType : null;
         dynamic data =
-            await httpCategoryService.setCategoryType(categoryType: toBeSated);
+            await _categoryRepo.setCategoryType(categoryType: toBeSated);
         _categoryesType.add(data);
         yield CategorysTypesState(categoryes: _categoryesType);
         break;
@@ -99,6 +99,11 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   getForCategoryType(String categoryType) {
+    if (_categoryesType.length == 0) {
+      add(GetCategoryTypeEvent());
+      return;
+    }
+
     _selectedCategoryType = _categoryesType.firstWhere(
         (element) => element.type == categoryType,
         orElse: () => CategoryType());

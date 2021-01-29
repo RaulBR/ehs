@@ -2,7 +2,7 @@ import 'package:ehsfocus/models/action/audit_head_modal.dart';
 import 'package:ehsfocus/models/action/audit_model.dart';
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/screens/forms/area/area_form.dart';
-import 'package:ehsfocus/bloc/category/area/area_bloc.dart';
+import 'package:ehsfocus/bloc/area/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspects.dart';
 import 'package:ehsfocus/bloc/audit_bloc/audit_bloc_index.dart';
 import 'package:ehsfocus/screens/forms/shared_form_components/audit_list_element.dart';

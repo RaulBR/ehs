@@ -35,6 +35,11 @@ class AreaFormState extends AreaState {
   AreaFormState({this.area});
 }
 
+class IsAddVisible extends AreaState {
+  final bool isAddVisible;
+  IsAddVisible({this.isAddVisible});
+}
+
 class SelectedStepState extends AreaState {
   final String step;
   SelectedStepState({this.step});

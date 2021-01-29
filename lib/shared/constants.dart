@@ -9,6 +9,16 @@ const textInputDecoration = InputDecoration(
   focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: AppColors.accent, width: 2)),
 );
+const searchTextDecorator = InputDecoration(
+  fillColor: AppColors.field,
+  filled: true,
+  labelText: Labels.area,
+  suffixIcon: Icon(Icons.search),
+  enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: AppColors.textSecundart, width: 1)),
+  focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: AppColors.accent, width: 2)),
+);
 
 const textAreaStyle = InputDecoration(
   fillColor: AppColors.field,

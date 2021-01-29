@@ -7,7 +7,6 @@ class HttpEmployeeService extends HttpService {
   getAllEmployees() async {
     String data = await postRequest(
         endpint: '$employeeUrl/get', jsonValue: null, hasHeadder: true);
-    print(data);
     return (json.decode(data) as List)
         .map((i) => Employee.fromJson(i))
         .toList();

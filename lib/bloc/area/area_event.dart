@@ -1,6 +1,7 @@
 part of 'area_bloc.dart';
 
 abstract class AreaEvent {
+  Area area;
   String areaString;
   AuditHead areaValue;
   AreaRole areaRole;
@@ -8,7 +9,11 @@ abstract class AreaEvent {
 
 class GetAreasEvent extends AreaEvent {}
 
-class GetStepsEvent extends AreaEvent {}
+class GetStepsEvent extends AreaEvent {
+  final Area area;
+
+  GetStepsEvent(this.area);
+}
 
 class DeleteAreasEvent extends AreaEvent {
   final String areaString;
@@ -39,9 +44,25 @@ class UpdateAreaEvent extends AreaEvent {
   UpdateAreaEvent({this.areaValue});
 }
 
+class UpdateAreaData extends AreaEvent {
+  final Area area;
+  final List<Area> areas;
+  UpdateAreaData({this.area, this.areas});
+}
+
 class UpdateAreaFormEvent extends AreaEvent {
   final Area area;
   UpdateAreaFormEvent({this.area});
+}
+
+// class AddVisibilittyEvent extends AreaEvent {
+//   final bool isAddVisible;
+//   AddVisibilittyEvent({this.isAddVisible});
+// }
+
+class UpdateAreaFormByIdEvent extends AreaEvent {
+  final String id;
+  UpdateAreaFormByIdEvent({this.id});
 }
 
 class SetRoleEvent extends AreaEvent {

@@ -102,7 +102,8 @@ class AreaLocalDb extends HiveRepo {
   Future<Area> getAreaById(String id) async {
     if (id == null) return Area();
     Box<Area> areaBox = await _getAreaBox();
-    return areaBox.get(id);
+    Area area = areaBox.get(id);
+    return area;
   }
 
   Future<Box<Area>> _getAreaBox() async {

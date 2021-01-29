@@ -65,7 +65,9 @@ class AuditLocalDb extends HiveRepo {
 
   Future<Audit> getAudit() async {
     Box<Audit> aspectBox = await initiateBox(HiveName.aspect);
-    return aspectBox.get(0);
+    Audit a = aspectBox.get(0);
+    print(a.toJson());
+    return a;
   }
 
   Future<Audit> getMyAudit() async {
@@ -96,7 +98,14 @@ class AuditLocalDb extends HiveRepo {
     return localAudit;
   }
 
-  submitAudit(AuditHead auditin) async {}
+  Future<void> setHollAudit(Audit audit) async {
+    try {
+      Box<Audit> aspectBox = await initiateBox(HiveName.audit);
+      await aspectBox.put(0, audit);
+    } catch (e) {
+      print(e);
+    }
+  }
 
   setAspect(AuditRequest auditin) async {
     try {} catch (e) {

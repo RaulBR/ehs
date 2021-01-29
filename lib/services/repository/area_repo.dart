@@ -12,9 +12,9 @@ class AreaRepo {
   AreaLocalDb _areaLocaldb = AreaLocalDb();
   setArea(Area auditin) async {
     try {
-      // Area area = await _httpAreaService.setArea(auditin);
-      _areaLocaldb.setArea(auditin);
-      return null;
+      Area area = await _httpAreaService.setArea(auditin);
+      _areaLocaldb.setArea(area);
+      return area;
     } catch (e) {
       throw GetException(Errors.setError);
     }

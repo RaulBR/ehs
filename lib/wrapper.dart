@@ -43,8 +43,8 @@ class _AuthWrapperState extends State<AuthWrapper> {
               create: (context) => LoginBloc(),
               child: BlocBuilder<LoginBloc, LoginState>(
                 builder: (context, state) {
-                  if (state is LoadingState) {
-                    MaterialApp(home: Loading());
+                  if (state is AppLoadingState || state is LoginInitial) {
+                    return MaterialApp(home: Loading());
                   }
                   if (state is LoginError) {
                     return AnimationWrapper(child: LoginWraper());

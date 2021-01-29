@@ -35,7 +35,6 @@ class InitAppService {
     Hive.registerAdapter(AuditActionAdapter());
     Hive.registerAdapter(AspectPhotoAdapter());
     Hive.registerAdapter(AuditHeadAdapter());
-
     Hive.registerAdapter(AspectAdapter());
   }
 

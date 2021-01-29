@@ -133,13 +133,9 @@ class HttpAuditService extends HttpService {
     return data;
   }
 
-  Future<dynamic> getMyAudits() async {
+  Future<List<Audit>> getMyAudits() async {
     String data = await getRequest(endpint: '/audits', hasHeadder: true);
-    dynamic result = (json.decode(data) as List) ?? [];
-    if (result.length == 0) {
-      return [];
-    }
-    return result.map((i) => Audit.fromJson(i)).toList();
+    return (json.decode(data) as List).map((i) => Audit.fromJson(i)).toList();
   }
 
   Future<List<Aspect>> getMyRejectedAudits() async {

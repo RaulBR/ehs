@@ -1,4 +1,6 @@
 import 'package:ehsfocus/screens/forms/shared_form_components/status_element.dart';
+import 'package:ehsfocus/shared/loading.dart';
+import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 
 class GennericListElement extends StatelessWidget {
@@ -31,7 +33,12 @@ class GennericListElement extends StatelessWidget {
               ? null
               : GestureDetector(
                   onTap: () => deleted(), child: Icon(Icons.close)),
-          title: Text(title == null ? 'no data' : title),
+          title: title == null
+              ? LoadingSimbol(
+                  size: 10,
+                  color: AppColors.accent,
+                )
+              : Text(title == null ? 'no data' : title),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

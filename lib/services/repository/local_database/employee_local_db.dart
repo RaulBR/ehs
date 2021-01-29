@@ -17,7 +17,7 @@ class EmployeeLocaldb extends HiveRepo {
       return myself;
     } catch (e) {
       print(e);
-      throw EmployeeException('retrive faild');
+      return null;
     }
   }
 

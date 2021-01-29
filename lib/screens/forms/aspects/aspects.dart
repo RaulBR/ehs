@@ -1,5 +1,5 @@
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
-import 'package:ehsfocus/bloc/category/area/area_bloc.dart';
+import 'package:ehsfocus/bloc/area/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/aspect_wrapper.dart';
 import 'package:ehsfocus/screens/forms/aspects/ehs_asplect_list.dart';
 import 'package:ehsfocus/bloc/audit_bloc/audit_bloc.dart';
@@ -18,7 +18,8 @@ class AspectsList extends StatelessWidget {
   final int order;
   final String type;
   final List<Aspect> aspects;
-
+  final _mylistKey = GlobalKey<AnimatedListState>();
+// her raul
   AspectsList(
       {this.aspects,
       this.hasChanges,
@@ -41,7 +42,9 @@ class AspectsList extends StatelessWidget {
                 ? Text(Labels.addAspect)
                 : Expanded(
                     child: EhsAspectList(
+                        listKey: _mylistKey,
                         aspects: _aspects,
+                        deleted: (data) {},
                         selected: (Aspect aspect) {
                           navigate(
                               context: context,

@@ -1,6 +1,6 @@
 import 'package:ehsfocus/models/area/area_role_model.dart';
 import 'package:ehsfocus/models/generic_list_model.dart';
-import 'package:ehsfocus/shared/ehs_generic_list.dart';
+import 'package:ehsfocus/shared/form_eleements/lists/ehs_generic_list.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/form_container.dart';
 import 'package:flutter/material.dart';

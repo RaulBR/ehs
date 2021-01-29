@@ -11,17 +11,18 @@ import 'package:ehsfocus/shared/constants.dart';
 class AuditRepo {
   HttpAuditService _httpAuditService = HttpAuditService();
   AuditLocalDb _auditLocalDb = AuditLocalDb();
-  Future<List<dynamic>> getPhotosByAspectId(Aspect aspect) async {}
+  // Future<List<dynamic>> getPhotosByAspectId(Aspect aspect) async {}
 
 // move to poho
   deleteAspectPhoto(AspectPhoto aspectPhoto) async {}
 
   Future<Audit> getAudit() async {
     try {
-      Audit audit = await _auditLocalDb.getAudit();
+      Audit audit = await _auditLocalDb.getMyAudit();
       if (audit != null) return audit;
-      audit = await _httpAuditService.getMyAudits();
-      return audit;
+      List<Audit> audits = await _httpAuditService.getMyAudits();
+      await _auditLocalDb.setHollAudit(audits[0]);
+      return audits[0];
     } catch (e) {
       throw GetException(Errors.getError);
     }
