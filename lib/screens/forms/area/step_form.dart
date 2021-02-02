@@ -1,11 +1,11 @@
-import 'package:ehsfocus/models/area_modal.dart';
+import 'package:ehsfocus/models/area/area_model.dart';
 import 'package:ehsfocus/screens/category/category_service.dart';
-import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
+import 'package:ehsfocus/bloc/area/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/shared_form_components/generic_element.dart';
 import 'package:ehsfocus/services/popup_service/generic_message_popup.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/form_container.dart';
-import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/generic_list_page_search.dart';
+import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/generic_page_wraper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,7 +21,7 @@ class StepForm extends StatelessWidget {
 
     return BlocBuilder<AreaBloc, AreaState>(builder: (context, state) {
       // return widget here based on BlocA's state
-      BlocProvider.of<AreaBloc>(context).getStepes();
+      BlocProvider.of<AreaBloc>(context).getStepes(area);
       return PageWrapper(
         // title: Labels.area2,
         appBarr: AppBar(title: Text(Labels.area2)),
@@ -65,7 +65,7 @@ class StepForm extends StatelessWidget {
                           deleted: () async {
                             if (await EhsGennericPopup().showPupup(
                               context,
-                              what: _area.steps[index].step,
+                              messageTitle: _area.steps[index].step,
                               title: Labels.area2,
                             )) {
                               BlocProvider.of<AreaBloc>(context)

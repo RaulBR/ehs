@@ -9,6 +9,16 @@ const textInputDecoration = InputDecoration(
   focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: AppColors.accent, width: 2)),
 );
+const searchTextDecorator = InputDecoration(
+  fillColor: AppColors.field,
+  filled: true,
+  labelText: Labels.area,
+  suffixIcon: Icon(Icons.search),
+  enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: AppColors.textSecundart, width: 1)),
+  focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: AppColors.accent, width: 2)),
+);
 
 const textAreaStyle = InputDecoration(
   fillColor: AppColors.field,
@@ -42,6 +52,7 @@ class Labels {
   static const String corectiveAcction = 'Actiune corectiva';
   static const String insertcorectiveAcction =
       'Introduce-ti o Actiune ccorectiva';
+  static const String setResposible = 'Seteaza responsabili';
   static const String responsibal = 'Responsabil';
   static const String area1 = 'Zona';
   static const String area2 = 'Echipamente din zona';
@@ -99,7 +110,7 @@ class Labels {
   static const String auditTitle = 'Audituri';
   static const String aspectsResponsiBilittyTitle = 'Aspecte de rezolvat';
   static const String doneBy = 'Facut de:';
-  static const String responsable = 'Responsabil:';
+  static const String responsible = 'Responsabil:';
   static const String rejected = 'Respins';
   static const String acceped = 'Acceptat';
   static const String modify = 'Modifica';
@@ -112,6 +123,44 @@ class Labels {
   static const String acction = 'Actiuni: ';
   static const String duplicat = 'Duplicat?';
   static const String edit = 'Editeaza';
+  static const String typeManager = 'Responsabil pe Tip';
+  static const String managerMantanence = 'Manageri';
+  static const String manager = 'Manager';
+}
+
+class HiveName {
+  static const String mySelf = 'mySelf';
+  static const String employees = 'employees';
+  static const String categoryType = 'categoryType';
+  static const String categoryTypeSelected = 'categoryTypeSelected';
+  static const String area = 'area';
+  static const String selectedArea = 'selectedArea';
+  static const String aspect = 'aspect';
+  static const String aspectAdd = 'aspectAdd';
+  static const String aspectUpdate = 'aspectUpdate';
+  static const String aspectDelete = 'aspectDelete';
+  static const String audit = 'audit';
+  List<String> toListElements() {
+    return [
+      mySelf,
+      employees,
+      categoryType,
+      categoryTypeSelected,
+      area,
+      selectedArea,
+      aspect,
+      aspectAdd,
+      aspectUpdate,
+      aspectDelete,
+      audit
+    ];
+  }
+}
+
+class Errors {
+  static const String getError = 'get error';
+  static const String setError = 'set error';
+  static const String deleteError = 'delete error';
 }
 
 Map<String, String> dinamicTitles = {
@@ -165,6 +214,7 @@ class RoutPath {
   static const myResponsibility = '/myResponsibility';
   static const myRejectedAspects = '/myRejected';
   static const myAudits = '/myAudits';
+  static const myManaagers = '/myManaagers';
 }
 
 class CurrentPath {
@@ -195,7 +245,7 @@ class PageTitles {
   String ok = 'ok';
 }
 
-enum FooterStates { delete, save, send }
+// enum FooterStates { delete, save, send }
 enum PopupStates { ok, cancel }
 
 // Map<FooterStates, String> footerLagels = {

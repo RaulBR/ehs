@@ -1,5 +1,5 @@
-import 'package:ehsfocus/models/employee_model.dart';
-import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
+import 'package:ehsfocus/models/employee/employee_model.dart';
+import 'package:ehsfocus/bloc/employee/employee_bloc.dart';
 import 'package:ehsfocus/screens/side_menu/side_menu_headder_content.dart';
 import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';

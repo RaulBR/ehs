@@ -1,8 +1,9 @@
 import 'package:ehsfocus/models/generic_list_model.dart';
-import 'package:ehsfocus/shared/ehs_generic_list.dart';
-import 'package:ehsfocus/shared/form_eleements/form_footer.dart';
+import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/bloc/ehs_generic_list_bloc.dart';
+import 'package:ehsfocus/shared/form_eleements/lists/ehs_generic_list.dart';
 import 'package:flutter/material.dart';
 import 'package:ehsfocus/shared/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchPageWrapper extends StatefulWidget {
   final String title;
@@ -35,7 +36,8 @@ class _SearchPageWrapperState extends State<SearchPageWrapper> {
   final GlobalKey<ScaffoldState> _scaffoldstate = GlobalKey<ScaffoldState>();
   bool _isAddVisible = true;
   openWidget(Widget input) {
-    handleBottomFooter();
+    BlocProvider.of<EhsGenericListBloc>(context)
+        .add(AddVisibilittyEvent(isAddVisible: false));
     PersistentBottomSheetController bottomSheetController =
         _scaffoldstate.currentState.showBottomSheet(
       (context) => input,
@@ -43,110 +45,67 @@ class _SearchPageWrapperState extends State<SearchPageWrapper> {
     );
 
     bottomSheetController.closed.then((value) {
-      handleBottomFooter();
-    });
-  }
-
-  handleBottomFooter() {
-    setState(() {
-      _isAddVisible = !_isAddVisible;
+      BlocProvider.of<EhsGenericListBloc>(context)
+          .add(AddVisibilittyEvent(isAddVisible: true));
     });
   }
 
   @override
   Widget build(BuildContext context) {
     bool _isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0.0;
-    return Scaffold(
-      key: _scaffoldstate,
-      appBar: AppBar(actions: <Widget>[], title: Text(widget.title)),
-      body: BodyContainer(
-        child: Column(
-          children: <Widget>[
-            TextField(
-              decoration: textInputDecoration.copyWith(
-                  labelText: widget.searchLabel ?? widget.title,
-                  suffixIcon: Icon(Icons.search)),
-              onChanged: (data) {
-                widget.search(data);
-              },
+    return BlocBuilder<EhsGenericListBloc, EhsGenericListState>(
+      builder: (context, state) {
+        _isAddVisible = state.isAddVisible;
+        return Scaffold(
+          key: _scaffoldstate,
+          appBar: AppBar(actions: <Widget>[], title: Text(widget.title)),
+          body: BodyContainer(
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  decoration: textInputDecoration.copyWith(
+                      labelText: widget.searchLabel ?? widget.title,
+                      suffixIcon: Icon(Icons.search)),
+                  onChanged: (data) {
+                    widget.search(data);
+                  },
+                ),
+                SizedBox(height: 20),
+                Flexible(
+                  child: widget.customListWidget != null
+                      ? widget.customListWidget
+                      : EhsGenericList(
+                          listElements: widget.listObjects,
+                          deleted: widget.deleted == null
+                              ? null
+                              : (data) {
+                                  widget.deleted(data);
+                                },
+                          selected: (data) {
+                            widget.selected(data);
+                            if (widget.addForm != null) {
+                              openWidget(widget.addForm);
+                            }
+                          },
+                        ),
+                ),
+              ],
             ),
-            SizedBox(height: 20),
-            Flexible(
-              child: widget.customListWidget != null
-                  ? widget.customListWidget
-                  : EhsGenericList(
-                      listElements: widget.listObjects,
-                      deleted: widget.deleted == null
-                          ? null
-                          : (data) {
-                              widget.deleted(data);
-                            },
-                      selected: (data) {
-                        widget.selected(data);
-                        openWidget(widget.addForm);
-                      },
-                    ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: !_isAddVisible || _isKeyboard || widget.add == null
-          ? null
-          : FloatingActionButton(
-              onPressed: () {
-                if (widget.addForm != null) {
-                  widget.add();
-                  openWidget(widget.addForm);
-                }
-              },
-              child: Icon(Icons.add),
-            ),
-    );
-  }
-}
-
-class PageWrapper extends StatelessWidget {
-  final Widget appBarr;
-  final Widget child;
-  final Function footerAction;
-  final Function add;
-  final List<String> footerActions;
-  const PageWrapper({
-    Key key,
-    this.child,
-    this.footerAction,
-    this.footerActions,
-    this.add,
-    this.appBarr,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    bool _isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0.0;
-    List<String> _formActions =
-        footerActions == null ? [Labels.delete, Labels.save] : footerActions;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
-      appBar: appBarr == null ? null : appBarr,
-      body: BodyContainer(child: child),
-      bottomNavigationBar: _isKeyboard || footerAction == null
-          ? null
-          : FormFooter(
-              actions: _formActions,
-              action: footerActions == null
+          ),
+          floatingActionButton:
+              !_isAddVisible || _isKeyboard || widget.add == null
                   ? null
-                  : (action) {
-                      footerAction(action);
-                    },
-            ),
-      floatingActionButton: add == null
-          ? null
-          : FloatingActionButton(
-              onPressed: () {
-                add();
-              },
-              child: Icon(Icons.add),
-            ),
+                  : FloatingActionButton(
+                      onPressed: () {
+                        if (widget.addForm != null) {
+                          openWidget(widget.addForm);
+                        }
+                        widget.add();
+                      },
+                      child: Icon(Icons.add),
+                    ),
+        );
+      },
     );
   }
 }

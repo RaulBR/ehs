@@ -1,12 +1,10 @@
-import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/screens/category/category_picker.dart';
-import 'package:ehsfocus/screens/forms/area/are_dropdown_picker.dart';
-import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
-import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc.dart';
-import 'package:ehsfocus/services/camera_service.dart';
+import 'package:ehsfocus/bloc/audit_bloc/audit_bloc.dart';
+import 'package:ehsfocus/screens/forms/area/equipment_dropdown_picker.dart';
+import 'package:ehsfocus/shared/photoComponents/camera_service.dart';
 import 'package:ehsfocus/shared/action_button.dart';
 import 'package:ehsfocus/shared/form_eleements/audit_form_wraper.dart';
-import 'package:ehsfocus/models/aspects_model.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/photoComponents/placeholder_photo.dart';
 import 'package:ehsfocus/shared/comment.dart';
@@ -43,9 +41,7 @@ class PhotoCommentForm extends StatelessWidget {
     _aspect.type = type;
     _aspect = aspect == null ? _aspect : aspect;
     _aspect.categoryType = BlocProvider.of<AuditBloc>(context).getAuditType();
-    BlocProvider.of<CategoryBloc>(context)
-        .getForCategoryType(_aspect.categoryType);
-    BlocProvider.of<AreaBloc>(context).getStepes();
+    String area = BlocProvider.of<AuditBloc>(context).getAuditArea();
     return Scaffold(
       key: _key,
       resizeToAvoidBottomPadding: false,
@@ -71,6 +67,7 @@ class PhotoCommentForm extends StatelessWidget {
                   },
                 ),
                 EquipmantDroptDownPicker(
+                  area: area,
                   equipment: _aspect.equipment,
                   isEditable: isEditable,
                   getData: (equipment) {
@@ -78,6 +75,7 @@ class PhotoCommentForm extends StatelessWidget {
                   },
                 ),
                 CategoryPiker(
+                  categoryType: _aspect.categoryType,
                   error: null,
                   input: _aspect.category,
                   isEditable: isEditable,

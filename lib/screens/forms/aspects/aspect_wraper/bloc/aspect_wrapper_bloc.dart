@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:ehsfocus/models/action_model.dart';
-import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/models/action/audit_action_model.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:equatable/equatable.dart';
 
 part 'aspect_wrapper_event.dart';

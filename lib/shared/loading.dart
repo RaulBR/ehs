@@ -20,11 +20,12 @@ class Loading extends StatelessWidget {
 
 class LoadingSimbol extends StatelessWidget {
   final double size;
-  LoadingSimbol({this.size});
+  final Color color;
+  LoadingSimbol({this.size, this.color});
   @override
   Widget build(BuildContext context) {
     return SpinKitFoldingCube(
-      color: AppColors.icons,
+      color: color == null ? AppColors.icons : color,
       size: size != null ? size : 50.0,
     );
   }

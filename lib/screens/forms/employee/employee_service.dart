@@ -1,8 +1,8 @@
 import 'package:ehsfocus/models/generic_list_model.dart';
-import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
+import 'package:ehsfocus/bloc/employee/employee_bloc.dart';
 
 class EmployeeService {
-  List<GenericListObject> mapToList(state) {
+  List<GenericListObject> mapEmployeesToList(state) {
     return state is EmployeesValueState
         ? state.employees
             .map((e) => GenericListObject(
@@ -11,5 +11,17 @@ class EmployeeService {
                 subtitle: e.role))
             .toList()
         : [];
+  }
+
+  String getName(employee) {
+    if (employee != null) {
+      String returnString =
+          employee.firstName == null ? null : employee.firstName;
+      returnString = employee.lastName == null
+          ? returnString
+          : returnString + ' ' + employee.lastName;
+      return returnString;
+    }
+    return '';
   }
 }

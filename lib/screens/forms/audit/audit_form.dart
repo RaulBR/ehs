@@ -1,10 +1,10 @@
-import 'package:ehsfocus/models/action_model.dart';
-import 'package:ehsfocus/models/audit_head_modal.dart';
-import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/models/action/audit_head_modal.dart';
+import 'package:ehsfocus/models/action/audit_model.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/screens/forms/area/area_form.dart';
-import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
+import 'package:ehsfocus/bloc/area/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspects.dart';
-import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc_index.dart';
+import 'package:ehsfocus/bloc/audit_bloc/audit_bloc_index.dart';
 import 'package:ehsfocus/screens/forms/shared_form_components/audit_list_element.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/form_footer.dart';
@@ -75,7 +75,7 @@ class _AuditFormState extends State<AuditForm> {
       child: EhsNavigatorWidget(
         action: (data) {
           if (data == 0) {
-            BlocProvider.of<AuditBloc>(context).setAudit();
+            BlocProvider.of<AuditBloc>(context).setAuditHead();
           }
         },
         displayWidgets: [
@@ -88,29 +88,15 @@ class _AuditFormState extends State<AuditForm> {
             },
           ),
           AspectsList(
-            aspects: _positiveAspects,
             order: 2,
             type: 'P',
             title: Labels.positiveAcctionMessage,
-            hasChanges: (data) {
-              if (data == null) {
-                return;
-              }
-
-              BlocProvider.of<AuditBloc>(context).setAspect(data);
-            },
           ),
           AspectsList(
-              aspects: _negativeAspects,
-              order: 3,
-              type: 'N',
-              title: Labels.negativeAcctionMessage,
-              hasChanges: (data) {
-                if (data == null) {
-                  return;
-                }
-                BlocProvider.of<AuditBloc>(context).setAspect(data);
-              }),
+            order: 3,
+            type: 'N',
+            title: Labels.negativeAcctionMessage,
+          ),
         ],
         pageStart: number,
       ),

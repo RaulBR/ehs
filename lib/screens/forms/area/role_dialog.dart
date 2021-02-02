@@ -1,9 +1,13 @@
-import 'package:ehsfocus/models/area_modal.dart';
+import 'package:ehsfocus/bloc/category/category_state.dart';
+import 'package:ehsfocus/models/area/area_role_model.dart';
+import 'package:ehsfocus/models/category/category_type_responsible.dart';
 import 'package:ehsfocus/models/generic_list_model.dart';
-import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
+import 'package:ehsfocus/bloc/category/category_bloc.dart';
+import 'package:ehsfocus/screens/category/category_type_picker.dart';
 import 'package:ehsfocus/screens/forms/area/area_service.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_service.dart';
-import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
+import 'package:ehsfocus/bloc/employee/employee_bloc.dart';
+import 'package:ehsfocus/screens/forms/employee/employee_picker.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/fields/search_picker/custom_list_search.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +30,7 @@ class _RoleDialogState extends State<RoleDialog> {
       _responsable = data.title;
     });
     // get if
-    _areaRole.responsable =
+    _areaRole.responsible =
         BlocProvider.of<EmployeeBloc>(context).getEmployee(data.id);
   }
 
@@ -47,8 +51,7 @@ class _RoleDialogState extends State<RoleDialog> {
           children: [
             BlocBuilder<CategoryBloc, CategoryState>(
               builder: (context, state) => EhsSearchListPicker(
-                list:
-                    AspectService().handleCategorysStateChange(context, state),
+                list: AspectService().handleCategorysStateChange(state),
                 error: null,
                 label: Labels.aspectType,
                 selected: (data) {
@@ -56,7 +59,7 @@ class _RoleDialogState extends State<RoleDialog> {
                 },
                 tapped: () {
                   BlocProvider.of<CategoryBloc>(context)
-                      .add(GetCategoryTypeEvent());
+                      .addGetCategoryTypeEvent();
                 },
                 preselected: _areaRole.role,
               ),
@@ -89,8 +92,79 @@ class _RoleDialogState extends State<RoleDialog> {
         FlatButton(
           child: Text(Labels.add),
           onPressed: () {
-            if (_areaRole.responsable != null) {
+            if (_areaRole.responsible != null) {
               widget.add(_areaRole);
+            }
+            //    Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class RoleDialog2 extends StatelessWidget {
+  final List<String> customLabes;
+  final String customTitle;
+  final CategoryTypeResponsible areaRole;
+  final Function add;
+
+  const RoleDialog2(
+      {Key key, this.areaRole, this.add, this.customLabes, this.customTitle})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    List<String> _customLabes = [];
+    if (customLabes == null) {
+      _customLabes.add(Labels.aspectType);
+      _customLabes.add(Labels.responsabile);
+    } else {
+      _customLabes = customLabes;
+    }
+    String _title = customTitle == null ? Labels.setResposible : customTitle;
+    CategoryTypeResponsible _areaRole = CategoryTypeResponsible();
+    _areaRole = areaRole ?? _areaRole;
+    return AlertDialog(
+      title: Text(_title),
+      content: Container(
+        height: 250.0,
+        width: double.maxFinite,
+        child: Column(
+          children: [
+            CategoryTypeObjectPiker(
+              hasChanges: (categoryType) {
+                _areaRole.categoryType = categoryType;
+              },
+              label: _customLabes[0],
+              input: _areaRole.categoryType == null
+                  ? null
+                  : _areaRole.categoryType.type,
+              isEditable: true,
+            ),
+            EmployeePicker(
+              preSelected: _areaRole.responsible,
+              hasChanges: (employee) {
+                _areaRole.responsible = employee;
+              },
+              isEditable: true,
+              lable: _customLabes[1],
+            ),
+          ],
+        ),
+      ),
+      actions: <Widget>[
+        // usually buttons at the bottom of the dialog
+        FlatButton(
+          child: Text(Labels.close),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        FlatButton(
+          child: Text(Labels.add),
+          onPressed: () {
+            if (_areaRole.responsible != null) {
+              add(_areaRole);
             }
             //    Navigator.of(context).pop();
           },

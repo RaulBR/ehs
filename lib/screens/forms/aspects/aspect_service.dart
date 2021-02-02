@@ -1,9 +1,9 @@
+import 'package:ehsfocus/bloc/category/category_state.dart';
 import 'package:ehsfocus/models/generic_list_model.dart';
-import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
-import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
+import 'package:ehsfocus/bloc/employee/employee_bloc.dart';
 
 class AspectService {
-  List<GenericListObject> handleCategorysStateChange(context, state) {
+  List<GenericListObject> handleCategorysStateChange(state) {
     if (state is CategorysTypesState) {
       return state.categoryes
           .map((d) => GenericListObject(id: d.id, title: d.type))
@@ -17,7 +17,7 @@ class AspectService {
     return [];
   }
 
-  List<GenericListObject> handleResponsableForAspect(context, state) {
+  List<GenericListObject> handleResponsableForAspect(state) {
     if (state is EmployeesValueState) {
       return state.employees == null
           ? []

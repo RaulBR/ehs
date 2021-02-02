@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'package:ehsfocus/models/aspects_model.dart';
-import 'package:ehsfocus/services/camera_service.dart';
-import 'package:ehsfocus/shared/photoComponents/bloc/photo_bloc.dart';
+import 'package:ehsfocus/models/aspect/aspect_photo.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
+import 'package:ehsfocus/shared/photoComponents/camera_service.dart';
+import 'package:ehsfocus/bloc/photo/photo_bloc.dart';
 import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

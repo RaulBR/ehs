@@ -1,11 +1,9 @@
-import 'package:ehsfocus/models/audit_head_modal.dart';
+import 'package:ehsfocus/models/action/audit_head_modal.dart';
 import 'package:ehsfocus/screens/category/category_type_picker.dart';
-import 'package:ehsfocus/screens/forms/area/are_dropdown_picker.dart';
-import 'package:ehsfocus/screens/forms/area/bloc/area_bloc.dart';
-import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc_index.dart';
-
+import 'package:ehsfocus/screens/forms/area/area_dropdown_picker.dart';
+import 'package:ehsfocus/bloc/area/area_bloc.dart';
+import 'package:ehsfocus/bloc/audit_bloc/audit_bloc_index.dart';
 import 'package:ehsfocus/services/qr_scanning.dart';
-
 import 'package:ehsfocus/shared/form_eleements/audit_form_wraper.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:flutter/material.dart';

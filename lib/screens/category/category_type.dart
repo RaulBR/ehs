@@ -1,13 +1,14 @@
-import 'package:ehsfocus/models/category_model.dart';
-import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
+import 'package:ehsfocus/bloc/category/category_state.dart';
+import 'package:ehsfocus/models/category/category_type_model.dart';
+import 'package:ehsfocus/bloc/category/category_bloc.dart';
 import 'package:ehsfocus/screens/category/category_service.dart';
 import 'package:ehsfocus/screens/forms/shared_form_components/generic_element.dart';
 import 'package:ehsfocus/services/popup_service/generic_message_popup.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/clerable%20_text_field.dart';
 import 'package:ehsfocus/shared/form_eleements/form_container.dart';
+import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/generic_page_wraper.dart';
 import 'package:flutter/material.dart';
-import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/generic_list_page_search.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategoryTypeMentenanceForm extends StatelessWidget {
@@ -15,6 +16,7 @@ class CategoryTypeMentenanceForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CategoryType category = CategoryType();
+
     TextEditingController txt;
     return PageWrapper(
       add: () {
@@ -65,7 +67,7 @@ class CategoryTypeMentenanceForm extends StatelessWidget {
                     title: category.categories[index].category,
                     deleted: () async {
                       if (await EhsGennericPopup().showPupup(context,
-                          what: category.categories[index].category)) {
+                          messageTitle: category.categories[index].category)) {
                         BlocProvider.of<CategoryBloc>(context)
                             .deleteCategory(category.categories[index]);
                       }
@@ -83,8 +85,9 @@ class CategoryTypeMentenanceForm extends StatelessWidget {
           }),
         ],
       ),
+      footerActions: [Labels.delete, Labels.save],
       footerAction: (data) {
-        if (data == FooterStates.save) {
+        if (data == Labels.save) {
           BlocProvider.of<CategoryBloc>(context).saveCategoryType(category);
           Navigator.pop(context);
         }

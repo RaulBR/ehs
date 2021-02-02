@@ -1,4 +1,4 @@
-import 'package:ehsfocus/models/employee_model.dart';
+import 'package:ehsfocus/models/employee/employee_model.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';

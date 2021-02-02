@@ -1,8 +1,8 @@
 import 'package:ehsfocus/app_localizations.dart';
 import 'package:ehsfocus/custom_routs.dart';
-import 'package:ehsfocus/screens/category/bloc/category_bloc.dart';
-import 'package:ehsfocus/screens/forms/audit/audit_bloc/audit_bloc.dart';
-import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
+import 'package:ehsfocus/bloc/category/category_bloc.dart';
+import 'package:ehsfocus/bloc/audit_bloc/audit_bloc.dart';
+import 'package:ehsfocus/bloc/employee/employee_bloc.dart';
 import 'package:ehsfocus/services/websocket_service.dart/audit_socket_bloc/audit_socket_bloc.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/theme.dart';

@@ -1,4 +1,4 @@
-import 'package:ehsfocus/models/aspects_model.dart';
+import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/screens/aspect_distribution/bold_elemen_text.dart';
 import 'package:ehsfocus/shared/check_box.dart';
 import 'package:ehsfocus/shared/constants.dart';
@@ -24,10 +24,10 @@ class ActionDistributionCard extends StatelessWidget {
     // TODO move to service
     bool _hasDublicate = hasDublicate == null ? false : true;
     _hasDublicate = aspect.status == 'Z' ? false : _hasDublicate;
-    String getResponsable() {
+    String getresponsible() {
       if (aspect != null && aspect.action != null) {
-        return aspect.action.responsable != null
-            ? '${aspect.action.responsable.firstName ?? null} ${aspect.action.responsable.lastName ?? null}'
+        return aspect.action.responsible != null
+            ? '${aspect.action.responsible.firstName ?? null} ${aspect.action.responsible.lastName ?? null}'
             : Labels.notSet;
       }
       return Labels.notSet;
@@ -121,7 +121,7 @@ class ActionDistributionCard extends StatelessWidget {
                           child: BoldElementText(
                             color: AppColors.fieldInFocus,
                             boldText: '${Labels.rejected}:',
-                            text: aspect.action.comment == null
+                            text: aspect.rejectComment == null
                                 ? ''
                                 : '${aspect.rejectComment}',
                           ),
@@ -154,8 +154,8 @@ class ActionDistributionCard extends StatelessWidget {
                       date: aspect.createdDate,
                     ),
                     EmployeeCard(
-                      action: Labels.responsable,
-                      name: getResponsable(),
+                      action: Labels.responsible,
+                      name: getresponsible(),
                       date: getDate(),
                     )
                   ],

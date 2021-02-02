@@ -1,4 +1,4 @@
-import 'package:ehsfocus/screens/forms/employee/bloc/employee_bloc.dart';
+import 'package:ehsfocus/bloc/employee/employee_bloc.dart';
 import 'package:ehsfocus/screens/home/home_menu.dart';
 import 'package:ehsfocus/screens/side_menu/side_menu.dart';
 import 'package:ehsfocus/shared/constants.dart';
