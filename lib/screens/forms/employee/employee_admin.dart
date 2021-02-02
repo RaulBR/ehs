@@ -36,7 +36,7 @@ class EmployeeAdmin extends StatelessWidget {
                   .selectEmployee(id: data.id),
               deleted: (data) async {
                 if (await EhsGennericPopup()
-                    .showPupup(context, what: data.title)) {
+                    .showPupup(context, messageTitle: data.title)) {
                   BlocProvider.of<EmployeeBloc>(context)
                       .deleteEmployee(id: data.id);
                 }

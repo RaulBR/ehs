@@ -75,7 +75,7 @@ class _AuditFormState extends State<AuditForm> {
       child: EhsNavigatorWidget(
         action: (data) {
           if (data == 0) {
-            BlocProvider.of<AuditBloc>(context).setAudit();
+            BlocProvider.of<AuditBloc>(context).setAuditHead();
           }
         },
         displayWidgets: [
@@ -88,29 +88,15 @@ class _AuditFormState extends State<AuditForm> {
             },
           ),
           AspectsList(
-            aspects: _positiveAspects,
             order: 2,
             type: 'P',
             title: Labels.positiveAcctionMessage,
-            hasChanges: (data) {
-              if (data == null) {
-                return;
-              }
-
-              BlocProvider.of<AuditBloc>(context).setAspect(data);
-            },
           ),
           AspectsList(
-              aspects: _negativeAspects,
-              order: 3,
-              type: 'N',
-              title: Labels.negativeAcctionMessage,
-              hasChanges: (data) {
-                if (data == null) {
-                  return;
-                }
-                BlocProvider.of<AuditBloc>(context).setAspect(data);
-              }),
+            order: 3,
+            type: 'N',
+            title: Labels.negativeAcctionMessage,
+          ),
         ],
         pageStart: number,
       ),

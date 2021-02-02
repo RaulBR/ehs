@@ -21,9 +21,19 @@ class UpdateForm extends AuditEvent {
   UpdateForm({this.audit});
 }
 
+class GetAuditAspectsEvent extends AuditEvent {
+  final String type;
+  GetAuditAspectsEvent({this.type});
+}
+
 class SetAudit extends AuditEvent {
   final Audit audit;
   SetAudit({this.audit});
+}
+
+class SetAuditHead extends AuditEvent {
+  final Audit audit;
+  SetAuditHead({this.audit});
 }
 
 class GetAuditsToApprove extends AuditEvent {}

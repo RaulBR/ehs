@@ -35,7 +35,7 @@ class PhotoLocalDb {
     try {
       String dir = await getAppFolder();
       File f = new File('$dir/$filename');
-      return cocnvertFromFileTOBase64(f);
+      return await cocnvertFromFileTOBase64(f);
     } catch (e) {
       print(e);
       return null;
@@ -64,6 +64,7 @@ class PhotoLocalDb {
     String newPath = await getAppFolder();
     String type = path.path.split('/').last.split('.')[1];
     String newFilename = DateTime.now().millisecondsSinceEpoch.toString();
+    newFilename = 'EHS-$newFilename';
     f = await moveFile(f, "$newPath/$newFilename.$type");
     return f;
   }

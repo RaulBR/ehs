@@ -65,7 +65,7 @@ class StepForm extends StatelessWidget {
                           deleted: () async {
                             if (await EhsGennericPopup().showPupup(
                               context,
-                              what: _area.steps[index].step,
+                              messageTitle: _area.steps[index].step,
                               title: Labels.area2,
                             )) {
                               BlocProvider.of<AreaBloc>(context)

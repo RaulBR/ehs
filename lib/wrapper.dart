@@ -7,6 +7,7 @@ import 'package:ehsfocus/shared/animations/animation_wrapper.dart';
 import 'package:ehsfocus/shared/loading.dart';
 import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthWrapper extends StatefulWidget {
@@ -35,6 +36,10 @@ class _AuthWrapperState extends State<AuthWrapper> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.black,
+      // statusBarColor: Colors.pink,
+    ));
     return !_isDataLoaded
         ? MaterialApp(home: Loading())
         : Container(

@@ -1,9 +1,7 @@
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
-import 'package:ehsfocus/bloc/category/category_bloc.dart';
 import 'package:ehsfocus/screens/category/category_picker.dart';
-import 'package:ehsfocus/screens/forms/area/area_dropdown_picker.dart';
-import 'package:ehsfocus/bloc/area/area_bloc.dart';
 import 'package:ehsfocus/bloc/audit_bloc/audit_bloc.dart';
+import 'package:ehsfocus/screens/forms/area/equipment_dropdown_picker.dart';
 import 'package:ehsfocus/shared/photoComponents/camera_service.dart';
 import 'package:ehsfocus/shared/action_button.dart';
 import 'package:ehsfocus/shared/form_eleements/audit_form_wraper.dart';
@@ -44,9 +42,6 @@ class PhotoCommentForm extends StatelessWidget {
     _aspect = aspect == null ? _aspect : aspect;
     _aspect.categoryType = BlocProvider.of<AuditBloc>(context).getAuditType();
     String area = BlocProvider.of<AuditBloc>(context).getAuditArea();
-    BlocProvider.of<CategoryBloc>(context)
-        .getForCategoryType(_aspect.categoryType);
-    BlocProvider.of<AreaBloc>(context).getStepes(area);
     return Scaffold(
       key: _key,
       resizeToAvoidBottomPadding: false,
@@ -72,6 +67,7 @@ class PhotoCommentForm extends StatelessWidget {
                   },
                 ),
                 EquipmantDroptDownPicker(
+                  area: area,
                   equipment: _aspect.equipment,
                   isEditable: isEditable,
                   getData: (equipment) {
@@ -79,6 +75,7 @@ class PhotoCommentForm extends StatelessWidget {
                   },
                 ),
                 CategoryPiker(
+                  categoryType: _aspect.categoryType,
                   error: null,
                   input: _aspect.category,
                   isEditable: isEditable,

@@ -7,12 +7,12 @@ class PhotoRepo {
   final _httpPhotoService = HttpPhotoService();
   PhotoLocalDb _photoLocalDb = PhotoLocalDb();
   removePhoto(AspectPhoto aspectPhoto) async {
-    await _httpPhotoService.deleteAspectPhoto(aspectPhoto);
     return await _photoLocalDb.removePhoto(aspectPhoto);
   }
 
-  getFromFile(String photoName) async {
-    return await _photoLocalDb.getFromFile(photoName);
+  Future<AspectPhoto> getFromFile(String photoName) async {
+    AspectPhoto aspectPhoto = await _photoLocalDb.getFromFile(photoName);
+    return aspectPhoto;
   }
 
   Future<List<AspectPhoto>> getPhotosByAspectId(Aspect photoSorce) async {

@@ -32,24 +32,10 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
           a.aspect = event.auditRequest.aspect;
           a.aspect.audit = _audit.auditHead;
           a.aspect.status = 'S';
-          dynamic data = await httpAuditService.setAspect(a);
-          if (data == null) {
-            yield Error();
-            break;
-          }
-          // move to service
-
-          _audit.auditHead = data.auditHead;
-          if (data.aspect.type == 'N') {
-            _audit.negativeAspects =
-                _handleAspectElement(_audit.negativeAspects, data.aspect);
-          } else {
-            _audit.positiveAspects =
-                _handleAspectElement(_audit.positiveAspects, data.aspect);
-          }
-          //
-          // _auditRepo.setAspect2(a.aspect);
-          yield AuditDataState(_audit);
+          _auditRepo.setAspect2(a.aspect);
+          add(GetMyAudit());
+          yield AspectAddedState(aspect: a.aspect);
+          add(GetAuditAspectsEvent(type: a.aspect.type));
         } catch (e) {
           yield Error(error: e);
         }
@@ -57,7 +43,6 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
       case GetAuditsToApprove:
         try {
           List<Aspect> audits = await httpAuditService.getAuditsToApprove();
-
           yield AuditsToApproveState(audits);
           break;
         } catch (e) {
@@ -65,9 +50,12 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
           break;
         }
         break;
+      case SetAuditHead:
+        await _auditRepo.setAuditHead(_audit.auditHead);
+        break;
       case SetAudit:
         try {
-          _audit.auditHead = await httpAuditService.setAudit(_audit.auditHead);
+          _audit = await _auditRepo.setAudit(_audit);
         } catch (e) {
           yield Error();
           break;
@@ -108,8 +96,23 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
         }
 
         break;
+      case GetAuditAspectsEvent:
+        if (event is GetAuditAspectsEvent) {
+          _audit = await _auditRepo.getAudit();
+          if (event.type == 'N') {
+            yield AduitAspectsState(aspects: _audit.negativeAspects);
+          }
+          if (event.type == 'P') {
+            yield AduitAspectsState(aspects: _audit.positiveAspects);
+          }
+        }
+        break;
       case DeleteAudit:
-        dynamic a = await httpAuditService.deleteAudit(event.id);
+        _auditRepo.deleteFromLovalDb();
+        yield DeleteSucsesfull();
+        _clearAudit();
+        yield AuditDataState(_audit);
+        dynamic a = await _auditRepo.deleteAudit(event.id);
         if (a == 'success') {
           yield DeleteSucsesfull();
           _clearAudit();
@@ -131,11 +134,11 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
     add(SetAudit());
   }
 
-  void deleteAuidit(String id) {
-    if (id == null) {
-      return;
-    }
+  void setAuditHead() {
+    add(SetAuditHead());
+  }
 
+  void deleteAuidit(String id) {
     add(DeleteAudit(id: id));
   }
 
@@ -204,5 +207,9 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
 
   String getAuditArea() {
     return _audit.auditHead.area;
+  }
+
+  void getAuditAspect(String type) {
+    add(GetAuditAspectsEvent(type: type));
   }
 }

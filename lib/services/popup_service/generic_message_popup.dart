@@ -3,7 +3,8 @@ import 'package:ehsfocus/shared/form_eleements/clerable%20_text_field.dart';
 import 'package:flutter/material.dart';
 
 class EhsGennericPopup {
-  Future<bool> showPupup(context, {title, contentText, what, subtitle}) async {
+  Future<bool> showPupup(context,
+      {title, contentText, messageTitle, subtitle}) async {
     bool value = false;
     await showDialog(
         context: context,
@@ -14,8 +15,14 @@ class EhsGennericPopup {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(what),
-                    Text(subtitle ?? ''),
+                    Text(messageTitle),
+                    Text(
+                      subtitle ?? '',
+                      style: TextStyle(fontSize: 13),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Text(contentText ?? Labels.areYouShoureText),
                   ],
                 ),

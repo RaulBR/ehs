@@ -67,7 +67,7 @@ class CategoryTypeMentenanceForm extends StatelessWidget {
                     title: category.categories[index].category,
                     deleted: () async {
                       if (await EhsGennericPopup().showPupup(context,
-                          what: category.categories[index].category)) {
+                          messageTitle: category.categories[index].category)) {
                         BlocProvider.of<CategoryBloc>(context)
                             .deleteCategory(category.categories[index]);
                       }

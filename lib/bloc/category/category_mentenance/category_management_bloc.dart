@@ -13,7 +13,7 @@ class CategoryManagementBloc
   }
   HttpCategoryManagmentService _httpCategoryManagmentService =
       HttpCategoryManagmentService();
-
+  List<CategoryTypeResponsible> _data = [];
   @override
   Stream<CategoryManagementState> mapEventToState(
     CategoryManagementEvent event,
@@ -22,17 +22,20 @@ class CategoryManagementBloc
       case GetCategoryManagementEvent:
 
         // check empty list
-        List<CategoryTypeResponsible> data =
+        _data =
             await _httpCategoryManagmentService.getCategoryTypeResponsible();
-        print(data.toString());
-        yield CategoryManagementListState(categoryTypeResponsibleList: data);
+
+        yield CategoryManagementListState(categoryTypeResponsibleList: _data);
 
         break;
       case SetCategoryManagementEvent:
         try {
-          await _httpCategoryManagmentService.setCategoryTypeResponsible(
-              categoryType: event.categoryTypeResponsible);
-          add(GetCategoryManagementEvent());
+          CategoryTypeResponsible e =
+              await _httpCategoryManagmentService.setCategoryTypeResponsible(
+                  categoryType: event.categoryTypeResponsible);
+          yield AddedCategoryManagemt(categoryTypeResponsible: e);
+          _data.add(e);
+          //add(GetCategoryManagementEvent());
           break;
         } catch (e) {}
         break;
@@ -41,8 +44,14 @@ class CategoryManagementBloc
             categoryType: event.categoryTypeResponsible);
         add(GetCategoryManagementEvent());
         break;
-
+      case UpdateListEvent:
+        yield CategoryManagementListState(categoryTypeResponsibleList: _data);
+        break;
       default:
     }
+  }
+
+  CategoryTypeResponsible setCategoryByid(String id) {
+    return _data.firstWhere((element) => element.id == id);
   }
 }

@@ -38,7 +38,7 @@ class CategoryForm extends StatelessWidget {
               },
               deleted: (data) async {
                 if (await EhsGennericPopup()
-                    .showPupup(context, what: data.title)) {
+                    .showPupup(context, messageTitle: data.title)) {
                   BlocProvider.of<CategoryBloc>(context)
                       .deleteCategoryType(data.id);
                 }

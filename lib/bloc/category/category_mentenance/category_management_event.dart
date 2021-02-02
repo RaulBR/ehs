@@ -20,4 +20,6 @@ class DeleteCategoryManagementEvent extends CategoryManagementEvent {
   DeleteCategoryManagementEvent(this.categoryTypeResponsible);
 }
 
+class UpdateListEvent extends CategoryManagementEvent {}
+
 class GetCategoryManagementEvent extends CategoryManagementEvent {}

@@ -8,12 +8,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/category/category_bloc.dart';
 
 class CategoryPiker extends StatelessWidget {
+  final String categoryType;
   final String error;
   final bool isEditable;
   final String input;
   final Function hasChanges;
   const CategoryPiker(
-      {Key key, this.isEditable, this.input, this.hasChanges, this.error})
+      {Key key,
+      this.isEditable,
+      this.input,
+      this.hasChanges,
+      this.error,
+      this.categoryType})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -34,7 +40,7 @@ class CategoryPiker extends StatelessWidget {
           list: CategorySertvice().handleCategorysStateChange(context, state),
           label: Labels.category,
           tapped: () {
-            BlocProvider.of<CategoryBloc>(context).getCategoryes();
+            BlocProvider.of<CategoryBloc>(context).getCategoryes(categoryType);
           },
           selected: (value2) {
             BlocProvider.of<CategoryBloc>(context).selectCategory(value2.id);

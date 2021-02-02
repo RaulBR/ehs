@@ -142,6 +142,7 @@ class RoleDialog2 extends StatelessWidget {
               isEditable: true,
             ),
             EmployeePicker(
+              preSelected: _areaRole.responsible,
               hasChanges: (employee) {
                 _areaRole.responsible = employee;
               },

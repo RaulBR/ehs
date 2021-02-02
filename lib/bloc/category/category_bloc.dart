@@ -30,6 +30,9 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
         break;
       case GetCategorysEvent:
+        if (event is GetCategorysEvent)
+          _selectedCategoryType = await _categoryRepo
+              .getCategoryTypeByType(event.categoryType.type);
         if (_selectedCategoryType == null) {
           yield CategorysState(categoryes: []);
           break;
@@ -72,8 +75,9 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     add(GetCategoryTypeEvent());
   }
 
-  getCategoryes() {
-    add(GetCategorysEvent());
+  getCategoryes(String categoryTypeIn) {
+    CategoryType categoryType = CategoryType(type: categoryTypeIn);
+    add(GetCategorysEvent(categoryType));
   }
 
   saveCategoryType(CategoryType categoryType) {
@@ -188,6 +192,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   getCategoryformId(id) {
     _selectedCategoryType = _categoryesType
         .firstWhere((element) => element.id == id, orElse: () => null);
+    add(PropagateCategoryTypeEvent());
     return _selectedCategoryType;
   }
 }

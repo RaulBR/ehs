@@ -107,15 +107,10 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
       case UpdateAreaData:
         if (event is UpdateAreaData) {
           _area = await _areaRepo.getAreaByName(event.area.area);
+          yield AreaFormState(area: _area);
         }
-
-        // _area = _areasList.firstWhere((element) => element.area == area);
         break;
-      // case AddVisibilittyEvent:
-      //   if (event is AddVisibilittyEvent) {
-      //     yield IsAddVisible(isAddVisible: event.isAddVisible);
-      //   }
-      //   break;
+
       default:
       // yield AreaListState(areaList: _data ?? []);
     }
@@ -156,7 +151,7 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
     }
 
     Area(area: area);
-    UpdateAreaData(area: Area(area: area));
+    add(UpdateAreaData(area: Area(area: area)));
   }
 
   updatFormByString(String area) {
@@ -202,5 +197,10 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
 
   void deleteStep(AreaStep step) {
     add(DeleteSteptEvent());
+  }
+
+  void celarSelected() {
+    _step = null;
+    add(EmitSteptEvent());
   }
 }

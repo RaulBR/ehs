@@ -48,7 +48,7 @@ class AreaMentenanceForm extends StatelessWidget {
                     roles: _area.roles ?? [],
                     delete: (data) async {
                       if (await EhsGennericPopup().showPupup(context,
-                          what: data.title, subtitle: data.subtitle)) {
+                          messageTitle: data.title, subtitle: data.subtitle)) {
                         BlocProvider.of<AreaBloc>(context).deleteRole(data.id);
                       }
                     },

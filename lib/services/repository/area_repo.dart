@@ -24,7 +24,7 @@ class AreaRepo {
     try {
       List<Area> areas = await _areaLocaldb.getAreas();
       if (areas.length > 0) return areas;
-      //areas = await _httpAreaService.getAreas();
+      areas = await _httpAreaService.getAreas();
       if (areas == null) return [];
       _areaLocaldb.setAreasToLocalDb(areas);
       return areas;

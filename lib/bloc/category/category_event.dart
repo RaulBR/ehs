@@ -17,7 +17,10 @@ class CategoryError extends CategoryEvent {
   CategoryError({this.errorMessage});
 }
 
-class GetCategorysEvent extends CategoryEvent {}
+class GetCategorysEvent extends CategoryEvent {
+  final CategoryType categoryType;
+  GetCategorysEvent(this.categoryType);
+}
 
 class SetCategoryEvent extends CategoryEvent {}
 

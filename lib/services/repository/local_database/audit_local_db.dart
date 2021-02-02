@@ -3,11 +3,13 @@ import 'package:ehsfocus/models/action/audit_request_model.dart';
 import 'package:ehsfocus/models/aspect/aspect_photo.dart';
 import 'package:ehsfocus/models/action/audit_head_modal.dart';
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
+import 'package:ehsfocus/services/repository/local_database/photo_local.db.dart';
 import 'package:ehsfocus/services/repository/local_database/repo.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:hive/hive.dart';
 
 class AuditLocalDb extends HiveRepo {
+  PhotoLocalDb _photoLocalDb = PhotoLocalDb();
   Future<Audit> setAuditAspect(Aspect aspect) async {
     try {
       Audit localAudit = await getMyAudit();
@@ -17,12 +19,13 @@ class AuditLocalDb extends HiveRepo {
       aspect.audit = localAudit.auditHead;
       aspect = clearPhotosFromAspect(aspect);
       if (aspect.type == 'N') {
+        if (localAudit.negativeAspects == null) localAudit.negativeAspects = [];
         localAudit.negativeAspects.add(aspect);
       } else {
+        if (localAudit.positiveAspects == null) localAudit.positiveAspects = [];
         localAudit.positiveAspects.add(aspect);
       }
-      Box<Audit> aspectBox = await initiateBox(HiveName.aspect);
-      aspectBox.put(0, localAudit);
+      setHollAudit(localAudit);
       return localAudit;
     } catch (e) {
       throw e;
@@ -32,9 +35,9 @@ class AuditLocalDb extends HiveRepo {
   Audit initiateAuditObject(Audit localAudit) {
     localAudit = localAudit == null ? Audit() : localAudit;
     localAudit.negativeAspects =
-        localAudit.negativeAspects = null ? [] : localAudit.negativeAspects;
+        localAudit.negativeAspects == null ? [] : localAudit.negativeAspects;
     localAudit.positiveAspects =
-        localAudit.positiveAspects = null ? [] : localAudit.positiveAspects;
+        localAudit.positiveAspects == null ? [] : localAudit.positiveAspects;
     return localAudit;
   }
 
@@ -56,7 +59,7 @@ class AuditLocalDb extends HiveRepo {
         audit.negativeAspects == null ? [] : audit.negativeAspects;
     audit.positiveAspects =
         localAudit.positiveAspects = null ? [] : localAudit.positiveAspects;
-    aspectBox.put(0, audit);
+    setHollAudit(audit);
     return localAudit;
   }
 
@@ -71,34 +74,42 @@ class AuditLocalDb extends HiveRepo {
   }
 
   Future<Audit> getMyAudit() async {
-    Box<Audit> aspectBox = await initiateBox(HiveName.audit);
-    Audit audit = aspectBox.get(0);
-    if (audit == null) {
-      audit = await initiateAudit();
+    try {
+      Box<Audit> aspectBox = await initiateBox(HiveName.audit);
+      Audit audit = aspectBox.get(0);
+      return audit;
+    } catch (e) {
+      return null;
     }
-    return audit;
   }
 
   getAuditsToApprove() async {}
 
   getAuditsToFix() async {}
 
-  Future<Audit> setAudit(AuditHead auditin) async {
+  Future<Audit> setAuditHead(AuditHead auditin) async {
+    if (auditin == null) return null;
     Box<Audit> aspectBox = await initiateBox(HiveName.audit);
     Audit localAudit = aspectBox.get(0);
     if (localAudit == null) {
       localAudit = Audit();
     }
-    localAudit.auditHead = auditin == null ? AuditHead() : auditin;
-    localAudit.negativeAspects =
-        localAudit.negativeAspects == null ? [] : localAudit.negativeAspects;
-    localAudit.positiveAspects =
-        localAudit.positiveAspects = null ? [] : localAudit.positiveAspects;
-    aspectBox.put(0, localAudit);
+    if (auditin == null) {
+      localAudit.auditHead = AuditHead();
+    } else {
+      localAudit.auditHead = auditin;
+    }
+    if (localAudit.negativeAspects == null) localAudit.negativeAspects = [];
+    if (localAudit.positiveAspects == null) localAudit.positiveAspects = [];
+    setHollAudit(localAudit);
     return localAudit;
   }
 
   Future<void> setHollAudit(Audit audit) async {
+    if (audit == null) return;
+    if (audit.auditHead == null &&
+        audit.negativeAspects == null &&
+        audit.positiveAspects == null) return;
     try {
       Box<Audit> aspectBox = await initiateBox(HiveName.audit);
       await aspectBox.put(0, audit);
@@ -123,9 +134,26 @@ class AuditLocalDb extends HiveRepo {
 
   acceptAspect(Aspect aspect) async {}
 
-  Future<dynamic> deleteAudit(String id) async {}
-  Future<dynamic> deleteAudit2() async {
+  Future<void> deleteAudit2() async {
     Box<Audit> aspectBox = await initiateBox(HiveName.audit);
+    Audit audit = aspectBox.get(0);
+    if (audit == null) {
+      return;
+    }
+    List elemetns = [];
+    if (audit.positiveAspects != null) {
+      elemetns = audit.positiveAspects;
+    }
+    if (audit.negativeAspects != null) {
+      elemetns = [...elemetns, ...audit.negativeAspects];
+    }
+
+    elemetns.forEach((element) {
+      if (element.photos != null)
+        element.photos.forEach((photo) {
+          _photoLocalDb.removePhoto(photo);
+        });
+    });
     await aspectBox.delete(0);
   }
 

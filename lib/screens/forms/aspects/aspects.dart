@@ -13,16 +13,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AspectsList extends StatelessWidget {
   final bool disabled;
-  final Function hasChanges;
+
   final String title;
   final int order;
   final String type;
-  final List<Aspect> aspects;
   final _mylistKey = GlobalKey<AnimatedListState>();
 // her raul
   AspectsList(
-      {this.aspects,
-      this.hasChanges,
+      {
+      // this.aspects,
       @required this.title,
       this.order,
       this.type,
@@ -31,40 +30,55 @@ class AspectsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Aspect> _aspects = [];
-    _aspects = aspects ?? _aspects;
+    BuildContext _context = context;
+    BlocProvider.of<AuditBloc>(_context).getAuditAspect(type);
     return Scaffold(
-      body: BlocBuilder<AuditBloc, AuditState>(
-        builder: (context, state) => AuditFormWraper(
-          title: title,
-          order: order,
-          children: [
-            _aspects.length == 0
-                ? Text(Labels.addAspect)
-                : Expanded(
-                    child: EhsAspectList(
-                        listKey: _mylistKey,
-                        aspects: _aspects,
-                        deleted: (data) {},
-                        selected: (Aspect aspect) {
-                          navigate(
-                              context: context,
-                              aspect: aspect,
-                              navigationEvent: (data) {
-                                data.type = type;
-                                hasChanges(data);
-                              });
-                        }),
-                  ),
-          ],
-        ),
+      body: AuditFormWraper(
+        title: title,
+        order: order,
+        children: [
+          BlocListener<AuditBloc, AuditState>(
+            listener: (context, state) {
+              if (state is AspectAddedState) {
+                //  _mylistKey.currentState.insertItem(_aspects.length);
+              }
+            },
+            child:
+                BlocBuilder<AuditBloc, AuditState>(builder: (_context, state) {
+              if (state is AduitAspectsState) {
+                _aspects = state.aspects;
+              }
+              return _aspects.length == 0
+                  ? Text(Labels.addAspect)
+                  : Expanded(
+                      child: EhsAspectList(
+                          listKey: _mylistKey,
+                          aspects: _aspects,
+                          deleted: (data) {},
+                          selected: (Aspect aspect) {
+                            navigate(
+                                context: context,
+                                aspect: aspect,
+                                navigationEvent: (data) {
+                                  data.type = type;
+                                  BlocProvider.of<AuditBloc>(_context)
+                                      .setAspect(data);
+                                  // hasChanges(data);
+                                });
+                          }),
+                    );
+            }),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           navigate(
-              context: context,
+              context: _context,
               navigationEvent: (data) {
                 data.type = type;
-                hasChanges(data);
+                BlocProvider.of<AuditBloc>(_context).setAspect(data);
+                // hasChanges(data);
               });
         },
         child: Icon(Icons.add),

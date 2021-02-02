@@ -1,8 +1,6 @@
 import 'package:ehsfocus/models/generic_list_model.dart';
 import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/bloc/ehs_generic_list_bloc.dart';
-import 'package:ehsfocus/shared/form_eleements/lists/ehs_generic_animated_lsit.dart';
 import 'package:ehsfocus/shared/form_eleements/lists/ehs_generic_list.dart';
-import 'package:ehsfocus/shared/form_eleements/form_footer.dart';
 import 'package:flutter/material.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

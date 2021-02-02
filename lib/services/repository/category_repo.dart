@@ -55,4 +55,9 @@ class CategoryRepo {
   Future<void> clearLocalDb() async {
     await _categoryLocalDb.clearBox();
   }
+
+  getCategoryTypeByType(String type) async {
+    List<CategoryType> categorytypes = await getCategoryTypes();
+    return categorytypes.firstWhere((element) => element.type == type);
+  }
 }

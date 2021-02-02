@@ -27,9 +27,9 @@ class EmployeeForm extends StatelessWidget {
               _employee = state.employee;
             }
             return Container(
-              height: 340,
+              height: 540,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   EHSTextField(
                     keyboardType: TextInputType.name,
