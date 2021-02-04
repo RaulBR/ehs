@@ -1,4 +1,5 @@
 import 'package:ehsfocus/app_localizations.dart';
+import 'package:ehsfocus/bloc/area/area_bloc.dart';
 import 'package:ehsfocus/custom_routs.dart';
 import 'package:ehsfocus/bloc/category/category_bloc.dart';
 import 'package:ehsfocus/bloc/audit_bloc/audit_bloc.dart';
@@ -31,6 +32,9 @@ class _MainAppState extends State<MainApp> {
         ),
         BlocProvider(
           create: (_) => CategoryBloc(),
+        ),
+        BlocProvider<AreaBloc>(
+          create: (_) => AreaBloc(),
         ),
       ],
       child: MaterialApp(

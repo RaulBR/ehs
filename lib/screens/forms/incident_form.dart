@@ -27,7 +27,7 @@ class _IncidentFormState extends State<IncidentForm> {
   Widget getNav(int number) {
     return EhsNavigatorWidget(
       displayWidgets: [
-        AreaFromWidget(title: Labels.areaId, order: 1),
+        AuditHeadForm(title: Labels.areaId, order: 1),
         PhotoCommentForm(
             isEditable: true,
             order: 2,

@@ -57,6 +57,8 @@ class SetAspect extends AuditEvent {
   SetAspect({this.aspects});
 }
 
+class GetAuditHeadEvent extends AuditEvent {}
+
 class SetAuditAspect extends AuditEvent {
   AuditRequest auditRequest;
   SetAuditAspect({this.auditRequest});

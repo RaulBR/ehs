@@ -106,10 +106,6 @@ class AreaLocalDb extends HiveRepo {
     return area;
   }
 
-  Future<Box<Area>> _getAreaBox() async {
-    return await initiateBox(HiveName.area);
-  }
-
   List<Area> getLocalAreas(Box<Area> areaBox) {
     // aconvertBoxToList<Area>(areaBox)
     return areaBox.values as List<Area>;
@@ -139,5 +135,14 @@ class AreaLocalDb extends HiveRepo {
     if (area.roles == null) area.roles = [];
     area.roles.add(role);
     return await setSelectedArea(area);
+  }
+
+  Future<void> deleteAreas() async {
+    Box<Area> areaBox = await _getAreaBox();
+    areaBox.clear();
+  }
+
+  Future<Box<Area>> _getAreaBox() async {
+    return await initiateBox(HiveName.area);
   }
 }

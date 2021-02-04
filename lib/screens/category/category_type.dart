@@ -1,6 +1,7 @@
 import 'package:ehsfocus/bloc/category/category_state.dart';
 import 'package:ehsfocus/models/category/category_type_model.dart';
 import 'package:ehsfocus/bloc/category/category_bloc.dart';
+import 'package:ehsfocus/models/form_metadata.dart/form_footer_model.dart';
 import 'package:ehsfocus/screens/category/category_service.dart';
 import 'package:ehsfocus/screens/forms/shared_form_components/generic_element.dart';
 import 'package:ehsfocus/services/popup_service/generic_message_popup.dart';
@@ -85,7 +86,10 @@ class CategoryTypeMentenanceForm extends StatelessWidget {
           }),
         ],
       ),
-      footerActions: [Labels.delete, Labels.save],
+      footerActions: [
+        FormFooterModel(Labels.delete),
+        FormFooterModel(Labels.save)
+      ],
       footerAction: (data) {
         if (data == Labels.save) {
           BlocProvider.of<CategoryBloc>(context).saveCategoryType(category);

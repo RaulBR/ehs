@@ -1,11 +1,9 @@
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
 import 'package:ehsfocus/screens/aspect_distribution/action_list.dart';
 import 'package:ehsfocus/screens/aspect_distribution/aspect_triaj_footer.dart';
-import 'package:ehsfocus/bloc/area/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/aspects/aspect_wraper/aspect_wrapper.dart';
 import 'package:ehsfocus/bloc/aspect/aspect_bloc.dart';
 import 'package:ehsfocus/shared/animations/animation_wrapper.dart';
-
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/loading.dart';
 import 'package:ehsfocus/theme.dart';
@@ -23,25 +21,17 @@ class AuditList extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => BlocProvider(
-          create: (context) {
-            AreaBloc areaBloc = AreaBloc();
-            String area = aspect.audit.area;
-            areaBloc.setareaString(area);
-            return areaBloc;
+        builder: (context) => AspectWraper(
+          isEditable: false,
+          isFooterEditable: true,
+          aspect: aspect ?? Aspect(),
+          hasChanges: (action) {
+            action(aspect, action);
           },
-          child: AspectWraper(
-            isEditable: false,
-            isFooterEditable: true,
-            aspect: aspect ?? Aspect(),
-            hasChanges: (action) {
-              action(aspect, action);
-            },
-            title: Labels.aspectTitle,
-            type: 'N',
-            hasAction: true,
-            buttons: [Labels.acceped, Labels.rejected],
-          ),
+          title: Labels.aspectTitle,
+          type: 'N',
+          hasAction: true,
+          buttons: [Labels.acceped, Labels.rejected],
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:ehsfocus/models/action/audit_head_modal.dart';
 import 'package:ehsfocus/models/action/audit_model.dart';
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
 
@@ -50,3 +51,8 @@ class AutidResponsable extends AuditState {
 }
 
 class AuditLoading extends AuditState {}
+
+class AduitHeadState extends AuditState {
+  AuditHead auditHead;
+  AduitHeadState({this.auditHead});
+}

@@ -1,4 +1,5 @@
 import 'package:ehsfocus/models/area/area_model.dart';
+import 'package:ehsfocus/models/form_metadata.dart/form_footer_model.dart';
 import 'package:ehsfocus/screens/category/category_service.dart';
 import 'package:ehsfocus/bloc/area/area_bloc.dart';
 import 'package:ehsfocus/screens/forms/shared_form_components/generic_element.dart';
@@ -30,7 +31,7 @@ class StepForm extends StatelessWidget {
               add: (data) => BlocProvider.of<AreaBloc>(context).addStep(data),
               title: Labels.area2);
         },
-        footerActions: [Labels.back],
+        footerActions: [FormFooterModel(Labels.back)],
         footerAction: (data) {
           if (data == Labels.back) {
             Navigator.pop(context);

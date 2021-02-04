@@ -35,7 +35,9 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
         if (_preseSelect != null) {
           setAreaFormByArea(_preseSelect);
         }
+
         yield AreaListState(areaList: _areasList ?? []);
+        yield AreaFormState(area: _area, areaList: _areasList);
         break;
       case SearchAreas:
         if (event.areaString == '') {
@@ -107,7 +109,8 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
       case UpdateAreaData:
         if (event is UpdateAreaData) {
           _area = await _areaRepo.getAreaByName(event.area.area);
-          yield AreaFormState(area: _area);
+          _areasList = await _areaRepo.getAreas();
+          yield AreaFormState(area: _area, areaList: _areasList);
         }
         break;
 

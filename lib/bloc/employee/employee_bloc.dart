@@ -69,9 +69,6 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
 
         _appEmployee = await _employeeRepo.getMyself();
 
-        if (_appEmployee.email == null) {
-          _appEmployee.email = await _localStorageService.getEmail();
-        }
         yield EmployeeValueState(_appEmployee);
         break;
       default:

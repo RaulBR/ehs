@@ -103,9 +103,8 @@ class AuditRepo {
     return a;
   }
 
-  Future<dynamic> deleteFromLovalDb() {
-    String a;
-    _auditLocalDb.deleteAudit2().then((value) => a == 'success');
+  Future<void> deleteFromLovalDb() async {
+    await _auditLocalDb.deleteAudit2();
   }
 
   Future<dynamic> getMyAudits() async {}

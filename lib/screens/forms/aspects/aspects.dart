@@ -37,38 +37,32 @@ class AspectsList extends StatelessWidget {
         title: title,
         order: order,
         children: [
-          BlocListener<AuditBloc, AuditState>(
-            listener: (context, state) {
-              if (state is AspectAddedState) {
-                //  _mylistKey.currentState.insertItem(_aspects.length);
-              }
-            },
-            child:
-                BlocBuilder<AuditBloc, AuditState>(builder: (_context, state) {
-              if (state is AduitAspectsState) {
-                _aspects = state.aspects;
-              }
-              return _aspects.length == 0
-                  ? Text(Labels.addAspect)
-                  : Expanded(
-                      child: EhsAspectList(
-                          listKey: _mylistKey,
-                          aspects: _aspects,
-                          deleted: (data) {},
-                          selected: (Aspect aspect) {
-                            navigate(
-                                context: context,
-                                aspect: aspect,
-                                navigationEvent: (data) {
-                                  data.type = type;
-                                  BlocProvider.of<AuditBloc>(_context)
-                                      .setAspect(data);
-                                  // hasChanges(data);
-                                });
-                          }),
-                    );
-            }),
-          ),
+          BlocBuilder<AuditBloc, AuditState>(
+              buildWhen: (previous, current) => current is AduitAspectsState,
+              builder: (_context, state) {
+                if (state is AduitAspectsState) {
+                  _aspects = state.aspects;
+                }
+                return _aspects.length == 0
+                    ? Text(Labels.addAspect)
+                    : Expanded(
+                        child: EhsAspectList(
+                            listKey: _mylistKey,
+                            aspects: _aspects,
+                            deleted: (data) {},
+                            selected: (Aspect aspect) {
+                              navigate(
+                                  context: context,
+                                  aspect: aspect,
+                                  navigationEvent: (data) {
+                                    data.type = type;
+                                    BlocProvider.of<AuditBloc>(_context)
+                                        .setAspect(data);
+                                    // hasChanges(data);
+                                  });
+                            }),
+                      );
+              }),
         ],
       ),
       floatingActionButton: FloatingActionButton(

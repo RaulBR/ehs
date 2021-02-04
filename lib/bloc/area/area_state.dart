@@ -32,7 +32,8 @@ class StepListState extends AreaState {
 
 class AreaFormState extends AreaState {
   final Area area;
-  AreaFormState({this.area});
+  final List<Area> areaList;
+  AreaFormState({this.area, this.areaList});
 }
 
 class IsAddVisible extends AreaState {

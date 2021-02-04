@@ -65,7 +65,8 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
       case SubmitAudit:
         try {
           await httpAuditService.submitAudit(_audit.auditHead);
-          Timer(Duration(seconds: 1), () => add(UpdateForm(audit: Audit())));
+          Timer(Duration(milliseconds: 300),
+              () => add(UpdateForm(audit: Audit())));
         } catch (e) {
           yield Error();
           break;
@@ -107,6 +108,12 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
           }
         }
         break;
+
+      case GetAuditHeadEvent:
+        _audit = await _auditRepo.getMyAudit();
+        yield AduitHeadState(auditHead: _audit.auditHead);
+        break;
+
       case DeleteAudit:
         _auditRepo.deleteFromLovalDb();
         yield DeleteSucsesfull();
@@ -161,22 +168,6 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
     add(SetAuditAspect(auditRequest: audit));
   }
 
-  List<Aspect> _handleAspectElement(List<Aspect> list, aspect) {
-    list = list ?? [];
-    Aspect element;
-    element = aspect;
-    if (list.length > 0) {
-      element = list.firstWhere((element) => element.id == aspect.id,
-          orElse: () => null);
-      if (element != null) {
-        element = aspect;
-        return list;
-      }
-    }
-    list.add(aspect);
-    return list;
-  }
-
   void submitAudit() {
     add(SubmitAudit());
   }
@@ -211,5 +202,14 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
 
   void getAuditAspect(String type) {
     add(GetAuditAspectsEvent(type: type));
+  }
+
+  void getAuditHead() {
+    add(GetAuditHeadEvent());
+  }
+
+  void setAreaFromQrCode(AuditHead area) {
+    _audit.auditHead = area;
+    add(GetAuditHeadEvent());
   }
 }

@@ -54,6 +54,10 @@ class _AuthWrapperState extends State<AuthWrapper> {
                   if (state is LoginError) {
                     return AnimationWrapper(child: LoginWraper());
                   }
+                  if (state is LogoutState) {
+                    return LoginWraper();
+                  }
+
                   return state is AuthorizedState && state.user != null
                       ? AnimationWrapper(child: MainApp())
                       : AnimationWrapper(child: LoginWraper());

@@ -15,7 +15,9 @@ class EmployeeRepo {
       Employee myself = await _employeeLocaldb.getMyself();
       if (myself == null) {
         myself = await _httpEmployeeService.getMyself();
-        _employeeLocaldb.setMyself(myself);
+        if (myself != null) {
+          _employeeLocaldb.setMyself(myself);
+        }
       }
       return myself;
     } catch (e) {
@@ -62,5 +64,9 @@ class EmployeeRepo {
     } catch (e) {
       return null;
     }
+  }
+
+  Future<void> deleteLocaEmployee() async {
+    _employeeLocaldb.deleteLocaEmployee();
   }
 }

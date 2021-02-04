@@ -1,7 +1,6 @@
 import 'package:ehsfocus/models/action/audit_head_modal.dart';
 import 'package:ehsfocus/screens/category/category_type_picker.dart';
 import 'package:ehsfocus/screens/forms/area/area_dropdown_picker.dart';
-import 'package:ehsfocus/bloc/area/area_bloc.dart';
 import 'package:ehsfocus/bloc/audit_bloc/audit_bloc_index.dart';
 import 'package:ehsfocus/services/qr_scanning.dart';
 import 'package:ehsfocus/shared/form_eleements/audit_form_wraper.dart';
@@ -11,51 +10,55 @@ import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AreaFromWidget extends StatelessWidget {
-  final AuditHead area;
+class AuditHeadForm extends StatelessWidget {
   final String title;
-  final Function getData;
   final int order;
 
-  AreaFromWidget({this.title, this.getData, this.order, this.area});
+  AuditHeadForm({this.title, this.order});
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<AuditBloc>(context).getAuditHead();
     QrScanService scan = QrScanService();
     AuditHead _area = AuditHead();
     AuditHead error = AuditHead();
-    _area = area == null ? _area : area;
 
     var children = [
       SizedBox(
         height: 40,
       ),
       BlocBuilder<AuditBloc, AuditState>(
+        buildWhen: (previous, current) => current is AduitHeadState,
         builder: (context, state) {
-          if (state is AuditDataState) {
-            _area = state.audit.auditHead == null
-                ? AuditHead()
-                : state.audit.auditHead;
+          if (state is AduitHeadState) {
+            _area = state.auditHead == null ? AuditHead() : state.auditHead;
           }
           return AreaDropDownPiker(
             area: _area,
             getData: (data) {
-              _area.area = data.area;
-              BlocProvider.of<AreaBloc>(context).updatFormByString(_area.area);
-              getData(_area);
+              _area.area = data._area;
+              BlocProvider.of<AuditBloc>(context).setArea(_area);
             },
           );
         },
       ),
-      CategoryTypePiker(
-        error: error == null ? null : error.auditType,
-        input: _area.auditType,
-        isEditable: true,
-        hasChanges: (_categoryType) {
-          _area.auditType = _categoryType;
-          getData(_area);
+      BlocBuilder<AuditBloc, AuditState>(
+        buildWhen: (previous, current) => current is AduitHeadState,
+        builder: (context, state) {
+          if (state is AduitHeadState) {
+            _area = state.auditHead == null ? AuditHead() : state.auditHead;
+          }
+          return CategoryTypePiker(
+            error: error == null ? null : error.auditType,
+            input: _area.auditType,
+            isEditable: true,
+            hasChanges: (_categoryType) {
+              _area.auditType = _categoryType;
+              BlocProvider.of<AuditBloc>(context).setArea(_area);
+            },
+            label: Labels.aspectType,
+          );
         },
-        label: Labels.aspectType,
       ),
       SizedBox(
         height: 50,
@@ -64,7 +67,7 @@ class AreaFromWidget extends StatelessWidget {
         onPressed: () async {
           try {
             _area = AuditHead.fromJson(json.decode(await scan.scanQr()));
-            getData(_area);
+            BlocProvider.of<AuditBloc>(context).setAreaFromQrCode(_area);
           } catch (e) {
             //TODO add error display
             print(e);

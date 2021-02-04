@@ -1,6 +1,7 @@
 import 'package:ehsfocus/models/area/area_model.dart';
 import 'package:ehsfocus/models/area/area_role_model.dart';
 import 'package:ehsfocus/bloc/area/area_bloc.dart';
+import 'package:ehsfocus/models/form_metadata.dart/form_footer_model.dart';
 import 'package:ehsfocus/screens/forms/area/role_dialog.dart';
 import 'package:ehsfocus/screens/forms/area/step_form.dart';
 import 'package:ehsfocus/services/popup_service/generic_message_popup.dart';
@@ -95,7 +96,10 @@ class AreaMentenanceForm extends StatelessWidget {
           ),
         ),
       ),
-      footerActions: [Labels.delete, Labels.save],
+      footerActions: [
+        FormFooterModel(Labels.delete),
+        FormFooterModel(Labels.save)
+      ],
       footerAction: (data) {
         if (data == Labels.save) {
           BlocProvider.of<AreaBloc>(context).setAreaForm(_area);

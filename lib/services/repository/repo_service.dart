@@ -1,11 +1,19 @@
+import 'package:ehsfocus/models/employee/employee_model.dart';
+import 'package:ehsfocus/services/repository/employee_repo.dart';
+import 'package:ehsfocus/services/repository/local_database/area_local_db.dart';
+import 'package:ehsfocus/services/repository/local_database/category_local_db.dart';
 import 'package:ehsfocus/services/repository/local_database/repo.dart';
-import 'package:ehsfocus/shared/constants.dart';
+
 import 'package:hive/hive.dart';
 
-class RepoService extends HiveRepo {
-  clearAllHives() {
-    HiveName()
-        .toListElements()
-        .forEach((element) => Hive.openBox(element).then((box) => box.clear()));
+EmployeeRepo employeeRepo = EmployeeRepo();
+AreaLocalDb _areaLocalDp = AreaLocalDb();
+CategoryLocalDb _categoryLocalDb = CategoryLocalDb();
+
+class RepoService {
+  clearAllHives() async {
+    await employeeRepo.deleteLocaEmployee();
+    await _areaLocalDp.deleteAreas();
+    await _categoryLocalDb.clearBox();
   }
 }
