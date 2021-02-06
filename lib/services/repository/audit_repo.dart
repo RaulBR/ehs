@@ -78,7 +78,11 @@ class AuditRepo {
     return photos;
   }
 
-  submitAudit(AuditHead auditin) async {}
+  submitAudit() async {
+    Audit audit = await _auditLocalDb.getMyAudit();
+    dynamic result = await _httpAuditService.submitAudit(audit.auditHead);
+    await _auditLocalDb.clearAudit();
+  }
 
   setAspect(AuditRequest auditin) async {
     try {} catch (e) {

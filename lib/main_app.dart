@@ -19,13 +19,11 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<AuditSocketBloc>(context).connect();
     return MultiBlocProvider(
       providers: [
         BlocProvider<EmployeeBloc>(
           create: (contect) => EmployeeBloc(),
-        ),
-        BlocProvider<AuditSocketBloc>(
-          create: (contect) => AuditSocketBloc(),
         ),
         BlocProvider(
           create: (_) => AuditBloc(),
@@ -65,8 +63,7 @@ class _MainAppState extends State<MainApp> {
   }
 
   @override
-  void dispose() {
-    BlocProvider.of<AuditSocketBloc>(context).disconnect();
+  Future<void> dispose() async {
     super.dispose();
   }
 }

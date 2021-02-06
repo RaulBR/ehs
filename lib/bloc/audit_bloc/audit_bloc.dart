@@ -19,13 +19,14 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
   final _auditRepo = AuditRepo();
   @override
   Stream<AuditState> mapEventToState(AuditEvent event) async* {
-    yield AuditLoading();
     switch (event.runtimeType) {
       case UpdateForm:
+        yield AuditLoading();
         yield AuditDataState(event.audit);
         break;
 
       case SetAuditAspect:
+        yield AuditLoading();
         try {
           AuditRequest a = AuditRequest();
           a.auditHead = _audit.auditHead;
@@ -63,8 +64,10 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
         yield AuditDataState(_audit);
         break;
       case SubmitAudit:
+        yield AuditLoading();
         try {
-          await httpAuditService.submitAudit(_audit.auditHead);
+          // await httpAuditService.submitAudit(_audit.auditHead);
+          await _auditRepo.submitAudit();
           Timer(Duration(milliseconds: 300),
               () => add(UpdateForm(audit: Audit())));
         } catch (e) {
@@ -111,6 +114,7 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
 
       case GetAuditHeadEvent:
         _audit = await _auditRepo.getMyAudit();
+        _audit = _audit == null ? Audit() : _audit;
         yield AduitHeadState(auditHead: _audit.auditHead);
         break;
 

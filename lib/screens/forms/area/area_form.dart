@@ -36,7 +36,7 @@ class AuditHeadForm extends StatelessWidget {
           return AreaDropDownPiker(
             area: _area,
             getData: (data) {
-              _area.area = data._area;
+              _area.area = data.area;
               BlocProvider.of<AuditBloc>(context).setArea(_area);
             },
           );

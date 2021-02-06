@@ -81,7 +81,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   saveCategoryType(CategoryType categoryType) {
-    print(categoryType == _initialStateCategoryType);
     add(SetCategoryTypeEvent(categoryType));
   }
 

@@ -1,6 +1,7 @@
 import 'package:ehsfocus/models/user.model.dart';
 import 'package:ehsfocus/bloc/login/login_bloc.dart';
 import 'package:ehsfocus/bloc/login/login_state.dart';
+import 'package:ehsfocus/services/websocket_service.dart/audit_socket_bloc/audit_socket_bloc.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/clerable%20_text_field.dart';
 import 'package:ehsfocus/shared/form_eleements/form_container.dart';
@@ -16,6 +17,7 @@ class LoginForm extends StatelessWidget {
     String _email;
     String _password;
     String error;
+
     return Scaffold(
       appBar: AppBar(actions: <Widget>[], title: Text(Labels.signIn)),
       body: Container(

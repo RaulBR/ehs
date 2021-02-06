@@ -64,7 +64,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           // }
 
           await _storeDataLocaly(data);
-          // yield UserFormState(event.user);
           yield AuthorizedState(user: data);
         } catch (e) {
           yield UserLoginError(error: User.fromJson(e));
@@ -78,7 +77,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         await _localStorageService.removeToken();
         await _localStorageService.removeRole();
         await _repoService.clearAllHives();
-        yield LogoutState(null);
+        // yield LogoutState(null);
         break;
 
       default:

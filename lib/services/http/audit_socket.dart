@@ -16,7 +16,7 @@ class AuditSocketService extends HttpService {
   }
 
   disconecct() {
-    if (socket.connected) {
+    if (socket != null) if (socket.connected) {
       socket.disconnect();
     }
   }
