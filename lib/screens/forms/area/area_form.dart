@@ -63,7 +63,7 @@ class AuditHeadForm extends StatelessWidget {
       SizedBox(
         height: 50,
       ),
-      FlatButton(
+      TextButton(
         onPressed: () async {
           try {
             _area = AuditHead.fromJson(json.decode(await scan.scanQr()));

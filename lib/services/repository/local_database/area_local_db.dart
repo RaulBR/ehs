@@ -49,7 +49,7 @@ class AreaLocalDb extends HiveRepo {
   Future<Area> deleteRole(AreaRole areaRole) async {
     try {
       Box<Area> areaBox = await _getAreaBox();
-      List<Area> areas = await getLocalAreas(areaBox);
+      List<Area> areas = getLocalAreas(areaBox);
       Area area = areas.firstWhere((area) {
         bool isDone = false;
         area.roles.removeWhere((role) {

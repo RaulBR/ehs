@@ -37,7 +37,7 @@ class CameraService {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FlatButton.icon(
+                    TextButton.icon(
                         onPressed: () async {
                           PickedFile image = await openGalery(context);
                           if (image == null) {
@@ -52,7 +52,7 @@ class CameraService {
                     SizedBox(
                       height: 10,
                     ),
-                    FlatButton.icon(
+                    TextButton.icon(
                         onPressed: () async {
                           PickedFile image = await openCamera(context);
                           getPicture(await photoLocalDb

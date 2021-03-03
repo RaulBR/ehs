@@ -1,7 +1,9 @@
 class GenericListObject {
-  String id;
-  String status;
-  String title;
-  String subtitle;
-  GenericListObject({this.id, this.title, this.subtitle, this.status});
+  final String id;
+  final String status;
+  final String title;
+  final String subtitle;
+  final String error;
+  GenericListObject(
+      {this.error, this.id, this.title, this.subtitle, this.status});
 }

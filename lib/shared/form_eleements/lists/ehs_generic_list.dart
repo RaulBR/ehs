@@ -18,6 +18,8 @@ class EhsGenericList extends StatelessWidget with Labels {
             itemCount: _listElements.length,
             itemBuilder: (context, index) {
               return GennericListElement(
+                error: _listElements[index].error,
+                // 'Not good',
                 simbol: _listElements[index].status,
                 title: _listElements[index].title,
                 subtitle: _listElements[index].subtitle ?? null,

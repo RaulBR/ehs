@@ -1,5 +1,5 @@
 import 'package:ehsfocus/shared/constants.dart';
-import 'package:ehsfocus/shared/form_eleements/form_container.dart';
+import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 
 class GoToButton extends StatelessWidget {
@@ -11,9 +11,13 @@ class GoToButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(right: 12),
-      child: FlatButton(
-        padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
+      // padding: EdgeInsets.only(right: 12),
+      child: TextButton(
+        style: ButtonStyle(
+          padding: MaterialStateProperty.all(
+            EdgeInsets.only(left: 8, right: 13),
+          ),
+        ),
         onPressed: () {
           onPressed();
         },
@@ -21,8 +25,16 @@ class GoToButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            InputContainer(child: Text(label, style: normallabelFomat)),
-            icon == null ? Icon(Icons.message) : icon,
+            Text(
+              label,
+              style: normallabelFomat,
+            ),
+            icon == null
+                ? Icon(
+                    Icons.message,
+                    color: AppColors.textSecundart,
+                  )
+                : icon,
           ],
         ),
       ),

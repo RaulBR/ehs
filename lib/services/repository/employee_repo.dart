@@ -42,7 +42,7 @@ class EmployeeRepo {
   Future<Employee> setEmployee(Employee employee) async {
     try {
       Employee employeeRepo = await _httpEmployeeService.setEmployee(employee);
-      _employeeLocaldb.setEmployee(employee);
+      _employeeLocaldb.setEmployee(employeeRepo);
       return employeeRepo;
     } catch (e) {
       throw EmployeeException('save faild');

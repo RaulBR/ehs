@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:ehsfocus/models/action/audit_head_modal.dart';
 
 import 'package:ehsfocus/services/http/audit_socket.dart';
+import 'package:ehsfocus/services/loacal_storage.dart';
 import 'package:equatable/equatable.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 part 'audit_socket_event.dart';
@@ -11,7 +12,7 @@ part 'audit_socket_state.dart';
 class AuditSocketBloc extends Bloc<AuditSocketEvent, AuditSocketState> {
   Socket _webSocket;
   int _reconnectCouter = 0;
-  bool _isConnected = false;
+  final localstorageService = LocalStorageService();
   AuditSocketBloc() : super(AuditSocketInitial()) {
     // if ((_webSocket != null && !_webSocket.connected) || _webSocket == null) {
     //   add(ConnectToSocketEvent());
@@ -35,7 +36,6 @@ class AuditSocketBloc extends Bloc<AuditSocketEvent, AuditSocketState> {
           }
 
           _reconnectCouter = 0;
-          _isConnected = true;
           add(CheckConenctionEvent());
           _webSocket.emit('getAll');
         });
@@ -99,7 +99,6 @@ class AuditSocketBloc extends Bloc<AuditSocketEvent, AuditSocketState> {
       // _webSocket.emit('auditsFromMyArea');
       return;
     }
-    _isConnected = false;
     connect();
   }
 
@@ -119,9 +118,7 @@ class AuditSocketBloc extends Bloc<AuditSocketEvent, AuditSocketState> {
   }
 
   connect() {
-    if (!_isConnected) {
-      add(ConnectToSocketEvent());
-    }
+    add(ConnectToSocketEvent());
   }
 
   void notyfyRejectedChange(count) {

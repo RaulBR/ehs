@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ehsfocus/bloc/category/category_state.dart';
 import 'package:ehsfocus/models/category/category_type_model.dart';
 import 'package:ehsfocus/bloc/category/category_bloc.dart';
@@ -5,6 +7,7 @@ import 'package:ehsfocus/models/form_metadata.dart/form_footer_model.dart';
 import 'package:ehsfocus/screens/category/category_service.dart';
 import 'package:ehsfocus/screens/forms/shared_form_components/generic_element.dart';
 import 'package:ehsfocus/services/popup_service/generic_message_popup.dart';
+import 'package:ehsfocus/services/popup_service/snakbar.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/clerable%20_text_field.dart';
 import 'package:ehsfocus/shared/form_eleements/form_container.dart';
@@ -17,7 +20,8 @@ class CategoryTypeMentenanceForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CategoryType category = CategoryType();
-
+    String error;
+    Timer _debounce;
     TextEditingController txt;
     return PageWrapper(
       add: () {
@@ -27,20 +31,33 @@ class CategoryTypeMentenanceForm extends StatelessWidget {
       },
       child: Column(
         children: <Widget>[
-          BlocBuilder<CategoryBloc, CategoryState>(
-            builder: (context, state) {
-              if (state is OneCategoryTypesState) {
-                category = state.categorie;
+          BlocListener<CategoryBloc, CategoryState>(
+            listener: (context, state) {
+              if (state is CategoryErrorState) {
+                SnackBarSerice().showToast(context, state.error);
               }
-              return ClearableTextField(
-                label: Labels.aspectType,
-                inputValue: (category.type),
-                onChanged: (value) {
-                  BlocProvider.of<CategoryBloc>(context).setCategoryType(value);
-                },
-                error: null,
-              );
             },
+            child: BlocBuilder<CategoryBloc, CategoryState>(
+              builder: (context, state) {
+                if (state is OneCategoryTypesState) {
+                  category = state.categorie;
+                  error = state.error;
+                }
+                return ClearableTextField(
+                  label: Labels.aspectType,
+                  inputValue: (category.type),
+                  onChanged: (value) {
+                    if (_debounce?.isActive ?? false) _debounce.cancel();
+                    _debounce = Timer(const Duration(milliseconds: 500), () {
+                      BlocProvider.of<CategoryBloc>(context)
+                          .setCategoryType(value);
+                      _debounce.cancel();
+                    });
+                  },
+                  error: error,
+                );
+              },
+            ),
           ),
           SizedBox(height: 20),
           InputContainer(

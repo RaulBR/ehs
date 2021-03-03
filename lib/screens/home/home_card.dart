@@ -35,7 +35,7 @@ class CardElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: color == null ? AppColors.primary : color,
-      child: FlatButton(
+      child: TextButton(
         onPressed: () {
           acction();
         },

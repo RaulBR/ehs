@@ -22,6 +22,8 @@ class ClearableTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController _controller = TextEditingController();
     _controller.text = inputValue ?? null;
+    _controller.selection = TextSelection.fromPosition(
+        TextPosition(offset: _controller.text.length));
     return InputContainer(
       child: TextField(
         onEditingComplete: editComplete == null

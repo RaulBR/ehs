@@ -61,14 +61,14 @@ class ListDiablog extends StatelessWidget {
       ),
       actions: <Widget>[
         // usually buttons at the bottom of the dialog
-        FlatButton(
+        TextButton(
           child: new Text(Labels.clear),
           onPressed: () {
             selected(null);
             Navigator.of(context).pop();
           },
         ),
-        FlatButton(
+        TextButton(
           child: new Text(Labels.close),
           onPressed: () {
             Navigator.of(context).pop();

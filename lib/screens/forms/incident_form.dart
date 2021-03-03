@@ -119,13 +119,15 @@ class _IncidentFormState extends State<IncidentForm> {
           : BottomAppBar(
               color: AppColors.primary,
               child: SizedBox(
-                  width: double.infinity,
-                  child: FlatButton(
-                    child: Text(Labels.save),
-                    onPressed: () {},
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0)),
-                  ))),
+                width: double.infinity,
+                child: TextButton(
+                  child: Text(Labels.save),
+                  onPressed: () {},
+                  // shape: RoundedRectangleBorder(
+                  //     borderRadius: BorderRadius.circular(30.0)),
+                ),
+              ),
+            ),
     );
   }
 }

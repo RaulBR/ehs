@@ -3,6 +3,7 @@ import 'package:ehsfocus/screens/aspect_distribution/aspects_to_distribute.dart'
 import 'package:ehsfocus/screens/aspect_distribution/aspects_to_fix_list.dart';
 import 'package:ehsfocus/screens/aspect_distribution/rejected_aspects.dart';
 import 'package:ehsfocus/screens/audits_sumery.dart/all_audits.dart';
+import 'package:ehsfocus/screens/audits_sumery.dart/my_area_audits.dart';
 import 'package:ehsfocus/screens/category/audit_type.dart';
 import 'package:ehsfocus/screens/category/category_management_setings.dart/employee_mentenance.dart';
 import 'package:ehsfocus/screens/forms/area/audit_mentenace_list.dart';
@@ -82,6 +83,8 @@ class CustomRouter {
         return checkRoute(RejectedAspects(), settings);
       case RoutPath.myManaagers:
         return checkRoute(ManagersMentenanceScreen(), settings);
+      case RoutPath.managerAuditis:
+        return checkRoute(MyManagedAudits(), settings);
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

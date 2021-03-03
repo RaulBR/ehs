@@ -55,8 +55,9 @@ class AreaBloc extends Bloc<AreaEvent, AreaState> {
         break;
       case GetStepsEvent:
         List<Area> _areasList = await _areaRepo.getAreas();
-        _area =
-            _areasList.firstWhere((element) => element.area == event.area.area);
+        _area = _areasList.firstWhere(
+            (element) => element.area == event.area.area,
+            orElse: () => Area());
         yield StepListState(stepList: _area.steps ?? []);
 
         break;

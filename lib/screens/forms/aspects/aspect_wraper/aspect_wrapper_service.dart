@@ -11,7 +11,7 @@ class AspectWrapperServie {
       _buttons.add(Labels.add);
     }
     return [
-      FlatButton(
+      TextButton(
         child: Text(_buttons[0]),
         onPressed: !isEnabled || _buttons[0] == ''
             ? null
@@ -19,7 +19,7 @@ class AspectWrapperServie {
                 hasChanges(_buttons[0]);
               },
       ),
-      FlatButton(
+      TextButton(
         onPressed: !isEnabled || _buttons[1] == ''
             ? null
             : () {
@@ -27,7 +27,7 @@ class AspectWrapperServie {
               },
         child: Text(_buttons[1]),
       ),
-      FlatButton(
+      TextButton(
         onPressed: () {
           hasChanges(Labels.back);
         },

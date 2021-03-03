@@ -44,7 +44,7 @@ class PhotoCommentForm extends StatelessWidget {
     String area = BlocProvider.of<AuditBloc>(context).getAuditArea();
     return Scaffold(
       key: _key,
-      resizeToAvoidBottomPadding: false,
+      // resizeToAvoidBottomPadding: false,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

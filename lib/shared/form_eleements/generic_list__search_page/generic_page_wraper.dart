@@ -26,7 +26,7 @@ class PageWrapper extends StatelessWidget {
         : footerActions;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+      // resizeToAvoidBottomPadding: false,
       appBar: appBarr == null ? null : appBarr,
       body: BodyContainer(child: child),
       bottomNavigationBar: _isKeyboard || footerAction == null

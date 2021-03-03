@@ -42,7 +42,7 @@ class FlatRoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool _isEditable = isEditable == null ? true : isEditable;
-    return FlatButton(
+    return TextButton(
       child: Text(
         lable,
         style: TextStyle(
@@ -54,7 +54,7 @@ class FlatRoundedButton extends StatelessWidget {
           : () {
               onPressed();
             },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
     );
   }
 }

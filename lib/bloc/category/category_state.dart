@@ -7,9 +7,7 @@ abstract class CategoryState {}
 
 class CategoryInitial extends CategoryState {
   final CategoryType categorie;
-
   CategoryInitial({this.categorie});
-  // factory CategoryInitial.initial() => CategoryInitial();
 }
 
 class CategorysTypesState extends CategoryState {
@@ -21,7 +19,9 @@ class CategorysTypesState extends CategoryState {
 
 class OneCategoryTypesState extends CategoryState {
   final CategoryType categorie;
+  final String error;
   OneCategoryTypesState({
+    this.error,
     this.categorie,
   });
 }
@@ -37,6 +37,13 @@ class CategorysState extends CategoryState {
   final List<AuditCategory> categoryes;
   CategorysState({
     this.categoryes,
+  });
+}
+
+class CategoryErrorState extends CategoryState {
+  final String error;
+  CategoryErrorState({
+    this.error,
   });
 }
 

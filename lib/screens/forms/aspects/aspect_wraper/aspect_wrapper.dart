@@ -49,7 +49,7 @@ class AspectWraper extends StatelessWidget {
     return BuilderProvider(
       child: SafeArea(
         child: Scaffold(
-          resizeToAvoidBottomPadding: false,
+          // resizeToAvoidBottomPadding: false,
           body: Container(
             child: BlocBuilder<AspectWrapperBloc, AspectWrapperState>(
                 buildWhen: (previous, current) => current is FormPageSate,
@@ -166,7 +166,7 @@ class GenericPageSwitcher extends StatelessWidget {
                             ),
                     ],
                   ),
-                  FlatButton(
+                  TextButton(
                       onPressed: () => changeForm(context),
                       child: Text('switch'))
                 ],

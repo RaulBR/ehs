@@ -16,8 +16,8 @@ class AuditDataState extends AuditState {
 }
 
 class AduitAspectsState extends AuditState {
-  List<Aspect> aspects;
-  AduitAspectsState({this.aspects});
+  final Audit audit;
+  AduitAspectsState({this.audit});
 }
 
 class AuditsDataState extends AuditState {
@@ -28,6 +28,12 @@ class AuditsDataState extends AuditState {
 class AspectAddedState extends AuditState {
   Aspect aspect;
   AspectAddedState({this.aspect});
+}
+
+class DeleteAuditAspectState extends AuditState {
+  final int index;
+
+  DeleteAuditAspectState(this.index);
 }
 
 // move

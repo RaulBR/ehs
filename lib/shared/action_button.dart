@@ -13,7 +13,7 @@ class NavigateToNextPage extends StatelessWidget {
     return SizedBox(
       height: 60,
       width: double.infinity,
-      child: FlatButton(
+      child: TextButton(
         onPressed: () {
           onPressed();
         },

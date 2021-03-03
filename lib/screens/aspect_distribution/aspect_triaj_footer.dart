@@ -14,7 +14,7 @@ class AspectTriajFooter extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          FlatButton(
+          TextButton(
             onPressed: actions[0] == ''
                 ? null
                 : () {
@@ -27,13 +27,13 @@ class AspectTriajFooter extends StatelessWidget {
                   : null,
             ),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () {
               getAction(Labels.ditail);
             },
             child: Text(Labels.ditail),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () {
               getAction(actions[1]);
             },

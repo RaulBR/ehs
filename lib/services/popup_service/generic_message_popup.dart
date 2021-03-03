@@ -28,14 +28,14 @@ class EhsGennericPopup {
                 ),
               ),
               actions: [
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     value = true;
                     Navigator.of(context).pop();
                   },
                   child: Text(Labels.ok),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     value = false;
                     Navigator.of(context).pop();
@@ -78,19 +78,19 @@ class EhsGennericPopup {
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            FlatButton(
+            TextButton(
               child: Text(Labels.close),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text(Labels.addAnother),
               onPressed: () {
                 add(_localValoue);
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text(Labels.add),
               onPressed: () {
                 add(_localValoue);
@@ -137,13 +137,13 @@ class EhsGennericPopup {
                 ),
               ),
               actions: [
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                   child: Text(Labels.ok),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     value = '';
                     Navigator.of(context).pop();

@@ -59,14 +59,15 @@ class _AuthWrapperState extends State<AuthWrapper> {
                   if (state is AppLoadingState || state is LoginInitial) {
                     return MaterialApp(home: Loading());
                   }
-
                   if (state is LoginError) {
                     return LoginWraper();
                   }
+                  if (state is AuthorizedState && state.user != null) {
+                    BlocProvider.of<AuditSocketBloc>(context).connect();
+                    return AnimationWrapper(child: MainApp());
+                  }
 
-                  return state is AuthorizedState && state.user != null
-                      ? AnimationWrapper(child: MainApp())
-                      : AnimationWrapper(child: LoginWraper());
+                  return AnimationWrapper(child: LoginWraper());
                 },
               ),
             ),

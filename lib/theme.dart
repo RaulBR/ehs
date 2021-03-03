@@ -83,6 +83,7 @@ class AppColors {
   static const Color textSecundart = Color(0xFF757575);
   static const Color dividerColor = Color(0xFFBDBDBD);
   static const Color fieldInFocus = Colors.pink;
+  static const Color errorColor = Colors.redAccent;
   static const Color field = Colors.white;
   static const Color pending = const Color(0xFFFF9800);
 }

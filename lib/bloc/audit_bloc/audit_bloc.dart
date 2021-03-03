@@ -103,12 +103,7 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
       case GetAuditAspectsEvent:
         if (event is GetAuditAspectsEvent) {
           _audit = await _auditRepo.getAudit();
-          if (event.type == 'N') {
-            yield AduitAspectsState(aspects: _audit.negativeAspects);
-          }
-          if (event.type == 'P') {
-            yield AduitAspectsState(aspects: _audit.positiveAspects);
-          }
+          yield AduitAspectsState(audit: _audit);
         }
         break;
 
@@ -132,6 +127,14 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
           break;
         }
         break;
+      case DeleteAuditAspect:
+        if (event is DeleteAuditAspect) {
+          await _auditRepo.deleteAuditAspect(event.aspect, event.index);
+
+          yield DeleteAuditAspectState(event.index);
+        }
+        break;
+
       default:
         yield AuditDataState(null);
     }
@@ -204,8 +207,8 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
     return _audit.auditHead.area;
   }
 
-  void getAuditAspect(String type) {
-    add(GetAuditAspectsEvent(type: type));
+  void getAuditAspects() {
+    add(GetAuditAspectsEvent());
   }
 
   void getAuditHead() {
@@ -215,5 +218,9 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
   void setAreaFromQrCode(AuditHead area) {
     _audit.auditHead = area;
     add(GetAuditHeadEvent());
+  }
+
+  void deleteAuditAspect(Aspect data, index) {
+    add(DeleteAuditAspect(data, index));
   }
 }

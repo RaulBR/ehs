@@ -19,10 +19,10 @@ class StepForm extends StatelessWidget {
   Widget build(BuildContext context) {
     Area _area = Area();
     TextEditingController txt;
-
+    BlocProvider.of<AreaBloc>(context).getStepes(area);
     return BlocBuilder<AreaBloc, AreaState>(builder: (context, state) {
       // return widget here based on BlocA's state
-      BlocProvider.of<AreaBloc>(context).getStepes(area);
+
       return PageWrapper(
         // title: Labels.area2,
         appBarr: AppBar(title: Text(Labels.area2)),

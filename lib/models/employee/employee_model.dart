@@ -32,13 +32,15 @@ class Employee {
         "email": email
       };
 
-  Employee.fromJson(Map<String, dynamic> parsedJson) {
-    id = parsedJson['id']?.toString();
-    firstName = parsedJson['firstName']?.toString();
-    lastName = parsedJson['lastName']?.toString();
-    role = parsedJson['role']?.toString();
-    email = parsedJson['email']?.toString();
-    createdDate = parsedJson['created_date']?.toString();
+  factory Employee.fromJson(Map<String, dynamic> parsedJson) {
+    return Employee(
+      id: parsedJson['id'],
+      firstName: parsedJson['firstName'],
+      lastName: parsedJson['lastName'],
+      role: parsedJson['role'],
+      email: parsedJson['email'],
+      createdDate: parsedJson['created_date'],
+    );
   }
 
   set setId(String id) => this.id = id;

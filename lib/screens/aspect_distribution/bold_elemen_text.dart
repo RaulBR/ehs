@@ -22,7 +22,6 @@ class BoldElementText extends StatelessWidget {
             text: text,
 
             style: TextStyle(
-              // color: Colors.green,
               fontWeight: FontWeight.normal,
               decorationStyle: TextDecorationStyle.wavy,
             ),

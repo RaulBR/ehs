@@ -51,7 +51,6 @@ class _AuditFormState extends State<AuditForm> {
 
   void initState() {
     super.initState();
-
     _hasData =
         widget.loadDataFromList == null ? false : widget.loadDataFromList;
     if (!_hasData) {
@@ -70,10 +69,10 @@ class _AuditFormState extends State<AuditForm> {
             ),
       // maybe can bereoved
       body: BlocBuilder<AuditBloc, AuditState>(
+        buildWhen: (previous, current) => current is AuditDataState,
         builder: (BuildContext context, state) {
           String areaTitle;
           String areaSubtitle;
-          String pageType;
           if (state is AuditDataState) {
             _area = state.audit.auditHead;
             areaTitle = _auditService.getAreaTitle(state.audit);

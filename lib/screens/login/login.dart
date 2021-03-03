@@ -1,7 +1,6 @@
 import 'package:ehsfocus/models/user.model.dart';
 import 'package:ehsfocus/bloc/login/login_bloc.dart';
 import 'package:ehsfocus/bloc/login/login_state.dart';
-import 'package:ehsfocus/services/websocket_service.dart/audit_socket_bloc/audit_socket_bloc.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/clerable%20_text_field.dart';
 import 'package:ehsfocus/shared/form_eleements/form_container.dart';
@@ -56,12 +55,11 @@ class LoginForm extends StatelessWidget {
                     ),
                     SizedBox(
                       width: double.infinity,
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         onPressed: () {
                           User user = User(email: _email, password: _password);
                           BlocProvider.of<LoginBloc>(context).onLogIn(user);
                         },
-                        // color: AppColors.primary,
                         child: state is LoadingState
                             ? LoadingSimbol(
                                 size: 10,
@@ -74,11 +72,10 @@ class LoginForm extends StatelessWidget {
                     ),
                     SizedBox(
                       width: double.infinity,
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         onPressed: () {
                           Navigator.pushNamed(context, '/signup');
                         },
-                        // color: AppColors.primary,
                         child: Text(
                           Labels.signup,
                           style: TextStyle(color: AppColors.icons),

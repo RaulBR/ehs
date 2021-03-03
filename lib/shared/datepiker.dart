@@ -42,9 +42,7 @@ class _DatePikerState extends State<DatePiker> {
         ? DateTime.now()
         : DateTime.parse(widget.inputDate);
     return InputContainer(
-      child: FlatButton(
-        padding: EdgeInsets.all(0),
-        color: widget.color,
+      child: TextButton(
         onPressed: () {
           if (!widget.isEditable) {
             return;
@@ -67,8 +65,6 @@ class _DatePikerState extends State<DatePiker> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Text(widget.label, style: labelFomat),
-            // SizedBox(height: 10),
             Container(
               width: double.infinity,
               decoration: BoxDecoration(

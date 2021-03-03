@@ -80,7 +80,7 @@ class AuditRepo {
 
   submitAudit() async {
     Audit audit = await _auditLocalDb.getMyAudit();
-    dynamic result = await _httpAuditService.submitAudit(audit.auditHead);
+    await _httpAuditService.submitAudit(audit.auditHead);
     await _auditLocalDb.clearAudit();
   }
 
@@ -113,13 +113,12 @@ class AuditRepo {
 
   Future<dynamic> getMyAudits() async {}
 
+  // ignore: missing_return
   Future<List<Aspect>> getMyRejectedAudits() async {
     try {} catch (e) {
       return [];
     }
   }
-
-  _getManyAspects(endpoint) async {}
 
   Future<Audit> setAspect2(Aspect aspect) async {
     return await _auditLocalDb.setAuditAspect(aspect);
@@ -135,5 +134,12 @@ class AuditRepo {
       if (element.type == 'P') audit.positiveAspects.add(element);
     });
     return audit;
+  }
+
+  deleteAuditAspect(Aspect aspect, int index) async {
+    if (aspect.id != null) {
+      // delete asspect form server
+    }
+    return await _auditLocalDb.deleteAspectAtIndex(aspect, index);
   }
 }
