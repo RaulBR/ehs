@@ -29,20 +29,8 @@ class EhsAspectList extends StatelessWidget with Labels {
             deleted: deleted == null
                 ? null
                 : () {
-                    if (listKey.currentState != null)
-                      listKey.currentState.removeItem(
-                        index,
-                        (context, animation) => ListAnimation(
-                          animation: animation,
-                          child: GennericListElement(
-                            simbol: aspects[index].status,
-                            title: aspects[index].equipment,
-                            subtitle: aspects[index].category,
-                          ),
-                        ),
-                      );
-                    if (index < aspects.length - 1) aspects.removeAt(index);
-                    deleted(aspects[index]);
+                    deleted(aspects[index], index);
+                    // if (index < aspects.length - 1) aspects.removeAt(index);
                   },
             isSelected: () {
               selected(aspects[index]);

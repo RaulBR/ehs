@@ -79,7 +79,7 @@ class Labels {
   static const String addComment = 'Adauga Comentariu';
   static const String comment = 'Comentariu';
   static const String scan = 'Scaneaza';
-  static const String addCorectiveAcction = 'Adauga Actiune corectiva';
+  static const String addCorectiveAcction = 'Adauga actiune corectiva';
   static const String goTocorectiveAcction = 'Actiunea corectiva';
   static const String backToAspects = 'Inapoi la aspecte';
   static const String aspects = 'aspecte';
@@ -126,6 +126,9 @@ class Labels {
   static const String typeManager = 'Responsabil pe Tip';
   static const String managerMantanence = 'Manageri';
   static const String manager = 'Manager';
+  static const String managerAuditis = 'Administrare audituri';
+  static const String refresh = 'Reincarca datele';
+  static const String next = 'urmatorul';
 }
 
 class HiveName {
@@ -215,6 +218,7 @@ class RoutPath {
   static const myRejectedAspects = '/myRejected';
   static const myAudits = '/myAudits';
   static const myManaagers = '/myManaagers';
+  static const managerAuditis = '/managerAuditis';
 }
 
 class CurrentPath {

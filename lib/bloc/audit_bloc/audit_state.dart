@@ -1,3 +1,4 @@
+import 'package:ehsfocus/models/action/audit_head_modal.dart';
 import 'package:ehsfocus/models/action/audit_model.dart';
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
 
@@ -15,8 +16,8 @@ class AuditDataState extends AuditState {
 }
 
 class AduitAspectsState extends AuditState {
-  List<Aspect> aspects;
-  AduitAspectsState({this.aspects});
+  final Audit audit;
+  AduitAspectsState({this.audit});
 }
 
 class AuditsDataState extends AuditState {
@@ -27,6 +28,12 @@ class AuditsDataState extends AuditState {
 class AspectAddedState extends AuditState {
   Aspect aspect;
   AspectAddedState({this.aspect});
+}
+
+class DeleteAuditAspectState extends AuditState {
+  final int index;
+
+  DeleteAuditAspectState(this.index);
 }
 
 // move
@@ -50,3 +57,8 @@ class AutidResponsable extends AuditState {
 }
 
 class AuditLoading extends AuditState {}
+
+class AduitHeadState extends AuditState {
+  AuditHead auditHead;
+  AduitHeadState({this.auditHead});
+}

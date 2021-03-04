@@ -43,9 +43,10 @@ class AreaRepo {
   }
 
   Future<Area> deleteRole(AreaRole areaRole) async {
+    await _areaLocaldb.deleteRole(areaRole);
     try {
-      await _areaLocaldb.deleteRole(areaRole);
       Area area = await _httpAreaService.deleteRole(areaRole);
+
       setSelectedArea(area);
       return area;
     } catch (e) {
@@ -53,6 +54,7 @@ class AreaRepo {
     }
   }
 
+  // ignore: missing_return
   Future<bool> deleteStep(AreaStep step) async {
     try {
       await _areaLocaldb.deleteStep(step);

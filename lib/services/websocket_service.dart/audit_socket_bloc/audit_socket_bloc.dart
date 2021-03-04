@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:ehsfocus/models/action/audit_head_modal.dart';
 
 import 'package:ehsfocus/services/http/audit_socket.dart';
+import 'package:ehsfocus/services/loacal_storage.dart';
 import 'package:equatable/equatable.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 part 'audit_socket_event.dart';
@@ -11,11 +12,11 @@ part 'audit_socket_state.dart';
 class AuditSocketBloc extends Bloc<AuditSocketEvent, AuditSocketState> {
   Socket _webSocket;
   int _reconnectCouter = 0;
-  bool _isConnected = false;
+  final localstorageService = LocalStorageService();
   AuditSocketBloc() : super(AuditSocketInitial()) {
-    if ((_webSocket != null && !_webSocket.connected) || _webSocket == null) {
-      add(ConnectToSocketEvent());
-    }
+    // if ((_webSocket != null && !_webSocket.connected) || _webSocket == null) {
+    //   add(ConnectToSocketEvent());
+    // }
     print('BUILD HERE ');
   }
   AuditSocketService _autitWs = AuditSocketService();
@@ -30,9 +31,11 @@ class AuditSocketBloc extends Bloc<AuditSocketEvent, AuditSocketState> {
         _webSocket = await _autitWs.connect();
 
         _webSocket.on("connect", (_) {
-          print('Connected ${_webSocket.id}');
+          if (_webSocket != null) {
+            print('Connected ${_webSocket.id}');
+          }
+
           _reconnectCouter = 0;
-          _isConnected = true;
           add(CheckConenctionEvent());
           _webSocket.emit('getAll');
         });
@@ -80,8 +83,8 @@ class AuditSocketBloc extends Bloc<AuditSocketEvent, AuditSocketState> {
         break;
       case CheckConenctionEvent:
         Timer.periodic(new Duration(seconds: 60), (timer) {
-          print('ws is: ${_webSocket.connected} => ${_webSocket.id} ');
-          if (_webSocket.disconnected && _isConnected == true) {}
+          if (_webSocket != null) print('ws is: ${_webSocket.id} ');
+          //   if (_webSocket.disconnected && _isConnected == true) {}
         });
 
         break;
@@ -96,7 +99,6 @@ class AuditSocketBloc extends Bloc<AuditSocketEvent, AuditSocketState> {
       // _webSocket.emit('auditsFromMyArea');
       return;
     }
-    _isConnected = false;
     connect();
   }
 
@@ -116,9 +118,7 @@ class AuditSocketBloc extends Bloc<AuditSocketEvent, AuditSocketState> {
   }
 
   connect() {
-    if (!_isConnected) {
-      add(ConnectToSocketEvent());
-    }
+    add(ConnectToSocketEvent());
   }
 
   void notyfyRejectedChange(count) {

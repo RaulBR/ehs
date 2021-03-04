@@ -78,7 +78,11 @@ class AuditRepo {
     return photos;
   }
 
-  submitAudit(AuditHead auditin) async {}
+  submitAudit() async {
+    Audit audit = await _auditLocalDb.getMyAudit();
+    await _httpAuditService.submitAudit(audit.auditHead);
+    await _auditLocalDb.clearAudit();
+  }
 
   setAspect(AuditRequest auditin) async {
     try {} catch (e) {
@@ -103,20 +107,18 @@ class AuditRepo {
     return a;
   }
 
-  Future<dynamic> deleteFromLovalDb() {
-    String a;
-    _auditLocalDb.deleteAudit2().then((value) => a == 'success');
+  Future<void> deleteFromLovalDb() async {
+    await _auditLocalDb.deleteAudit2();
   }
 
   Future<dynamic> getMyAudits() async {}
 
+  // ignore: missing_return
   Future<List<Aspect>> getMyRejectedAudits() async {
     try {} catch (e) {
       return [];
     }
   }
-
-  _getManyAspects(endpoint) async {}
 
   Future<Audit> setAspect2(Aspect aspect) async {
     return await _auditLocalDb.setAuditAspect(aspect);
@@ -132,5 +134,12 @@ class AuditRepo {
       if (element.type == 'P') audit.positiveAspects.add(element);
     });
     return audit;
+  }
+
+  deleteAuditAspect(Aspect aspect, int index) async {
+    if (aspect.id != null) {
+      // delete asspect form server
+    }
+    return await _auditLocalDb.deleteAspectAtIndex(aspect, index);
   }
 }

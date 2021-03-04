@@ -1,5 +1,6 @@
 import 'package:ehsfocus/models/employee/employee_model.dart';
 import 'package:ehsfocus/bloc/employee/employee_bloc.dart';
+import 'package:ehsfocus/models/form_metadata.dart/form_footer_model.dart';
 import 'package:ehsfocus/shared/constants.dart';
 import 'package:ehsfocus/shared/form_eleements/clerable%20_text_field.dart';
 import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/generic_page_wraper.dart';
@@ -76,7 +77,10 @@ class EmployeeForm extends StatelessWidget {
           },
         ),
       ),
-      footerActions: [Labels.delete, Labels.save],
+      footerActions: [
+        FormFooterModel(Labels.delete),
+        FormFooterModel(Labels.save)
+      ],
       footerAction: (data) {
         if (data == Labels.save) {
           BlocProvider.of<EmployeeBloc>(context).setEmployee(_employee);

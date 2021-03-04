@@ -99,10 +99,10 @@ class DropDownAuditListElement extends StatelessWidget {
         ),
         SizedBox(
           width: double.infinity,
-          child: FlatButton.icon(
+          child: TextButton.icon(
             onPressed: () => selected(null),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0)),
+            // shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.circular(30.0)),
             icon: Icon(Icons.add),
             label: Text('add'),
           ),

@@ -20,7 +20,15 @@ class AuditHead {
   Employee employee;
   @HiveField(7)
   String createdDate;
-  AuditHead({this.id, this.area, this.step, this.sector, this.auditStatus});
+  AuditHead(
+      {this.id,
+      this.area,
+      this.step,
+      this.sector,
+      this.auditStatus,
+      this.auditType,
+      this.createdDate,
+      this.employee});
 
   Map<String, dynamic> toJson() => {
         "area": area,
@@ -35,17 +43,17 @@ class AuditHead {
     return AuditHead.fromJson(parsedJson);
   }
 
-  AuditHead.fromJson(Map<String, dynamic> parsedJson) {
-    id = parsedJson['id'].toString();
-    area = parsedJson['area']?.toString();
-    step = parsedJson['step']?.toString();
-    auditType = parsedJson['auditType']?.toString();
-    sector =
-        parsedJson['sector'] == null ? null : parsedJson['sector'].toString();
-    auditStatus = parsedJson['auditStatus'].toString();
-    createdDate = parsedJson['createdDate'].toString();
-    employee = parsedJson['employee'] == null
-        ? null
-        : Employee.fromJson(parsedJson['employee']);
+  factory AuditHead.fromJson(Map<String, dynamic> parsedJson) {
+    return AuditHead(
+        id: parsedJson['id'],
+        area: parsedJson['area'],
+        step: parsedJson['step'],
+        auditType: parsedJson['auditType'],
+        sector: parsedJson['sector'] == null ? null : parsedJson['sector'],
+        auditStatus: parsedJson['auditStatus'],
+        createdDate: parsedJson['createdDate'],
+        employee: parsedJson['employee'] == null
+            ? null
+            : Employee.fromJson(parsedJson['employee']));
   }
 }

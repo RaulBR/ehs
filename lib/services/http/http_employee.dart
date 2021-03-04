@@ -12,12 +12,12 @@ class HttpEmployeeService extends HttpService {
         .toList();
   }
 
-  getMyself() async {
+  Future<Employee> getMyself() async {
     try {
       String data = await getRequest(endpint: employeeUrl, hasHeadder: true);
       return Employee.fromJson(json.decode(data));
     } catch (e) {
-      return Employee();
+      return null;
     }
   }
 

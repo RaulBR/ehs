@@ -15,7 +15,7 @@ class AreaMentenance extends StatelessWidget {
   Widget build(BuildContext context) {
     final _areaService = AreaService();
     final _mylistKey = GlobalKey<AnimatedListState>();
-
+    BlocProvider.of<AreaBloc>(context).getAreas();
     return AreaDependencies(
       child: SearchPageWrapper(
         title: Labels.area,

@@ -48,9 +48,12 @@ class DatePiker2 extends StatelessWidget {
               _inputDate = state.dateString;
             }
 
-            return FlatButton(
-              padding: EdgeInsets.all(0),
-              color: color,
+            return TextButton(
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all(
+                  EdgeInsets.only(right: 0),
+                ),
+              ),
               onPressed: !isEditable
                   ? null
                   : () async {
@@ -73,8 +76,6 @@ class DatePiker2 extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text(widget.label, style: labelFomat),
-                  // SizedBox(height: 10),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -90,6 +91,7 @@ class DatePiker2 extends StatelessWidget {
                           width: 140,
                           child: TextFormField(
                             controller: txt,
+                            style: TextStyle(color: AppColors.textPrimery),
                             enabled: false,
                             decoration: textInputDecoration.copyWith(
                                 fillColor: Colors.grey[50], labelText: label),
@@ -97,6 +99,7 @@ class DatePiker2 extends StatelessWidget {
                         ),
                         Icon(
                           Icons.calendar_today,
+                          color: AppColors.textSecundart,
                         ),
                       ],
                     ),

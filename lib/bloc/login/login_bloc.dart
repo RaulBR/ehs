@@ -59,15 +59,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       case SignUpEvent:
         try {
           data = await httpService.signUp(_user);
-          // if (data is String) {
-          //   yield LoginError(error: data);
-          // }
-
+          if (data is String) {
+            yield LoginError(error: data);
+          }
+          _logedInUser = data;
           await _storeDataLocaly(data);
-          // yield UserFormState(event.user);
           yield AuthorizedState(user: data);
         } catch (e) {
-          yield UserFormState(event.user ?? User());
           yield UserLoginError(error: User.fromJson(e));
           print(e);
         }
@@ -75,10 +73,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       case SignOutEvent:
         data = await httpService.signOut();
-        _repoService.clearAllHives();
         await _localStorageService.removeToken();
         await _localStorageService.removeRole();
-        yield LogoutState();
+        await _repoService.clearAllHives();
+        // yield LogoutState(null);
         break;
 
       default:

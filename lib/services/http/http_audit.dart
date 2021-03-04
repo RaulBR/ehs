@@ -5,6 +5,7 @@ import 'package:ehsfocus/models/action/audit_model.dart';
 import 'package:ehsfocus/models/action/audit_request_model.dart';
 import 'package:ehsfocus/models/aspect/aspect_photo.dart';
 import 'package:ehsfocus/models/aspect/aspects_model.dart';
+import 'package:ehsfocus/models/request_models/ehs_responce_model.dart';
 
 import 'package:ehsfocus/services/http/http.dart';
 
@@ -78,12 +79,12 @@ class HttpAuditService extends HttpService {
     return AuditHead.fromJson(json.decode(data));
   }
 
-  submitAudit(AuditHead auditin) async {
+  Future<EhsResponceModel> submitAudit(AuditHead auditin) async {
     dynamic data = await postRequest(
         endpint: '/submitAudit',
         jsonValue: jsonEncode(auditin),
         hasHeadder: true);
-    return json.decode(data);
+    return EhsResponceModel.fromJson(json.decode(data));
   }
 
   setAspect(AuditRequest auditin) async {

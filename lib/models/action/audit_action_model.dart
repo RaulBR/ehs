@@ -17,7 +17,11 @@ class AuditAction {
   @HiveField(5)
   String type;
   AuditAction(
-      {this.imidiatAcction, this.comment, this.limitDate, this.responsible});
+      {this.id,
+      this.imidiatAcction,
+      this.comment,
+      this.limitDate,
+      this.responsible});
 
   Map<String, dynamic> toJson() => {
         "id": id ?? null,
@@ -27,14 +31,15 @@ class AuditAction {
         "responsible": responsible.toJson()
       };
 
-  AuditAction.fromJson(parsedJson) {
-    id = parsedJson['id'].toString();
-    imidiatAcction = parsedJson['imidiatAcction'];
-    limitDate = parsedJson['limitDate']?.toString();
-    comment = parsedJson['comment']?.toString();
-    responsible = parsedJson['responsible'] != null
-        ? Employee.fromJson(parsedJson['responsible'])
-        : null;
+  factory AuditAction.fromJson(parsedJson) {
+    return AuditAction(
+        id: parsedJson['id'].toString(),
+        imidiatAcction: parsedJson['imidiatAcction'],
+        limitDate: parsedJson['limitDate'],
+        comment: parsedJson['comment'],
+        responsible: parsedJson['responsible'] != null
+            ? Employee.fromJson(parsedJson['responsible'])
+            : null);
   }
 
   isNotEmpty() {

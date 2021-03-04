@@ -83,13 +83,13 @@ class _RoleDialogState extends State<RoleDialog> {
       ),
       actions: <Widget>[
         // usually buttons at the bottom of the dialog
-        FlatButton(
+        TextButton(
           child: Text(Labels.close),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        FlatButton(
+        TextButton(
           child: Text(Labels.add),
           onPressed: () {
             if (_areaRole.responsible != null) {
@@ -154,13 +154,13 @@ class RoleDialog2 extends StatelessWidget {
       ),
       actions: <Widget>[
         // usually buttons at the bottom of the dialog
-        FlatButton(
+        TextButton(
           child: Text(Labels.close),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        FlatButton(
+        TextButton(
           child: Text(Labels.add),
           onPressed: () {
             if (_areaRole.responsible != null) {

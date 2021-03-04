@@ -19,13 +19,14 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
   final _auditRepo = AuditRepo();
   @override
   Stream<AuditState> mapEventToState(AuditEvent event) async* {
-    yield AuditLoading();
     switch (event.runtimeType) {
       case UpdateForm:
+        yield AuditLoading();
         yield AuditDataState(event.audit);
         break;
 
       case SetAuditAspect:
+        yield AuditLoading();
         try {
           AuditRequest a = AuditRequest();
           a.auditHead = _audit.auditHead;
@@ -63,9 +64,12 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
         yield AuditDataState(_audit);
         break;
       case SubmitAudit:
+        yield AuditLoading();
         try {
-          await httpAuditService.submitAudit(_audit.auditHead);
-          Timer(Duration(seconds: 1), () => add(UpdateForm(audit: Audit())));
+          // await httpAuditService.submitAudit(_audit.auditHead);
+          await _auditRepo.submitAudit();
+          Timer(Duration(milliseconds: 300),
+              () => add(UpdateForm(audit: Audit())));
         } catch (e) {
           yield Error();
           break;
@@ -99,14 +103,16 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
       case GetAuditAspectsEvent:
         if (event is GetAuditAspectsEvent) {
           _audit = await _auditRepo.getAudit();
-          if (event.type == 'N') {
-            yield AduitAspectsState(aspects: _audit.negativeAspects);
-          }
-          if (event.type == 'P') {
-            yield AduitAspectsState(aspects: _audit.positiveAspects);
-          }
+          yield AduitAspectsState(audit: _audit);
         }
         break;
+
+      case GetAuditHeadEvent:
+        _audit = await _auditRepo.getMyAudit();
+        _audit = _audit == null ? Audit() : _audit;
+        yield AduitHeadState(auditHead: _audit.auditHead);
+        break;
+
       case DeleteAudit:
         _auditRepo.deleteFromLovalDb();
         yield DeleteSucsesfull();
@@ -121,6 +127,14 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
           break;
         }
         break;
+      case DeleteAuditAspect:
+        if (event is DeleteAuditAspect) {
+          await _auditRepo.deleteAuditAspect(event.aspect, event.index);
+
+          yield DeleteAuditAspectState(event.index);
+        }
+        break;
+
       default:
         yield AuditDataState(null);
     }
@@ -161,22 +175,6 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
     add(SetAuditAspect(auditRequest: audit));
   }
 
-  List<Aspect> _handleAspectElement(List<Aspect> list, aspect) {
-    list = list ?? [];
-    Aspect element;
-    element = aspect;
-    if (list.length > 0) {
-      element = list.firstWhere((element) => element.id == aspect.id,
-          orElse: () => null);
-      if (element != null) {
-        element = aspect;
-        return list;
-      }
-    }
-    list.add(aspect);
-    return list;
-  }
-
   void submitAudit() {
     add(SubmitAudit());
   }
@@ -209,7 +207,20 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
     return _audit.auditHead.area;
   }
 
-  void getAuditAspect(String type) {
-    add(GetAuditAspectsEvent(type: type));
+  void getAuditAspects() {
+    add(GetAuditAspectsEvent());
+  }
+
+  void getAuditHead() {
+    add(GetAuditHeadEvent());
+  }
+
+  void setAreaFromQrCode(AuditHead area) {
+    _audit.auditHead = area;
+    add(GetAuditHeadEvent());
+  }
+
+  void deleteAuditAspect(Aspect data, index) {
+    add(DeleteAuditAspect(data, index));
   }
 }

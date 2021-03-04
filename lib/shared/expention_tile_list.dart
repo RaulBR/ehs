@@ -48,10 +48,10 @@ class ExpandableListTile extends StatelessWidget {
           ),
           SizedBox(
             width: double.infinity,
-            child: FlatButton.icon(
+            child: TextButton.icon(
               onPressed: () => add(),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0)),
+              // shape: RoundedRectangleBorder(
+              //     borderRadius: BorderRadius.circular(30.0)),
               icon: Icon(Icons.add),
               label: Text(Labels.add),
             ),

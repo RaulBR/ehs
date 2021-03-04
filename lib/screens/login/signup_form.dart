@@ -56,7 +56,7 @@ class SignUpForm extends StatelessWidget {
                   SizedBox(height: 20.0),
                   SizedBox(
                     width: double.infinity,
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       onPressed: () {
                         BlocProvider.of<LoginBloc>(context).onSignUp();
                       },

@@ -47,7 +47,7 @@ class ActionsFormWidget extends StatelessWidget {
     }
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      // resizeToAvoidBottomPadding: false,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,7 +85,6 @@ class ActionsFormWidget extends StatelessWidget {
                       if (value) {
                         _action.limitDate =
                             DateFormat('dd-MMM-yyyy').format(DateTime.now());
-                        print(_action.limitDate);
                         _action.responsible =
                             BlocProvider.of<EmployeeBloc>(context).getMe();
                       }

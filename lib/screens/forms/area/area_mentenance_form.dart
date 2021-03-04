@@ -1,6 +1,7 @@
 import 'package:ehsfocus/models/area/area_model.dart';
 import 'package:ehsfocus/models/area/area_role_model.dart';
 import 'package:ehsfocus/bloc/area/area_bloc.dart';
+import 'package:ehsfocus/models/form_metadata.dart/form_footer_model.dart';
 import 'package:ehsfocus/screens/forms/area/role_dialog.dart';
 import 'package:ehsfocus/screens/forms/area/step_form.dart';
 import 'package:ehsfocus/services/popup_service/generic_message_popup.dart';
@@ -12,6 +13,7 @@ import 'package:ehsfocus/shared/expention_tile_list.dart';
 import 'package:ehsfocus/shared/form_eleements/clerable%20_text_field.dart';
 import 'package:ehsfocus/shared/form_eleements/form_container.dart';
 import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/generic_page_wraper.dart';
+import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -81,7 +83,10 @@ class AreaMentenanceForm extends StatelessWidget {
                     ),
                   ),
                   OpenTextAreaWidget(
-                    icon: Icon(Icons.info_outline),
+                    icon: Icon(
+                      Icons.info_outline,
+                      color: AppColors.textSecundart,
+                    ),
                     label: 'Informatii ${Labels.area1}',
                     text: _area.areaInfo ?? null,
                     onEdit: (text) {
@@ -95,7 +100,10 @@ class AreaMentenanceForm extends StatelessWidget {
           ),
         ),
       ),
-      footerActions: [Labels.delete, Labels.save],
+      footerActions: [
+        FormFooterModel(Labels.delete),
+        FormFooterModel(Labels.save)
+      ],
       footerAction: (data) {
         if (data == Labels.save) {
           BlocProvider.of<AreaBloc>(context).setAreaForm(_area);

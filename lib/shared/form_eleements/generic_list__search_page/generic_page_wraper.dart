@@ -1,3 +1,4 @@
+import 'package:ehsfocus/models/form_metadata.dart/form_footer_model.dart';
 import 'package:ehsfocus/shared/form_eleements/form_footer.dart';
 import 'package:ehsfocus/shared/form_eleements/generic_list__search_page/generic_list_page_search.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ class PageWrapper extends StatelessWidget {
   final Widget child;
   final Function footerAction;
   final Function add;
-  final List<String> footerActions;
+  final List<FormFooterModel> footerActions;
   const PageWrapper({
     Key key,
     this.child,
@@ -20,11 +21,12 @@ class PageWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool _isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0.0;
-    List<String> _formActions =
-        footerActions == null ? [Labels.delete, Labels.save] : footerActions;
+    List<FormFooterModel> _formActions = footerActions == null
+        ? [FormFooterModel(Labels.delete), FormFooterModel(Labels.save)]
+        : footerActions;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+      // resizeToAvoidBottomPadding: false,
       appBar: appBarr == null ? null : appBarr,
       body: BodyContainer(child: child),
       bottomNavigationBar: _isKeyboard || footerAction == null

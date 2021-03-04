@@ -7,16 +7,17 @@ class AuditRequest {
   Aspect aspect;
   AuditRequest({this.aspect, this.auditHead});
 
-  AuditRequest.fromJson(Map<String, dynamic> parsedJson) {
+  factory AuditRequest.fromJson(Map<String, dynamic> parsedJson) {
     if (parsedJson == null || parsedJson['auditHead'] == null) {
-      return;
+      return AuditRequest();
     }
-    auditHead = AuditHead.fromJson(parsedJson['auditHead']);
+    AuditHead auditHead2 = AuditHead.fromJson(parsedJson['auditHead']);
+    Aspect aspect2;
     if (parsedJson['aspect'] == null) {
-      aspect = null;
-      return;
+      return AuditRequest();
     }
-    aspect = Aspect.fromJson(parsedJson['aspect']);
+    aspect2 = Aspect.fromJson(parsedJson['aspect']);
+    return AuditRequest(auditHead: auditHead2, aspect: aspect2);
   }
 
   Map<String, dynamic> toJson() => {

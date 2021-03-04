@@ -30,7 +30,11 @@ class AppLoadingState extends LoginState {
   AppLoadingState();
 }
 
-class LogoutState extends LoginState {}
+class LogoutState extends LoginState {
+  final User user;
+
+  LogoutState(this.user);
+}
 
 class LoginError extends LoginState {
   String error;

@@ -35,7 +35,7 @@ class EhsNavigatorWidget extends StatelessWidget {
         },
         child: BlocBuilder<NavigationBloc, NavigationState>(
           builder: (context, state) => Scaffold(
-              resizeToAvoidBottomPadding: false,
+              // resizeToAvoidBottomPadding: false,
               body: PageView(
                 dragStartBehavior: DragStartBehavior.start,
                 controller: _controller,

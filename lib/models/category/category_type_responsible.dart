@@ -15,7 +15,7 @@ class CategoryTypeResponsible extends Equatable {
   Map<String, dynamic> toJson() => {
         "id": id,
         "responsible": responsible?.toJson(),
-        "categoryType": categoryType.toJson(),
+        "categoryType": categoryType?.toJson(),
       };
 
   CategoryTypeResponsible.fromJson(Map<String, dynamic> parsedJson) {

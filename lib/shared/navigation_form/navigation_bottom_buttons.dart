@@ -1,3 +1,5 @@
+import 'package:ehsfocus/shared/constants.dart';
+import 'package:ehsfocus/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,40 +19,49 @@ class BottomGroupButtons extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              FlatButton(
+              TextButton(
                 child: isFirst
                     ? Text('')
                     : Row(
                         children: [
-                          Icon(Icons.chevron_left),
-                          isFirst ? Text('') : Text('inapoi'),
+                          Icon(
+                            Icons.chevron_left,
+                            color: AppColors.icons,
+                          ),
+                          isFirst
+                              ? Text('')
+                              : Text(
+                                  Labels.back,
+                                  style: TextStyle(color: AppColors.icons),
+                                ),
                         ],
                       ),
                 onPressed: isFirst ? null : () => navigate(-1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(30.0),
+                // ),
               ),
-              // FlatButton(
-              //   child: Text(Labels.back),
-              //   onPressed: () => submit(),
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(30.0),
-              //   ),
-              // ),
-              FlatButton(
+              TextButton(
                 child: !isEnabled
                     ? Text('')
                     : Row(
                         children: [
-                          isLast ? Text('inchide') : Text('urmatorul'),
-                          isLast ? Text('') : Icon(Icons.chevron_right),
+                          Text(
+                            isLast ? Labels.close : Labels.next,
+                            style: TextStyle(color: AppColors.icons),
+                          ),
+                          isLast
+                              ? Text('')
+                              : Icon(
+                                  Icons.chevron_right,
+                                  color: AppColors.icons,
+                                ),
                         ],
                       ),
                 onPressed: !isEnabled ? null : () => navigate(1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(30.0),
+                // ),
               ),
             ],
           )),

@@ -20,11 +20,12 @@ class CategoryRepo {
     }
   }
 
-  setCategoryType({CategoryType categoryType}) async {
+  Future<CategoryType> setCategoryType({CategoryType categoryType}) async {
     try {
       CategoryType categorytypeDto = await _httpCategoryService.setCategoryType(
           categoryType: categoryType);
       await _categoryLocalDb.setCategoryType(categoryType: categorytypeDto);
+      return categorytypeDto;
     } catch (e) {
       throw CategoryTypeException('save error');
     }

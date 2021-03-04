@@ -64,8 +64,8 @@ class ManagersMentenanceScreen extends StatelessWidget {
                             'Nu va mai fi manager pe: ${data.subtitle}')) {
                       CategoryTypeResponsible cat =
                           CategoryTypeResponsible(id: data.id);
-                      // BlocProvider.of<CategoryManagementBloc>(context)
-                      //     .add(DeleteCategoryManagementEvent(cat));
+                      BlocProvider.of<CategoryManagementBloc>(context)
+                          .add(DeleteCategoryManagementEvent(cat));
                       _areaService.deletteElemet(_mylistKey, index, data, list);
                     }
 

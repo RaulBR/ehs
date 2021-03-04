@@ -40,8 +40,10 @@ class CategoryManagementBloc
         } catch (e) {}
         break;
       case DeleteCategoryManagementEvent:
+        CategoryTypeResponsible category = _data.firstWhere(
+            (element) => element.id == event.categoryTypeResponsible.id);
         await _httpCategoryManagmentService.deleteCategoryTypeResponsible(
-            categoryType: event.categoryTypeResponsible);
+            categoryType: category);
         add(GetCategoryManagementEvent());
         break;
       case UpdateListEvent:

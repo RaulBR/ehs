@@ -15,7 +15,9 @@ class EmployeeRepo {
       Employee myself = await _employeeLocaldb.getMyself();
       if (myself == null) {
         myself = await _httpEmployeeService.getMyself();
-        _employeeLocaldb.setMyself(myself);
+        if (myself != null) {
+          _employeeLocaldb.setMyself(myself);
+        }
       }
       return myself;
     } catch (e) {
@@ -40,7 +42,7 @@ class EmployeeRepo {
   Future<Employee> setEmployee(Employee employee) async {
     try {
       Employee employeeRepo = await _httpEmployeeService.setEmployee(employee);
-      _employeeLocaldb.setEmployee(employee);
+      _employeeLocaldb.setEmployee(employeeRepo);
       return employeeRepo;
     } catch (e) {
       throw EmployeeException('save faild');
@@ -62,5 +64,9 @@ class EmployeeRepo {
     } catch (e) {
       return null;
     }
+  }
+
+  Future<void> deleteLocaEmployee() async {
+    _employeeLocaldb.deleteLocaEmployee();
   }
 }

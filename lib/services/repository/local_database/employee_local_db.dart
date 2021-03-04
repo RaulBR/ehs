@@ -92,4 +92,11 @@ class EmployeeLocaldb extends HiveRepo {
       });
     }
   }
+
+  Future<void> deleteLocaEmployee() async {
+    Box<Employee> empBox = await _initiateMyBox();
+    Box<Employee> empsBox = await _initiateEmployeeBox();
+    empBox.clear();
+    empsBox.clear();
+  }
 }

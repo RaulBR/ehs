@@ -1,4 +1,5 @@
 import 'package:ehsfocus/shared/form_eleements/form_container.dart';
+import 'package:ehsfocus/theme.dart';
 import 'package:flutter/material.dart';
 
 // class MyCheckBox extends StatefulWidget {
@@ -67,8 +68,12 @@ class _EhsCheckBoxState extends State<EhsCheckBox> {
     }
 
     return InputContainer(
-      child: FlatButton(
-        padding: EdgeInsets.all(0),
+      child: TextButton(
+        style: ButtonStyle(
+          padding: MaterialStateProperty.all(
+            EdgeInsets.only(left: 9),
+          ),
+        ),
         onPressed: () {
           setLocal();
           widget.setValue(local);
@@ -78,7 +83,10 @@ class _EhsCheckBoxState extends State<EhsCheckBox> {
               ? MainAxisAlignment.spaceBetween
               : MainAxisAlignment.center,
           children: [
-            Text(widget.label),
+            Text(
+              widget.label,
+              style: TextStyle(color: AppColors.textSecundart),
+            ),
             Checkbox(
               value: local,
               onChanged: (bool value) {

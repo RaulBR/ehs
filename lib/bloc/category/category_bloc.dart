@@ -22,10 +22,8 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   ) async* {
     switch (event.runtimeType) {
       case GetCategoryTypeEvent:
-        if (_categoryesType.length == 0) {
-          dynamic data = await _categoryRepo.getCategoryTypes();
-          _categoryesType = data;
-        }
+        dynamic data = await _categoryRepo.getCategoryTypes();
+        _categoryesType = data;
         yield CategorysTypesState(categoryes: _categoryesType);
 
         break;
@@ -56,15 +54,20 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         dynamic data =
             await _categoryRepo.deleteCategoryTypes(categoryType: categoryType);
         _categoryesType = data;
-        yield CategorysTypesState(categoryes: _categoryesType);
+        add(GetCategoryTypeEvent());
         break;
       case SetCategoryTypeEvent:
         CategoryType toBeSated =
             event is SetCategoryTypeEvent ? event.categoryType : null;
-        dynamic data =
-            await _categoryRepo.setCategoryType(categoryType: toBeSated);
-        _categoryesType.add(data);
-        yield CategorysTypesState(categoryes: _categoryesType);
+        await _categoryRepo.setCategoryType(categoryType: toBeSated);
+        add(GetCategoryTypeEvent());
+        break;
+      case CategoryError:
+        yield CategoryErrorState(error: event.errorMessage);
+        break;
+      case CategoryTypeError:
+        yield OneCategoryTypesState(
+            categorie: _selectedCategoryType, error: event.errorMessage);
         break;
       default:
         yield OneCategoryTypesState(categorie: _selectedCategoryType);
@@ -81,7 +84,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   saveCategoryType(CategoryType categoryType) {
-    print(categoryType == _initialStateCategoryType);
     add(SetCategoryTypeEvent(categoryType));
   }
 
@@ -135,6 +137,14 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
   setCategoryType(String data) {
     _selectedCategoryType.type = data;
+    add(CategoryTypeError(errorMessage: null));
+    if (_initialStateCategoryType.type != data) {
+      dynamic value = _categoryesType
+          .firstWhere((element) => element.type == data, orElse: () => null);
+      if (value != null) {
+        add(CategoryTypeError(errorMessage: 'Duplicat'));
+      }
+    }
   }
 
   editCategory(int index, String newValue) {

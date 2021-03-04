@@ -27,7 +27,7 @@ class _IncidentFormState extends State<IncidentForm> {
   Widget getNav(int number) {
     return EhsNavigatorWidget(
       displayWidgets: [
-        AreaFromWidget(title: Labels.areaId, order: 1),
+        AuditHeadForm(title: Labels.areaId, order: 1),
         PhotoCommentForm(
             isEditable: true,
             order: 2,
@@ -119,13 +119,15 @@ class _IncidentFormState extends State<IncidentForm> {
           : BottomAppBar(
               color: AppColors.primary,
               child: SizedBox(
-                  width: double.infinity,
-                  child: FlatButton(
-                    child: Text(Labels.save),
-                    onPressed: () {},
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0)),
-                  ))),
+                width: double.infinity,
+                child: TextButton(
+                  child: Text(Labels.save),
+                  onPressed: () {},
+                  // shape: RoundedRectangleBorder(
+                  //     borderRadius: BorderRadius.circular(30.0)),
+                ),
+              ),
+            ),
     );
   }
 }

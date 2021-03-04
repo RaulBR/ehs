@@ -31,7 +31,7 @@ class HttpCategoryManagmentService extends HttpService {
 
   deleteCategoryTypeResponsible({CategoryTypeResponsible categoryType}) async {
     String data = await postRequest(
-        endpint: _categoryUrl,
+        endpint: '$_categoryUrl/delete',
         jsonValue: json.encode(categoryType),
         hasHeadder: true);
     return json.decode(data);

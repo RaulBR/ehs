@@ -69,7 +69,7 @@ class AuditLocalDb extends HiveRepo {
   Future<Audit> getAudit() async {
     Box<Audit> aspectBox = await initiateBox(HiveName.aspect);
     Audit a = aspectBox.get(0);
-    print(a.toJson());
+
     return a;
   }
 
@@ -77,6 +77,9 @@ class AuditLocalDb extends HiveRepo {
     try {
       Box<Audit> aspectBox = await initiateBox(HiveName.audit);
       Audit audit = aspectBox.get(0);
+      if (audit == null) {
+        audit = Audit();
+      }
       return audit;
     } catch (e) {
       return null;
@@ -159,11 +162,32 @@ class AuditLocalDb extends HiveRepo {
 
   Future<dynamic> getMyAudits() async {}
 
+  // ignore: missing_return
   Future<List<Aspect>> getMyRejectedAudits() async {
     try {} catch (e) {
       return [];
     }
   }
 
-  _getManyAspects(endpoint) async {}
+  clearAudit() async {
+    Box<Audit> auditBox = await initiateBox<Audit>(HiveName.audit);
+    await auditBox.clear();
+  }
+
+  deleteAspectAtIndex(Aspect aspect, int index) async {
+    Audit localAudit = await getLocalAudit();
+    if (aspect.type == "N") {
+      localAudit.negativeAspects.removeAt(index);
+    }
+    if (aspect.type == "P") {
+      localAudit.positiveAspects.removeAt(index);
+    }
+    setHollAudit(localAudit);
+    return localAudit;
+  }
+
+  Future<Audit> getLocalAudit() async {
+    Box<Audit> aspectBox = await initiateBox(HiveName.audit);
+    return aspectBox.get(0);
+  }
 }

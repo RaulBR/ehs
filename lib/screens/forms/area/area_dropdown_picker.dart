@@ -15,18 +15,15 @@ class AreaDropDownPiker extends StatelessWidget {
   const AreaDropDownPiker({Key key, this.area, this.getData}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    AuditHead _area = AuditHead();
-    _area = area ?? _area;
+    AuditHead _area = area == null ? AuditHead() : area;
+    BlocProvider.of<AreaBloc>(context).setAreaFormByArea(_area.area);
     return BlocBuilder<AreaBloc, AreaState>(
-      buildWhen: (previous, current) =>
-          current is AreaListState || current is AreaFormState,
+      buildWhen: (previous, current) => current is AreaFormState,
       builder: (context, state) {
-        String selected = area != null ? area.area : null;
+        String selected;
         List<Area> list = [];
-        if (state is AreaListState) {
-          list = state.areaList != null ? state.areaList : [];
-        }
         if (state is AreaFormState) {
+          list = state.areaList != null ? state.areaList : [];
           selected = state.area != null ? state.area.area : selected;
         }
 

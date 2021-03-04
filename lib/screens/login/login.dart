@@ -16,6 +16,7 @@ class LoginForm extends StatelessWidget {
     String _email;
     String _password;
     String error;
+
     return Scaffold(
       appBar: AppBar(actions: <Widget>[], title: Text(Labels.signIn)),
       body: Container(
@@ -54,12 +55,11 @@ class LoginForm extends StatelessWidget {
                     ),
                     SizedBox(
                       width: double.infinity,
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         onPressed: () {
                           User user = User(email: _email, password: _password);
                           BlocProvider.of<LoginBloc>(context).onLogIn(user);
                         },
-                        // color: AppColors.primary,
                         child: state is LoadingState
                             ? LoadingSimbol(
                                 size: 10,
@@ -72,11 +72,10 @@ class LoginForm extends StatelessWidget {
                     ),
                     SizedBox(
                       width: double.infinity,
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         onPressed: () {
                           Navigator.pushNamed(context, '/signup');
                         },
-                        // color: AppColors.primary,
                         child: Text(
                           Labels.signup,
                           style: TextStyle(color: AppColors.icons),

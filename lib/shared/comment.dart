@@ -122,7 +122,7 @@ class EditableTextAreaWidget extends StatelessWidget {
               ),
 
               // ),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     onEdit(myController.text);
                     SystemChannels.textInput.invokeMethod('TextInput.hide');
